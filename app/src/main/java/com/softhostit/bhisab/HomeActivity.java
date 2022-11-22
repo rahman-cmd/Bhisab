@@ -38,6 +38,9 @@ public class HomeActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
 
 
+        loadDashboard();
+
+
 //        nav_view = findViewById(R.id.nav_view);
 //        nav_view.setItemIconTintList(null);
 
@@ -85,6 +88,22 @@ public class HomeActivity extends AppCompatActivity  {
 
 
 
+    }
+
+    private void loadDashboard() {
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            User user = SharedPrefManager.getInstance(this).getUser();
+            final String domain = user.getDomain();
+            final String username = user.getUsername();
+
+            // if everything is fine
+            // we will show dashboard data
+        }
+        else {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     // log out option menu

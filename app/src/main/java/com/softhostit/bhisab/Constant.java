@@ -8,7 +8,8 @@ public class Constant {
 
     //For retrofit base url must end with /
     public static final String BASE_URL = "https://dev.bhisab.com/php/mapi/";
-    public static final String URL_LOGIN= BASE_URL + "auth.php/";
+    public static final String URL_LOGIN = BASE_URL + "auth.php/";
+    public static final String URL_DASHBOARD = BASE_URL + "/dashboard/daily.php/";
 
     //For retrofit base url must end with /
 //    public static final String PRODUCT_IMAGE_URL = "http://bhishab.palashhossain.com/product_images/";
