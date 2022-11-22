@@ -38,6 +38,8 @@
     <string name="enter_suppliers_contact_person_name">Enter Suppliers Contact Person Name</string>
     <string name="enter_suppliers_cell">Enter Suppliers Cell</string>
     <string name="enter_valid_email">Enter Valid Email</string>
+    <string name="enter_valid_username" translatable="false">Enter Valid Username</string>
+    <string name="enter_valid_domain" translatable="false">Enter Valid Domain Name</string>
     <string name="enter_suppliers_address">Enter Suppliers Address</string>
     <string name="suppliers_successfully_added">Suppliers Successfully Added</string>
     <string name="failed">Failed</string>

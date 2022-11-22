@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/Search"
-        android:icon="@drawable/customer"
+        android:icon="@drawable/customar"
         android:title="Search" />
 
 

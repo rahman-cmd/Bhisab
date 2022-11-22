@@ -55,7 +55,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:padding="5dp"
-            android:text="Smart Solution for Your Shop"
+            android:text="Smart Solution for Your Business"
             android:textColor="@color/white"
             android:textSize="18dp"
             android:textStyle="bold" />

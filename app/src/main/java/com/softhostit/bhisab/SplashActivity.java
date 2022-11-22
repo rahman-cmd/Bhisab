@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.softhostit.bhisab.Login.LoginActivity;
+
 
 public class SplashActivity extends AppCompatActivity {
 
 
-    public static int splashTimeOut = 3000;
+    public static int splashTimeOut = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         actionBar.hide();
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, splashTimeOut);
