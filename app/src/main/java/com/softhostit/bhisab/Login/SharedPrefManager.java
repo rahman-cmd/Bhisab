@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.softhostit.bhisab.Dashboard.DashboardModel;
+
 public class SharedPrefManager {
 
     private static final String SHARED_PREF_NAME = "loginuser";
@@ -36,6 +38,32 @@ public class SharedPrefManager {
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_PASSWORD, user.getPassword());
         editor.apply();
+    }
+
+    // this method will store dashboard data in shared preferences
+    public void dashboardData(DashboardModel dashboardModel) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("domain", dashboardModel.getDomain());
+        editor.putString("username", dashboardModel.getUsername());
+        editor.putString("today_sales", dashboardModel.getToday_sales());
+        editor.putString("today_expense", dashboardModel.getToday_expense());
+        editor.putString("today_receive", dashboardModel.getToday_receive());
+        editor.putString("today_balance", dashboardModel.getToday_balance());
+        editor.apply();
+    }
+
+    // this method will get dashboard data from shared preferences
+    public DashboardModel getDashboardData() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return new DashboardModel(
+                sharedPreferences.getString("domain", null),
+                sharedPreferences.getString("username", null),
+                sharedPreferences.getString("today_sales", null),
+                sharedPreferences.getString("today_expense", null),
+                sharedPreferences.getString("today_receive", null),
+                sharedPreferences.getString("today_balance", null)
+        );
     }
 
     //this method will checker whether user is already logged in or not

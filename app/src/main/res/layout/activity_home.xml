@@ -32,7 +32,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -101,20 +101,20 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
                                     android:id="@+id/textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক বিক্রয়" />
+                                    android:text="দৈনিক বিক্রয়"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView2"
+                                    android:id="@+id/dailySales"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/solaimanlipi"
-                                    android:text="৳ ৫০০.০০"
+                                    android:text=""
                                     android:textColor="@android:color/darker_gray" />
                             </LinearLayout>
                         </LinearLayout>
@@ -170,13 +170,13 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
                                     android:id="@+id/textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক অবশিষ্ট" />
+                                    android:text="দৈনিক অবশিষ্ট"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/textView2"
@@ -189,6 +189,7 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -248,13 +249,13 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
                                     android:id="@+id/textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক জমা" />
+                                    android:text="দৈনিক জমা"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/textView2"
@@ -317,13 +318,13 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
                                     android:id="@+id/textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক খরচ" />
+                                    android:text="দৈনিক খরচ"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/textView2"
@@ -337,6 +338,7 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
