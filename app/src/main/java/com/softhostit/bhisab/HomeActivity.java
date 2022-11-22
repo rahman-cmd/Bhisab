@@ -3,6 +3,7 @@ package com.softhostit.bhisab;
 import static android.content.ContentValues.TAG;
 import static org.apache.poi.sl.usermodel.PresetColor.Menu;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -42,13 +43,12 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView nav_view;
     CardView posPrint, coustomer;
-    TextView dailySales;
+    TextView dailySales, today_expense, today_receive, today_balance;
 
     User user = SharedPrefManager.getInstance(this).getUser();
 
     final String domain = user.getDomain();
     final String username = user.getUsername();
-
 
 
     @Override
@@ -59,55 +59,76 @@ public class HomeActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         dailySales = findViewById(R.id.dailySales);
+        today_expense = findViewById(R.id.today_expense);
+        today_receive = findViewById(R.id.today_receive);
+        today_balance = findViewById(R.id.today_balance);
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DASHBOARD,
                 new Response.Listener<String>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(String response) {
-                        dailySales.setText(response);
+
 
                         try {
-                            JSONObject object = new JSONObject(response);
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
 
+                            JSONObject userJson = obj.getJSONObject("dashboard");
+                            DashboardModel dashboardModel = new DashboardModel(
+                                    userJson.getString("domain"),
+                                    userJson.getString("username"),
+                                    userJson.getString("today_sales"),
+                                    userJson.getString("today_expense"),
+                                    userJson.getString("today_receive"),
+                                    userJson.getString("today_balance")
+                            );
+
+                            dailySales.setText("৳ "+dashboardModel.getToday_sales());
+                            today_expense.setText("৳ "+dashboardModel.getToday_expense());
+                            today_receive.setText("৳ "+dashboardModel.getToday_receive());
+                            today_balance.setText("৳ "+dashboardModel.getToday_balance());
+
+
+
+//                            JSONObject userData = String string = obj.getString("dashboard");
+//
+//
+//                            dailySales.setText(string);
+
+
+                            //if no error in response
+//                            if (!obj.getBoolean("error")) {
+//
+//                                //getting the user from the response
+//                                JSONObject userJson = obj.getJSONObject("dashboard");
+//
+//
+//                                //creating a new dashboard object
+//                                DashboardModel dashboardModel = new DashboardModel(
+//                                        userJson.getString("domain"),
+//                                        userJson.getString("username"),
+//                                        userJson.getString("today_sales"),
+//                                        userJson.getString("today_expense"),
+//                                        userJson.getString("today_receive"),
+//                                        userJson.getString("today_balance")
+//                                );
+//
+//
+//
+//
+//
+//
+//                                //storing the user in shared preferences
+////                                SharedPrefManager.getInstance(getApplicationContext()).dashboardData(dashboardModel);
+//
+//                            } else {
+//                                Toasty.error(HomeActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
+//                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
-
-                      /*  try {
-                            //converting response to json object
-                           JSONObject obj = new JSONObject(response);
-
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
-
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("dashboard");
-
-                                //creating a new dashboard object
-                                DashboardModel dashboardModel = new DashboardModel(
-                                        userJson.getString("domain"),
-                                        userJson.getString("username"),
-                                        userJson.getString("today_sales"),
-                                        userJson.getString("today_expense"),
-                                        userJson.getString("today_receive"),
-                                        userJson.getString("today_balance")
-                                );
-
-
-                                //storing the user in shared preferences
-                                SharedPrefManager.getInstance(getApplicationContext()).dashboardData(dashboardModel);
-//                                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
-                            } else {
-                                Toasty.error(HomeActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
                     }
                 },
                 new Response.ErrorListener() {

@@ -110,12 +110,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:textStyle="bold"
                                     android:id="@+id/dailySales"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/solaimanlipi"
-                                    android:text=""
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:fontFamily="@font/sutonnymj_regular"
+                                    android:text="৳ ৫০০.০০"
+                                    android:textColor="@color/grey" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -179,12 +180,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView2"
+                                    android:textStyle="bold"
+                                    android:id="@+id/today_expense"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/solaimanlipi"
+                                    android:fontFamily="@font/sutonnymj_regular"
                                     android:text="৳ ৫০০.০০"
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:textColor="@color/grey" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -258,12 +260,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView2"
+                                    android:textStyle="bold"
+                                    android:id="@+id/today_receive"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/solaimanlipi"
+                                    android:fontFamily="@font/sutonnymj_regular"
                                     android:text="৳ ৫০০.০০"
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:textColor="@color/grey_60" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -327,12 +330,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView2"
+                                    android:textStyle="bold"
+                                    android:id="@+id/today_balance"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/solaimanlipi"
+                                    android:fontFamily="@font/sutonnymj_regular"
                                     android:text="৳ ৫০০.০০"
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:textColor="@android:color/holo_red_dark" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
