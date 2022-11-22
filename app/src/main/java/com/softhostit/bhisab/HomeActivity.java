@@ -1,10 +1,16 @@
 package com.softhostit.bhisab;
 
+import static org.apache.poi.sl.usermodel.PresetColor.Menu;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -16,11 +22,10 @@ import com.softhostit.bhisab.POS.PosActivity;
 
 import es.dmoral.toasty.Toasty;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity  {
 
     BottomNavigationView nav_view;
     CardView posPrint, coustomer;
-    LinearLayout btnLogout;
 
 
 
@@ -32,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //        nav_view = findViewById(R.id.nav_view);
 //        nav_view.setItemIconTintList(null);
 
-        btnLogout = findViewById(R.id.btnLogout);
+
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             User user = SharedPrefManager.getInstance(this).getUser();
@@ -42,7 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //            gender.setText(user.getGender());
 //            userName.setText(user.getName());
 
-            btnLogout.setOnClickListener(this);
+
         }
         else{
             Intent  intent = new Intent(HomeActivity.this,LoginActivity.class);
@@ -70,12 +75,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
+
+    }
+
+    // log out option menu
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logoout_menu, menu);
+        return true;
     }
 
     @Override
-    public void onClick(View v) {
-        if(v.equals(btnLogout)){
-            SharedPrefManager.getInstance(getApplicationContext()).logout();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logOutBtn:
+                if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+                    SharedPrefManager.getInstance(this).logout();
+                    finish();
+                    startActivity(new Intent(this, LoginActivity.class));
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

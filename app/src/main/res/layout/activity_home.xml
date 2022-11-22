@@ -844,7 +844,7 @@
 
                     <ImageButton
                         android:scaleType="fitCenter"
-                        android:layout_width="35dp"
+                        android:layout_width="?android:attr/actionBarSize"
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/home" />
@@ -867,7 +867,7 @@
 
                     <ImageButton
                         android:scaleType="fitCenter"
-                        android:layout_width="35dp"
+                        android:layout_width="?android:attr/actionBarSize"
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/sarch" />
@@ -905,7 +905,7 @@
 
                     <ImageButton
                         android:scaleType="fitCenter"
-                        android:layout_width="35dp"
+                        android:layout_width="?android:attr/actionBarSize"
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/sp" />
@@ -928,7 +928,7 @@
 
                     <ImageButton
                         android:scaleType="fitCenter"
-                        android:layout_width="35dp"
+                        android:layout_width="?android:attr/actionBarSize"
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/settings" />
