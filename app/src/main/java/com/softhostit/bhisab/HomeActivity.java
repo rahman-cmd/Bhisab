@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -34,6 +35,9 @@ public class HomeActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        ActionBar actionBar = getSupportActionBar();
+
+
 //        nav_view = findViewById(R.id.nav_view);
 //        nav_view.setItemIconTintList(null);
 
@@ -41,7 +45,11 @@ public class HomeActivity extends AppCompatActivity  {
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             User user = SharedPrefManager.getInstance(this).getUser();
-//
+
+            actionBar.setTitle("Welcome "+user.getUsername());
+            actionBar.setSubtitle(user.getDomain());
+
+            //
 //            id.setText(String.valueOf(user.getId()));
 //            userEmail.setText(user.getEmail());
 //            gender.setText(user.getGender());

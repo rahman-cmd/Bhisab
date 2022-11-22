@@ -49,8 +49,6 @@ import retrofit2.Callback;
 public class LoginActivity extends AppCompatActivity {
 
     EditText domainName, etxDomain, etxUsername, etxPassword;
-    Button domainSubmit;
-    TextView showDomain;
     SharedPreferences sp;
     ProgressDialog loading;
     Utils utils;
@@ -117,41 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-//        if (getSharedPreferences("domain", MODE_PRIVATE).getString("domain", null) != null) {
-//            // redirect to home activity
-////            showDomain = findViewById(id.showDomain);
-////            showDomain.setText(getSharedPreferences("domain", MODE_PRIVATE).getString("domain", null)); // get domain name from shared preference
-//
-//        } else {
-//            // show dialog
-//           /* btnDialog.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final Dialog dialog = new Dialog(LoginActivity.this);
-//                    dialog.setContentView(layout.dialog_login);
-//                    dialog.setTitle("Title...");
-//
-//                    domainName = dialog.findViewById(id.domainName);
-//                    domainSubmit = dialog.findViewById(id.domainSubmit);
-//
-//                    domainSubmit.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            SharedPreferences.Editor editor = getSharedPreferences("domain", MODE_PRIVATE).edit();
-//                            editor.putString("domain", domainName.getText().toString());
-//                            editor.apply();
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-//                    dialog.show();
-//                }
-//            });*/
-//            showDialog();
-//        }
-
 
     }
 
