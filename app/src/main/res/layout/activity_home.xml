@@ -450,7 +450,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user__1_" />
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -490,10 +490,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/suppliar" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -533,10 +534,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/products" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -583,10 +585,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/invoice" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -626,10 +629,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/deposit" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -669,10 +673,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/expences" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -718,10 +723,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/report" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -761,10 +767,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/deposit" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -805,10 +812,11 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:id="@+id/profile_image"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:background="@drawable/sarvice" />
+                                        android:background="@drawable/oval_bg"
+                                        android:padding="8dp"
+                                        android:src="@drawable/add_user" />
 
                                     <TextView
                                         android:id="@+id/textView"
