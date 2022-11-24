@@ -6,12 +6,15 @@ public class User {
     private String domain;
     private String username;
     private String password;
+    private String name;
 
-    public User(int id, String domain, String username, String password) {
+
+    public User(int id, String domain, String username, String password, String name) {
         this.id = id;
         this.domain = domain;
         this.username = username;
         this.password = password;
+        this.name = name;
     }
 
     public int getId() {
@@ -21,7 +24,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getDomain() {
         return domain;
@@ -45,5 +47,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

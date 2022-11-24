@@ -13,6 +13,7 @@ public class SharedPrefManager {
     private static final String KEY_DOMAIN = "domain";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_NAME = "name";
     private static final String KEY_ID = "id";
 
     private static SharedPrefManager mInstance;
@@ -37,6 +38,7 @@ public class SharedPrefManager {
         editor.putString(KEY_DOMAIN, user.getDomain());
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_PASSWORD, user.getPassword());
+        editor.putString(KEY_NAME, user.getName());
         editor.apply();
     }
 
@@ -79,7 +81,8 @@ public class SharedPrefManager {
                 sharedPreferences.getInt(KEY_ID, -1),
                 sharedPreferences.getString(KEY_DOMAIN, null),
                 sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_PASSWORD, null)
+                sharedPreferences.getString(KEY_PASSWORD, null),
+                sharedPreferences.getString(KEY_NAME, null)
         );
     }
 

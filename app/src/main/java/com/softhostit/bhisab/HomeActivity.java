@@ -1,9 +1,11 @@
 package com.softhostit.bhisab;
 
 import static android.content.ContentValues.TAG;
+import static com.softhostit.bhisab.R.id.c_name;
 import static org.apache.poi.sl.usermodel.PresetColor.Menu;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -43,12 +46,13 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView nav_view;
     CardView posPrint, coustomer;
-    TextView dailySales, today_expense, today_receive, today_balance;
+    TextView dailySales, today_expense, today_receive, today_balance, c_name;
 
     User user = SharedPrefManager.getInstance(this).getUser();
 
     final String domain = user.getDomain();
     final String username = user.getUsername();
+    final String store_name = user.getName();
 
 
     @Override
@@ -62,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         today_expense = findViewById(R.id.today_expense);
         today_receive = findViewById(R.id.today_receive);
         today_balance = findViewById(R.id.today_balance);
+        c_name = findViewById(R.id.c_name);
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DASHBOARD,
@@ -85,11 +90,10 @@ public class HomeActivity extends AppCompatActivity {
                                     userJson.getString("today_balance")
                             );
 
-                            dailySales.setText("৳ "+dashboardModel.getToday_sales());
-                            today_expense.setText("৳ "+dashboardModel.getToday_expense());
-                            today_receive.setText("৳ "+dashboardModel.getToday_receive());
-                            today_balance.setText("৳ "+dashboardModel.getToday_balance());
-
+                            dailySales.setText("৳ " + dashboardModel.getToday_sales());
+                            today_expense.setText("৳ " + dashboardModel.getToday_expense());
+                            today_receive.setText("৳ " + dashboardModel.getToday_receive());
+                            today_balance.setText("৳ " + dashboardModel.getToday_balance());
 
 
 //                            JSONObject userData = String string = obj.getString("dashboard");
@@ -162,6 +166,7 @@ public class HomeActivity extends AppCompatActivity {
 
             actionBar.setTitle("Welcome " + user.getUsername());
             actionBar.setSubtitle(user.getDomain());
+            c_name.setText(store_name);
 
 
         } else {
@@ -212,5 +217,27 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    // on back press show exit dialog
 
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
+    }
 }

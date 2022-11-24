@@ -136,9 +136,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
+
+
                         try {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);
+                            Log.d("response", response);
 
                             //if no error in response
                             if (!obj.getBoolean("error")) {
@@ -147,13 +150,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject("user");
+                                JSONObject companyJson = obj.getJSONObject("company");
 
                                 //creating a new user object
                                 User user = new User(
                                         userJson.getInt("id"),
                                         userJson.getString("domain"),
                                         userJson.getString("username"),
-                                        userJson.getString("password")
+                                        userJson.getString("password"),
+                                        companyJson.getString("name")
                                 );
 
                                 //storing the user in shared preferences
