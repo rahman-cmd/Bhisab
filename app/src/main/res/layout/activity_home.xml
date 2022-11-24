@@ -112,7 +112,8 @@
                                     android:id="@+id/profile_image"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:background="@drawable/shape_bg"
+                                    android:padding="8dp"
+                                    android:background="@drawable/dashoboard_oval_bg"
                                     android:src="@drawable/daily_sales" />
 
 
@@ -183,7 +184,8 @@
                                     android:id="@+id/profile_image"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:background="@drawable/shape_bg_red"
+                                    android:padding="8dp"
+                                    android:background="@drawable/dashoboard_oval_bg"
                                     android:src="@drawable/daily_balance" />
 
                             </LinearLayout>
@@ -262,8 +264,9 @@
                                     android:id="@+id/profile_image"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:background="@drawable/shape_bg"
-                                    android:src="@drawable/dashoboard_oval_bg" />
+                                    android:padding="8dp"
+                                    android:background="@drawable/dashoboard_oval_bg"
+                                    android:src="@drawable/daily_deposit" />
 
 
                             </LinearLayout>
@@ -333,7 +336,8 @@
                                     android:id="@+id/profile_image"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:background="@drawable/shape_bg"
+                                    android:padding="8dp"
+                                    android:background="@drawable/dashoboard_oval_bg"
                                     android:src="@drawable/daily_expences" />
 
                             </LinearLayout>
@@ -494,7 +498,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:src="@drawable/suppliar" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -538,7 +542,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:src="@drawable/product" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -588,8 +592,8 @@
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:padding="10dp"
+                                        android:src="@drawable/invoice" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -633,7 +637,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:src="@drawable/deposit" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -676,8 +680,8 @@
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:padding="10dp"
+                                        android:src="@drawable/expence" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -727,7 +731,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:src="@drawable/report" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -770,8 +774,8 @@
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:padding="10dp"
+                                        android:src="@drawable/wallet" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -816,7 +820,7 @@
                                         android:layout_height="50dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
-                                        android:src="@drawable/add_user" />
+                                        android:src="@drawable/sarvice" />
 
                                     <TextView
                                         android:id="@+id/textView"
@@ -914,7 +918,7 @@
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/sarch" />
+                        app:srcCompat="@drawable/product_search" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -952,7 +956,7 @@
                         android:layout_height="35dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/sp" />
+                        app:srcCompat="@drawable/support" />
 
                     <TextView
                         android:layout_width="wrap_content"
