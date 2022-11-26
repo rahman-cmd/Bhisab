@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // send otp to server
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বিহিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otp + "www.bhisab.com" + " হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
+        String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বিহিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otp + " www.bhisab.com" + " হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
