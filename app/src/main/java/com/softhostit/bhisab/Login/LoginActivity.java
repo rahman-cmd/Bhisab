@@ -33,6 +33,7 @@ import com.softhostit.bhisab.R;
 import com.softhostit.bhisab.model.Login;
 import com.softhostit.bhisab.networking.ApiClient;
 import com.softhostit.bhisab.networking.ApiInterface;
+import com.softhostit.bhisab.register.RegisterActivity;
 import com.softhostit.bhisab.utils.Utils;
 
 import org.json.JSONArray;
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog loading;
     Utils utils;
 
-    MaterialButton loginBtn;
+    MaterialButton loginBtn, registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loginBtn = findViewById(id.loginBtn);
+        registerBtn = findViewById(id.registerBtn);
 
         etxDomain = findViewById(id.domainName);
         etxUsername = findViewById(id.username);
@@ -87,6 +89,13 @@ public class LoginActivity extends AppCompatActivity {
         etxDomain.setText(domain);
         etxUsername.setText(username);
         etxPassword.setText(password);
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
 
 
         loginBtn.setOnClickListener(v -> {

@@ -10,6 +10,7 @@ public class Constant {
     public static final String BASE_URL = "https://dev.bhisab.com/php/mapi/";
     public static final String URL_LOGIN = BASE_URL + "auth.php/";
     public static final String URL_DASHBOARD = BASE_URL + "/dashboard/daily.php/";
+    public static final String URL_REGISTER = BASE_URL + "register.php/";
 
     //For retrofit base url must end with /
 //    public static final String PRODUCT_IMAGE_URL = "http://bhishab.palashhossain.com/product_images/";
