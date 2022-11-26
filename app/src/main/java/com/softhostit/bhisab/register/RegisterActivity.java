@@ -55,8 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
         // button click random number generate
 
 
-
-
         registerBtn.setOnClickListener(v -> {
             String mobileNumber = registerMobileNumber.getText().toString();
             String username = registerUsername.getText().toString();
@@ -91,7 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-
         loginBtn.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -104,10 +101,31 @@ public class RegisterActivity extends AppCompatActivity {
         String password = registerPassword.getText().toString();
 
 
-
         // button click 6 digit random number generate
         int randomPIN = (int) (Math.random() * 1000);
         String otp = String.format("%04d", randomPIN);
+
+        // send otp to server
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বিহিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otp + "www.bhisab.com" + " হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toasty.error(RegisterActivity.this, "Something went wrong", Toasty.LENGTH_SHORT).show();
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
 
 //        user registration otp verification
 

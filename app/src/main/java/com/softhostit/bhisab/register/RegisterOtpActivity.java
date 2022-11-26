@@ -17,12 +17,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.softhostit.bhisab.R;
 
 import es.dmoral.toasty.Toasty;
 
 public class RegisterOtpActivity extends AppCompatActivity {
-    TextView randomNumber, otpNumber, resendCode;
+    TextView otpNumber, resendCode;
     Button otptn;
     EditText otp1, otp2, otp3, otp4;
 
@@ -49,7 +55,6 @@ public class RegisterOtpActivity extends AppCompatActivity {
         int randomPIN = (int) (Math.random() * 1000);
         String otps = String.format("%04d", randomPIN);
 
-        randomNumber = findViewById(R.id.randomNumber);
         resendCode = findViewById(R.id.resendCode);
         otp1 = findViewById(R.id.otp1);
         otp2 = findViewById(R.id.otp2);
@@ -72,7 +77,27 @@ public class RegisterOtpActivity extends AppCompatActivity {
                     resendCode.setEnabled(false);
                     resendCode.setText("Resend code in " + resendTime + " seconds");
                     startCountDownTimer();
-                    randomNumber.setText(otps);
+
+                    // send otp to server
+                    RequestQueue queue = Volley.newRequestQueue(RegisterOtpActivity.this);
+                    String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বি-হিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otps + "www.bhisab.com"+" হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
+
+                    // Request a string response from the provided URL.
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // Display the first 500 characters of the response string.
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toasty.error(RegisterOtpActivity.this, "Something went wrong", Toasty.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // Add the request to the RequestQueue.
+                    queue.add(stringRequest);
 
                     Toasty.success(RegisterOtpActivity.this, otps, Toasty.LENGTH_SHORT).show();
                 } else {
@@ -81,25 +106,17 @@ public class RegisterOtpActivity extends AppCompatActivity {
             }
         });
 
-
-        randomNumber.setText(otp);
-
         otpNumber = findViewById(R.id.otpNumber);
-
-
-
         otptn = findViewById(R.id.otptn);
         otpNumber.setText(mobileNumber);
 
-
-
         // button click match otp
         otptn.setOnClickListener(v -> {
-            final  String allOtptext = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
+            final String allOtptext = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
 
             if (allOtptext.length() == 4) {
                 if (allOtptext.equals(otp) || allOtptext.equals(otps)) {
-                   Toasty.success(RegisterOtpActivity.this, "OTP Matched", Toasty.LENGTH_SHORT).show();
+                    Toasty.success(RegisterOtpActivity.this, "OTP Matched", Toasty.LENGTH_SHORT).show();
                 } else {
                     Toasty.error(RegisterOtpActivity.this, "Invalid OTP", Toasty.LENGTH_SHORT).show();
                 }
@@ -109,6 +126,7 @@ public class RegisterOtpActivity extends AppCompatActivity {
         });
     }
 
+
     private void showKeyboard(EditText editText) {
         editText.requestFocus();
 
@@ -116,7 +134,7 @@ public class RegisterOtpActivity extends AppCompatActivity {
         inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private void startCountDownTimer(){
+    private void startCountDownTimer() {
         resendEnabled = false;
         resendCode.setTextColor(getResources().getColor(R.color.grey));
 
@@ -138,7 +156,6 @@ public class RegisterOtpActivity extends AppCompatActivity {
     }
 
 
-
     private final TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -153,19 +170,16 @@ public class RegisterOtpActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() > 0) {
-                if (selectedPosition == 0){
+                if (selectedPosition == 0) {
                     selectedPosition = 1;
                     showKeyboard(otp2);
-                }
-                else if (selectedPosition == 1){
+                } else if (selectedPosition == 1) {
                     selectedPosition = 2;
                     showKeyboard(otp3);
-                }
-                else if (selectedPosition == 2){
+                } else if (selectedPosition == 2) {
                     selectedPosition = 3;
                     showKeyboard(otp4);
-                }
-                else if (selectedPosition == 3){
+                } else if (selectedPosition == 3) {
                     selectedPosition = 3;
                     showKeyboard(otp4);
                 }
@@ -176,29 +190,23 @@ public class RegisterOtpActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-       if (keyCode == KeyEvent.KEYCODE_DEL){
-           if (selectedPosition == 3) {
-               selectedPosition = 2;
-               showKeyboard(otp3);
-           }
-
-           else if (selectedPosition == 2) {
-               selectedPosition = 1;
-               showKeyboard(otp2);
-           }
-
-           else if (selectedPosition == 1) {
-               selectedPosition = 0;
-               showKeyboard(otp1);
-           }
-
-           else if (selectedPosition == 0) {
-               selectedPosition = 0;
-               showKeyboard(otp1);
-           }
-           return true;
-       } else{
-              return super.onKeyUp(keyCode, event);
-       }
+        if (keyCode == KeyEvent.KEYCODE_DEL) {
+            if (selectedPosition == 3) {
+                selectedPosition = 2;
+                showKeyboard(otp3);
+            } else if (selectedPosition == 2) {
+                selectedPosition = 1;
+                showKeyboard(otp2);
+            } else if (selectedPosition == 1) {
+                selectedPosition = 0;
+                showKeyboard(otp1);
+            } else if (selectedPosition == 0) {
+                selectedPosition = 0;
+                showKeyboard(otp1);
+            }
+            return true;
+        } else {
+            return super.onKeyUp(keyCode, event);
+        }
     }
 }
