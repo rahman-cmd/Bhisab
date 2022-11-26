@@ -108,7 +108,6 @@ public class RegisterActivity extends AppCompatActivity {
         // button click 6 digit random number generate
         int randomPIN = (int) (Math.random() * 1000);
         String otp = String.format("%04d", randomPIN);
-        Toast.makeText(this, "Random Number is: " + otp, Toast.LENGTH_SHORT).show();
 
 //        user registration otp verification
 
