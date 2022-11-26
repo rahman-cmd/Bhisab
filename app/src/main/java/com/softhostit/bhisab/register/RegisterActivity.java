@@ -64,6 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
                 registerMobileNumber.setError("Mobile Number is required");
                 registerMobileNumber.requestFocus();
                 return;
+            } else if (mobileNumber.length() < 11) {
+                registerMobileNumber.setError("Mobile Number must be 11 digit");
+                registerMobileNumber.requestFocus();
+                return;
             } else if (username.isEmpty()) {
                 registerUsername.setError("Username is required");
                 registerUsername.requestFocus();
