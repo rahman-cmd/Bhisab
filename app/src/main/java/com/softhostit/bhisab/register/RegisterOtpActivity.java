@@ -4,14 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,9 +29,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.softhostit.bhisab.Constant;
+import com.softhostit.bhisab.HomeActivity;
+import com.softhostit.bhisab.Login.LoginActivity;
+import com.softhostit.bhisab.Login.SharedPrefManager;
+import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.R;
 import com.softhostit.bhisab.SmsBroadcastReceiver;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +50,8 @@ import es.dmoral.toasty.Toasty;
 public class RegisterOtpActivity extends AppCompatActivity {
     TextView otpNumber, resendCode;
     Button otptn;
+
+    ProgressDialog loading;
 
     private static final int REQ_USER_CONSENT = 200;
     SmsBroadcastReceiver smsBroadcastReceiver;
@@ -58,8 +72,9 @@ public class RegisterOtpActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String otp = intent.getStringExtra("otp");
-        String mobileNumber = intent.getStringExtra("mobileNumber");
+        String mobileNumber = intent.getStringExtra("mobile");
         String username = intent.getStringExtra("username");
+        String company_name = intent.getStringExtra("company_name");
         String password = intent.getStringExtra("password");
 
         // random otp generate
@@ -81,6 +96,7 @@ public class RegisterOtpActivity extends AppCompatActivity {
         showKeyboard(otp1);
         startCountDownTimer();
 
+        // resend code from api url
         resendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,13 +137,63 @@ public class RegisterOtpActivity extends AppCompatActivity {
 
         startSmartUserConsent();
 
-        // button click match otp
+
+
+        // button click match otp and go to home activity
         otptn.setOnClickListener(v -> {
+
+            loading = new ProgressDialog(this);
+            loading.setCancelable(false);
+            loading.setMessage(getString(R.string.please_wait));
+            loading.show();
+
             final String allOtptext = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
 
             if (allOtptext.length() == 4) {
                 if (allOtptext.equals(otp) || allOtptext.equals(otps)) {
-                    Toasty.success(RegisterOtpActivity.this, "OTP Matched", Toasty.LENGTH_SHORT).show();
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_REGISTER, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // show dialog
+
+                            Toasty.success(RegisterOtpActivity.this, "Registration Successful Please Login", Toasty.LENGTH_SHORT).show();
+                            Log.d("log_data", response);
+                            loading.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (!jsonObject.getBoolean("error")) {
+                                    loading.dismiss();
+                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    finish();
+                                } else {
+                                    Toasty.error(RegisterOtpActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                                    loading.dismiss();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toasty.error(RegisterOtpActivity.this, "Register Error" + error.toString(), Toasty.LENGTH_SHORT).show();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("mobile", mobileNumber);
+                            params.put("username", username);
+                            params.put("company_name", company_name);
+                            params.put("password", password);
+                            return params;
+                        }
+                    };
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(this);
+                    requestQueue.add(stringRequest);
+
+//                    Toasty.success(RegisterOtpActivity.this, "OTP Matched", Toasty.LENGTH_SHORT).show();
                 } else {
                     Toasty.error(RegisterOtpActivity.this, "Invalid OTP", Toasty.LENGTH_SHORT).show();
                 }
@@ -137,11 +203,8 @@ public class RegisterOtpActivity extends AppCompatActivity {
         });
     }
 
-    private void startSmartUserConsent() {
-        SmsRetrieverClient client = SmsRetriever.getClient(this);
-        client.startSmsUserConsent(null);
-    }
 
+    // otp set text start
 
     private void showKeyboard(EditText editText) {
         editText.requestFocus();
@@ -226,6 +289,14 @@ public class RegisterOtpActivity extends AppCompatActivity {
         }
     }
 
+    // otp set text end
+
+    // use for otp read start
+    private void startSmartUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        client.startSmsUserConsent(null);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -297,4 +368,5 @@ public class RegisterOtpActivity extends AppCompatActivity {
         super.onStop();
         unregisterReceiver(smsBroadcastReceiver);
     }
+    // use for otp read end
 }

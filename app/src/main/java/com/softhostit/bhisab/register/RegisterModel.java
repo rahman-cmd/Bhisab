@@ -1,13 +1,15 @@
 package com.softhostit.bhisab.register;
 
-public class registerModel {
+public class RegisterModel {
     private String mobileNumber;
     private String username;
+    private String company_name;
     private String password;
 
-    public registerModel(String mobileNumber, String username, String password) {
+    public RegisterModel(String mobileNumber, String username, String company_name, String password) {
         this.mobileNumber = mobileNumber;
         this.username = username;
+        this.company_name = company_name;
         this.password = password;
     }
 
@@ -25,6 +27,14 @@ public class registerModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 
     public String getPassword() {

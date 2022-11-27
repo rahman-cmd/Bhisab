@@ -36,7 +36,7 @@ import es.dmoral.toasty.Toasty;
 public class RegisterActivity extends AppCompatActivity {
 
     Button loginBtn, registerBtn;
-    EditText registerMobileNumber, registerUsername, registerPassword;
+    EditText registerMobileNumber, registerUsername, registerCompany_name, registerPassword;
     Utils utils;
 
     @Override
@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerMobileNumber = findViewById(R.id.registerMobileNumber);
         registerUsername = findViewById(R.id.registerUsername);
+        registerCompany_name = findViewById(R.id.registerCompany_name);
         registerPassword = findViewById(R.id.registerPassword);
         utils = new Utils();
 
@@ -58,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(v -> {
             String mobileNumber = registerMobileNumber.getText().toString();
             String username = registerUsername.getText().toString();
+            String company_name = registerCompany_name.getText().toString();
             String password = registerPassword.getText().toString();
 
             if (mobileNumber.isEmpty()) {
@@ -71,6 +73,10 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (username.isEmpty()) {
                 registerUsername.setError("Username is required");
                 registerUsername.requestFocus();
+                return;
+            } else if (company_name.isEmpty()){
+                registerCompany_name.setError("Company Name is required");
+                registerCompany_name.requestFocus();
                 return;
             } else if (password.isEmpty()) {
                 registerPassword.setError("Password is required");
@@ -102,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void userRegister() {
         String mobileNumber = registerMobileNumber.getText().toString();
         String username = registerUsername.getText().toString();
+        String company_name = registerCompany_name.getText().toString();
         String password = registerPassword.getText().toString();
 
 
@@ -135,8 +142,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (utils.isNetworkAvailable(RegisterActivity.this)) {
             Intent intent = new Intent(RegisterActivity.this, RegisterOtpActivity.class);
-            intent.putExtra("mobileNumber", mobileNumber);
+            intent.putExtra("mobile", mobileNumber);
             intent.putExtra("username", username);
+            intent.putExtra("company_name", company_name);
             intent.putExtra("password", password);
             intent.putExtra("otp", otp);
             startActivity(intent);
