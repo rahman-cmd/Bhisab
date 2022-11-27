@@ -1,10 +1,12 @@
 package com.softhostit.bhisab.register;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,13 +25,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.SmsBroadcastReceiver;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 
 public class RegisterOtpActivity extends AppCompatActivity {
     TextView otpNumber, resendCode;
     Button otptn;
+
+    private static final int REQ_USER_CONSENT = 200;
+    SmsBroadcastReceiver smsBroadcastReceiver;
     EditText otp1, otp2, otp3, otp4;
 
     // true after every 10 minutes
@@ -80,7 +91,7 @@ public class RegisterOtpActivity extends AppCompatActivity {
 
                     // send otp to server
                     RequestQueue queue = Volley.newRequestQueue(RegisterOtpActivity.this);
-                    String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বি-হিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otps + " www.bhisab.com"+" হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
+                    String url = "https://smsfrom.net/api/sent/compose?api_key=17|K7rNA5OMa8HOO8b556SoxIQvxZSf5MUWiD1cQIQt&from_type=sender_id&from_number=&sender_id=8&to_numbers=" + mobileNumber + "&body= বি-হিসাব মোবাইল এপ্লিকেশনে আপনাকে অভিন্দন " + otps + " www.bhisab.com" + " হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন";
 
                     // Request a string response from the provided URL.
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -108,6 +119,8 @@ public class RegisterOtpActivity extends AppCompatActivity {
         otptn = findViewById(R.id.otptn);
         otpNumber.setText(mobileNumber);
 
+        startSmartUserConsent();
+
         // button click match otp
         otptn.setOnClickListener(v -> {
             final String allOtptext = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
@@ -122,6 +135,11 @@ public class RegisterOtpActivity extends AppCompatActivity {
                 Toasty.error(RegisterOtpActivity.this, "Please enter valid OTP", Toasty.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void startSmartUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        client.startSmsUserConsent(null);
     }
 
 
@@ -206,5 +224,77 @@ public class RegisterOtpActivity extends AppCompatActivity {
         } else {
             return super.onKeyUp(keyCode, event);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_USER_CONSENT) {
+
+            if ((resultCode == RESULT_OK) && (data != null)) {
+
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+                getOtpFromMessage(message);
+
+
+            }
+
+
+        }
+
+    }
+
+    private void getOtpFromMessage(String message) {
+
+        Pattern otpPattern = Pattern.compile("(|^)\\d{4}");
+        Matcher matcher = otpPattern.matcher(message);
+        if (matcher.find()) {
+
+            String otp = matcher.group(0);
+            otp1.setText(String.valueOf(otp.charAt(0)));
+            otp2.setText(String.valueOf(otp.charAt(1)));
+            otp3.setText(String.valueOf(otp.charAt(2)));
+            otp4.setText(String.valueOf(otp.charAt(3)));
+
+        }
+
+
+    }
+
+    private void registerBroadcastReceiver() {
+
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
+
+        smsBroadcastReceiver.smsBroadcastReceiverListener = new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
+            @Override
+            public void onSuccess(Intent intent) {
+
+                startActivityForResult(intent, REQ_USER_CONSENT);
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        registerReceiver(smsBroadcastReceiver, intentFilter);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(smsBroadcastReceiver);
     }
 }
