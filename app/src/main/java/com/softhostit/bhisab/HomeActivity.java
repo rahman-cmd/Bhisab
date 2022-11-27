@@ -33,6 +33,7 @@ import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.POS.PosActivity;
+import com.softhostit.bhisab.deposit.DepositActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,10 +43,10 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
 
     BottomNavigationView nav_view;
-    CardView posPrint, coustomer;
+    CardView posPrint, coustomer, deposit, expense, report, setting;
     TextView dailySales, today_expense, today_receive, today_balance, c_name;
 
     User user = SharedPrefManager.getInstance(this).getUser();
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         c_name = findViewById(R.id.c_name);
 
 
+        // show the dashboard data
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DASHBOARD,
                 new Response.Listener<String>() {
                     @SuppressLint("SetTextI18n")
@@ -94,42 +96,6 @@ public class HomeActivity extends AppCompatActivity {
                             today_expense.setText("৳ " + dashboardModel.getToday_expense());
                             today_receive.setText("৳ " + dashboardModel.getToday_receive());
                             today_balance.setText("৳ " + dashboardModel.getToday_balance());
-
-
-//                            JSONObject userData = String string = obj.getString("dashboard");
-//
-//
-//                            dailySales.setText(string);
-
-
-                            //if no error in response
-//                            if (!obj.getBoolean("error")) {
-//
-//                                //getting the user from the response
-//                                JSONObject userJson = obj.getJSONObject("dashboard");
-//
-//
-//                                //creating a new dashboard object
-//                                DashboardModel dashboardModel = new DashboardModel(
-//                                        userJson.getString("domain"),
-//                                        userJson.getString("username"),
-//                                        userJson.getString("today_sales"),
-//                                        userJson.getString("today_expense"),
-//                                        userJson.getString("today_receive"),
-//                                        userJson.getString("today_balance")
-//                                );
-//
-//
-//
-//
-//
-//
-//                                //storing the user in shared preferences
-////                                SharedPrefManager.getInstance(getApplicationContext()).dashboardData(dashboardModel);
-//
-//                            } else {
-//                                Toasty.error(HomeActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
-//                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -187,6 +153,17 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toasty.success(HomeActivity.this, "Success!", Toasty.LENGTH_SHORT, true).show();
+            }
+        });
+
+        deposit = findViewById(R.id.deposit);
+        deposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, DepositActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
             }
         });
 
