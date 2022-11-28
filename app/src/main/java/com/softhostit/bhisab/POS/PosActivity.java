@@ -2,8 +2,12 @@ package com.softhostit.bhisab.POS;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,8 +36,33 @@ public class PosActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        etxtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.d("data", s.toString());
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.length() > 1) {
+
+                    //search data from server
+                    Log.d("data", s.toString());
 
 
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d("data", s.toString());
+
+            }
+        });
 
 
     }
