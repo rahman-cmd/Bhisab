@@ -43,17 +43,18 @@
             app:srcCompat="@drawable/barcode" />
     </LinearLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/pos_product_item"
+        android:id="@+id/product_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        tools:listitem="@layout/pos_product_item" />
 
     <!--    product item show -->
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -155,8 +155,6 @@ public class RegisterOtpActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             // show dialog
-
-                            Toasty.success(RegisterOtpActivity.this, "Registration Successful Please Login", Toasty.LENGTH_SHORT).show();
                             Log.d("log_data", response);
                             loading.dismiss();
                             try {
@@ -176,7 +174,7 @@ public class RegisterOtpActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toasty.error(RegisterOtpActivity.this, "Register Error" + error.toString(), Toasty.LENGTH_SHORT).show();
+                            Toasty.error(RegisterOtpActivity.this, "Register Error", Toasty.LENGTH_SHORT).show();
                         }
                     }) {
                         @Override
