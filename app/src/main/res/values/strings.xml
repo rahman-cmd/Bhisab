@@ -93,7 +93,8 @@
     <string name="submit">SUBMIT</string>
     <string name="product_name">Product Name</string>
     <string name="weight">Weight:</string>
-    <string name="price">Price</string>
+    <string name="price">Sell Price</string>
+    <string name="buyPrice" translatable="false">Buy Price</string>
 
     <string name="supplier_name">Supplier Name</string>
     <string name="supplier_contact_person">Supplier Contact Person</string>
