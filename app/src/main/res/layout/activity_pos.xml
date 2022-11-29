@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-        tools:listitem="@layout/pos_product_item" />
+        tools:listitem="@layout/product_list_item" />
 
     <!--    product item show -->
 

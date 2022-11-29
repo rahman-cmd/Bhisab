@@ -5,17 +5,20 @@ public class ProductModel {
     private String name;
     private String sell_price;
     private String buy_price;
+    private String openstock;
     private String images;
     private String barcode;
 
-    public ProductModel(String id, String name, String sell_price, String buy_price, String images, String barcode) {
+    public ProductModel(String id, String name, String sell_price, String buy_price, String openstock, String images, String barcode) {
         this.id = id;
         this.name = name;
         this.sell_price = sell_price;
         this.buy_price = buy_price;
+        this.openstock = openstock;
         this.images = images;
         this.barcode = barcode;
     }
+
 
     public String getId() {
         return id;
@@ -49,6 +52,14 @@ public class ProductModel {
         this.buy_price = buy_price;
     }
 
+    public String getOpenstock() {
+        return openstock;
+    }
+
+    public void setOpenstock(String openstock) {
+        this.openstock = openstock;
+    }
+
     public String getImages() {
         return images;
     }
@@ -65,3 +76,5 @@ public class ProductModel {
         this.barcode = barcode;
     }
 }
+
+
