@@ -92,6 +92,7 @@ public class HomeActivity extends AppCompatActivity  {
                                     userJson.getString("today_balance")
                             );
 
+
                             dailySales.setText("৳ " + dashboardModel.getToday_sales());
                             today_expense.setText("৳ " + dashboardModel.getToday_expense());
                             today_receive.setText("৳ " + dashboardModel.getToday_receive());

@@ -1,15 +1,17 @@
 package com.softhostit.bhisab.POS;
 
 public class ProductModel {
-    private String id;
+    private int id;
     private String name;
-    private String sell_price;
-    private String buy_price;
+    private int sell_price;
+    private int buy_price;
     private String openstock;
     private String images;
     private String barcode;
 
-    public ProductModel(String id, String name, String sell_price, String buy_price, String openstock, String images, String barcode) {
+    public ProductModel() {}
+
+    public ProductModel(int id, String name, int sell_price, int buy_price, String openstock, String images, String barcode) {
         this.id = id;
         this.name = name;
         this.sell_price = sell_price;
@@ -19,12 +21,11 @@ public class ProductModel {
         this.barcode = barcode;
     }
 
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,19 +37,19 @@ public class ProductModel {
         this.name = name;
     }
 
-    public String getSell_price() {
+    public int getSell_price() {
         return sell_price;
     }
 
-    public void setSell_price(String sell_price) {
+    public void setSell_price(int sell_price) {
         this.sell_price = sell_price;
     }
 
-    public String getBuy_price() {
+    public int getBuy_price() {
         return buy_price;
     }
 
-    public void setBuy_price(String buy_price) {
+    public void setBuy_price(int buy_price) {
         this.buy_price = buy_price;
     }
 

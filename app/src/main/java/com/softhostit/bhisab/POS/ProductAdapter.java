@@ -15,18 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.softhostit.bhisab.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private Context context;
-    private ArrayList<ProductModel> productModelArrayList;
+    List<ProductModel> productModelList;
 
-    public ProductAdapter(Context context, ArrayList<ProductModel> productModelArrayList) {
+    public ProductAdapter(Context context, List<ProductModel> productModelList) {
         this.context = context;
-        this.productModelArrayList = productModelArrayList;
+        this.productModelList = productModelList;
     }
 
     @NonNull
@@ -39,24 +39,32 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        ProductModel productModel = productModelArrayList.get(position);
+        ProductModel productModel = productModelList.get(position);
 
-        holder.productName.setText("Product Name: "+productModel.getName());
-        holder.productSellPrice.setText("Sell Price: "+productModel.getSell_price());
-        holder.productBuyPrice.setText("Buy Price: "+productModel.getBuy_price());
-        holder.productStock.setText("Stock: "+productModel.getOpenstock());
+        holder.productName.setText("Product Name: " + productModel.getName());
+        holder.productSellPrice.setText("Sell Price: " + productModel.getSell_price());
+        holder.productBuyPrice.setText("Buy Price: " + productModel.getBuy_price());
+        holder.productStock.setText("Stock: " + productModel.getOpenstock());
 
-        // stock will be shown in red color if stock is less than 10
-        if (Integer.parseInt(productModel.getOpenstock()) < 10) {
-            holder.productStock.setTextColor(context.getResources().getColor(R.color.red));
-        }
+        // stock will be shown in red color if stock is less than 1
+//        if ((productModel.getOpenstock()) < 10) {
+//            holder.productStock.setTextColor(context.getResources().getColor(R.color.red));
+//        }
 
         // set image from server with glide
-        Glide.with(context).load(productModel.getImages()).into(holder.img_product);
+        Glide.with(context)
+                .load(productModel.getImages())
+                .into(holder.img_product);
+
+        // show defult image if image is not available
+        if (productModel.getImages().equals("")) {
+            holder.img_product.setImageResource(R.drawable.image_placeholder);
+        }
+
 
         holder.addCart.setOnClickListener(v -> {
             //add to cart
-            Toasty.success(context, "Added to cart " +position, Toasty.LENGTH_SHORT).show();
+            Toasty.success(context, "Added to cart", Toasty.LENGTH_SHORT).show();
         });
 
 
@@ -64,7 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public int getItemCount() {
-        return productModelArrayList.size();
+        return productModelList.size();
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
