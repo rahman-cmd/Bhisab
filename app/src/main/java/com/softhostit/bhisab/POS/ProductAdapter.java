@@ -86,9 +86,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productName, productSellPrice, productBuyPrice, productStock;
+        TextView productName, productSellPrice, productBuyPrice, productStock, addCart;
         ImageView img_product;
-        Button addCart;
+
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
