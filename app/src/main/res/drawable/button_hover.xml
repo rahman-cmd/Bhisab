@@ -7,7 +7,5 @@
         android:endColor="#33000000"
         android:startColor="@android:color/transparent" >
     </gradient>
-
     <corners android:radius="5dp" />
-
 </shape>
