@@ -98,8 +98,6 @@ public class PosActivity extends AppCompatActivity {
                     final String text = productModelList.get(i).getId() + productModelList.get(i).getBarcode() + productModelList.get(i).getName().toLowerCase();
                     if (text.contains(s)) {
                         filteredList.add(productModelList.get(i));
-                    } else {
-                        Toasty.error(PosActivity.this, "No Product Found", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -118,45 +116,10 @@ public class PosActivity extends AppCompatActivity {
             }
         });
 
-//        loadData();
-
         // show data in recycler view
         productModelList = new ArrayList<>();
-        product_list_recycler_view.setLayoutManager(new LinearLayoutManager(this));
-        product_list_recycler_view.setAdapter(productAdapter);
-
-
         // add data to array list
-//        productModelList.add(new ProductModel("1", "আলু", "9", "100", "5", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77027"));
-//        productModelList.add(new ProductModel("2", "বেগুন", "130", "90", "80", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77028"));
-//        productModelList.add(new ProductModel("3", "কলা", "150", "120", "120", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77029"));
-//        productModelList.add(new ProductModel("4", "কুমড়া", "180", "160", "200", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77020"));
-//        productModelList.add(new ProductModel("5", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("6", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("7", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("8", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("9", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("10", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("11", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("12", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("13", "মুরগি", "200", "180", "8", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("14", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("15", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("16", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("17", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("18", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("19", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("20", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("21", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("22", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("23", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("24", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-//        productModelList.add(new ProductModel("25", "মুরগি", "200", "180", "100", "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg", "77021"));
-
-
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ALL_PRODUCT,
+      StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ALL_PRODUCT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -181,6 +144,7 @@ public class PosActivity extends AppCompatActivity {
                                     model.setOpenstock((productObject.getString("openstock")));
                                     model.setImages(productObject.getString("images"));
                                     model.setBarcode(productObject.getString("barcode"));
+                                    model.setDomain(productObject.getString("domain"));
 
                                     productModelList.add(model);
                                 } catch (JSONException e) {
@@ -226,103 +190,6 @@ public class PosActivity extends AppCompatActivity {
 
 
     }
-
-//    private void loadData() {
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        // jeson array request for getting data from server with post method
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, JSON_URL, null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                Log.d("response", response.toString());
-//                // if response is not null
-//
-//                    // looping through all the response
-//                    for (int i = 0; i < response.length(); i++) {
-//                        try {
-//                            // getting product object from json array
-//                            JSONObject productObject = response.getJSONObject(i);
-//
-//                            // adding the product to product list
-//                           ProductModel product = new ProductModel();
-//
-//
-//                            product.setId(Integer.parseInt(productObject.getString("id")));
-//                            product.setName(productObject.getString("name"));
-//                            product.setSell_price(Integer.parseInt(productObject.getString("sell_price")));
-//                            product.setBuy_price(Integer.parseInt(productObject.getString("buy_price")));
-//                            product.setOpenstock(Integer.parseInt(productObject.getString("openstock")));
-//                            product.setImages(productObject.getString("images"));
-//                            product.setBarcode(productObject.getString("barcode"));
-//
-//                            productModelList.add(product);
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                        //setup adapter
-//                        productAdapter = new ProductAdapter(getApplicationContext(), productModelList);
-//                        // set adapter to recyclerview
-//                        product_list_recycler_view.setHasFixedSize(true);
-//                        product_list_recycler_view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//                        product_list_recycler_view.setAdapter(productAdapter);
-//
-//
-//
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // error in getting response
-//                Toast.makeText(PosActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        // adding the string request to request queue
-//        requestQueue.add(jsonArrayRequest);
-//
-//        // adding the string request to request queue
-//
-//
-//
-//
-//    }
-
-
-    /*StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ALL_PRODUCT,
-            new Response.Listener<String>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onResponse(String response) {
-
-                    Log.d("response", response);
-
-
-                }
-
-
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(PosActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }) {
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<>();
-            // get domain name and user id from shared preference
-            SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String domain = sharedPreferences.getString(Constant.KEY_DOMAIN, "");
-            String username = sharedPreferences.getString(Constant.SP_USERNAME, "");
-            params.put("domain", "demo.bhisab.com");
-            params.put("username", "admin");
-
-            return params;
-        }
-    };
-
-       VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);*/
 
 
 }

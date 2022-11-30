@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.softhostit.bhisab.Constant;
+import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.R;
 
 import java.util.List;
@@ -46,6 +49,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productBuyPrice.setText("Buy Price: " + productModel.getBuy_price());
         holder.productStock.setText("Stock: " + productModel.getOpenstock());
 
+
+        String image = productModel.getImages();
+        String domain = productModel.getDomain();
+        String image_url = "https://"+ domain+"/php/product/" + image;
+
         // stock will be shown in red color if stock is less than 1
 //        if ((productModel.getOpenstock()) < 10) {
 //            holder.productStock.setTextColor(context.getResources().getColor(R.color.red));
@@ -53,11 +61,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         // set image from server with glide
         Glide.with(context)
-                .load(productModel.getImages())
+                .load(image_url)
+                .placeholder(R.drawable.image_placeholder)
                 .into(holder.img_product);
 
         // show defult image if image is not available
-        if (productModel.getImages().equals("")) {
+        if (image_url.equals("null")) {
             holder.img_product.setImageResource(R.drawable.image_placeholder);
         }
 
@@ -78,7 +87,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView productName, productSellPrice, productBuyPrice, productStock;
-        ImageView img_product, addCart;
+        ImageView img_product;
+        Button addCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);

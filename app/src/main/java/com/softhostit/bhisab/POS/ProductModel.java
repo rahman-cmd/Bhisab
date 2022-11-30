@@ -8,10 +8,11 @@ public class ProductModel {
     private String openstock;
     private String images;
     private String barcode;
+    private String domain;
 
     public ProductModel() {}
 
-    public ProductModel(int id, String name, int sell_price, int buy_price, String openstock, String images, String barcode) {
+    public ProductModel(int id, String name, int sell_price, int buy_price, String openstock, String images, String barcode, String domain) {
         this.id = id;
         this.name = name;
         this.sell_price = sell_price;
@@ -19,6 +20,7 @@ public class ProductModel {
         this.openstock = openstock;
         this.images = images;
         this.barcode = barcode;
+        this.domain = domain;
     }
 
     public int getId() {
@@ -75,6 +77,14 @@ public class ProductModel {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }
 

@@ -17,10 +17,10 @@ public class SharedPrefManager {
     private static final String KEY_NAME = "name";
     private static final String KEY_ID = "id";
 
-    private static SharedPrefManager mInstance;
-    private static Context ctx;
+    public static SharedPrefManager mInstance;
+    public static Context ctx;
 
-    private SharedPrefManager(Context context) {
+    public SharedPrefManager(Context context) {
         ctx = context;
     }
 
