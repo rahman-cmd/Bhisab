@@ -2,6 +2,7 @@ package com.softhostit.bhisab.POS;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -157,8 +158,10 @@ public class PosActivity extends AppCompatActivity {
                         productAdapter = new ProductAdapter(getApplicationContext(), productModelList);
                         // set adapter to recyclerview
                         product_list_recycler_view.setHasFixedSize(true);
-                        product_list_recycler_view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        product_list_recycler_view.setAdapter(productAdapter);
+//                        product_list_recycler_view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        product_list_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+
+                            product_list_recycler_view.setAdapter(productAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
