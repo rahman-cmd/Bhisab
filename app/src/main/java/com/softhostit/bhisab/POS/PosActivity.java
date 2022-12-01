@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class PosActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private RecyclerView product_list_recycler_view;
     DatabaseAccess databaseAccess;
+    ProgressBar progressBar;
 
     private static String JSON_URL = "https://mocki.io/v1/1fd35679-bddf-4fc2-8621-a666f88e35c0";
 
@@ -68,6 +70,7 @@ public class PosActivity extends AppCompatActivity {
     ImageView imgScanner, img_back, img_cart;
     public static EditText etxtSearch;
     public static TextView txtCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,7 @@ public class PosActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+        progressBar = findViewById(R.id.progressBar);
         etxtSearch = findViewById(R.id.etxt_search);
         imgScanner = findViewById(R.id.img_scanner);
         product_list_recycler_view = findViewById(R.id.product_list_recycler_view);
@@ -144,10 +148,15 @@ public class PosActivity extends AppCompatActivity {
         // show data in recycler view
         productModelList = new ArrayList<>();
         // add data to array list
-      StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ALL_PRODUCT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ALL_PRODUCT,
+                // show circular progress bar
+
+
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        product_list_recycler_view.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
 
                         try {
                             //converting response to json array
@@ -162,10 +171,10 @@ public class PosActivity extends AppCompatActivity {
                                     ProductModel model = new ProductModel();
 
 
-                                    model.setId(Integer.parseInt(productObject.getString("id")));
+                                    model.setId((productObject.getInt("id")));
                                     model.setName(productObject.getString("name"));
-                                    model.setSell_price(Integer.parseInt(productObject.getString("sell_price")));
-                                    model.setBuy_price(Integer.parseInt(productObject.getString("buy_price")));
+                                    model.setSell_price((productObject.getInt("sell_price")));
+                                    model.setBuy_price((productObject.getInt("buy_price")));
                                     model.setOpenstock((productObject.getString("openstock")));
                                     model.setImages(productObject.getString("images"));
                                     model.setBarcode(productObject.getString("barcode"));
@@ -179,11 +188,11 @@ public class PosActivity extends AppCompatActivity {
 
                             //creating adapter object and setting it to recyclerview
                             //setup adapter
-                        productAdapter = new ProductAdapter(getApplicationContext(), productModelList);
-                        // set adapter to recyclerview
-                        product_list_recycler_view.setHasFixedSize(true);
+                            productAdapter = new ProductAdapter(getApplicationContext(), productModelList);
+                            // set adapter to recyclerview
+                            product_list_recycler_view.setHasFixedSize(true);
 //                        product_list_recycler_view.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        product_list_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+                            product_list_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
 
                             product_list_recycler_view.setAdapter(productAdapter);
 
@@ -191,20 +200,21 @@ public class PosActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        product_list_recycler_view.setVisibility(View.VISIBLE);
 
-                        Toasty.error(PosActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(PosActivity.this, "Something went wrong", Toasty.LENGTH_SHORT).show();
 
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 params.put("domain", domain);
                 params.put("username", username);
                 return params;

@@ -82,6 +82,8 @@ dependencies {
     // sms api
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
+    // spin kit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 
 }

@@ -77,11 +77,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
             count++;
-            // if alredy added to cart show toast
-            if (position == 1) {
-
-
-            }
+            PosActivity.txtCount.setText("" + count);
 
 
 
