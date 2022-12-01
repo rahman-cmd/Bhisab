@@ -32,5 +32,21 @@ public class Constant {
     public static final String SP_PASSWORD = "password";
 
 
+    public static final String TAX="tax";
+    public static final String DISCOUNT="discount";
+
+    // table name
+    public static String productCart="product_cart";
+
+
+    public static final String CART_ID="cart_id";
+
+    // product list
+    public static final String PRODUCT_ID="product_id";
+    public static final String PRODUCT_NAME="product_name";
+    public static final String PRODUCT_PRICE="product_price";
+    public static final String PRODUCT_STOCK="product_stock";
+
+
 
 }

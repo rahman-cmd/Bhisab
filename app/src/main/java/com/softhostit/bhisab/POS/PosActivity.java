@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.database.DatabaseAccess;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,27 +60,49 @@ public class PosActivity extends AppCompatActivity {
     List<ProductModel> productModelList;
     private ProductAdapter productAdapter;
     private RecyclerView product_list_recycler_view;
+    DatabaseAccess databaseAccess;
 
     private static String JSON_URL = "https://mocki.io/v1/1fd35679-bddf-4fc2-8621-a666f88e35c0";
 
 
-    ImageView imgScanner;
+    ImageView imgScanner, img_back, img_cart;
     public static EditText etxtSearch;
+    public static TextView txtCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pos);
 
+        // hide action bar
+        getSupportActionBar().hide();
+
 
         etxtSearch = findViewById(R.id.etxt_search);
         imgScanner = findViewById(R.id.img_scanner);
         product_list_recycler_view = findViewById(R.id.product_list_recycler_view);
+        img_back = findViewById(R.id.img_back);
+        img_cart = findViewById(R.id.img_cart);
+        txtCount = findViewById(R.id.txt_count);
+        databaseAccess = DatabaseAccess.getInstance(PosActivity.this);
 
         imgScanner.setOnClickListener(v -> {
             Intent intent = new Intent(PosActivity.this, ScannerActivity.class);
             startActivity(intent);
         });
+
+        img_back.setOnClickListener(v -> {
+            finish();
+        });
+
+
+        // show add to cart count from database
+
+
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+
 
         etxtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -181,10 +205,8 @@ public class PosActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                String domain = sharedPreferences.getString(Constant.KEY_DOMAIN, "");
-                String username = sharedPreferences.getString(Constant.SP_USERNAME, "");
-                params.put("domain", "demo.bhisab.com");
-                params.put("username", "admin");
+                params.put("domain", domain);
+                params.put("username", username);
                 return params;
             }
         };

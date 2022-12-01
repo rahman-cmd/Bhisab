@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.database.DatabaseAccess;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private Context context;
     List<ProductModel> productModelList;
+    public static int count = 0;
 
     public ProductAdapter(Context context, List<ProductModel> productModelList) {
         this.context = context;
@@ -52,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         String image = productModel.getImages();
         String domain = productModel.getDomain();
-        String image_url = "https://"+ domain+"/php/product/" + image;
+        String image_url = "https://" + domain + "/php/product/" + image;
 
         // stock will be shown in red color if stock is less than 1
 //        if ((productModel.getOpenstock()) < 10) {
@@ -72,8 +75,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
 
         holder.addCart.setOnClickListener(v -> {
-            //add to cart
-            Toasty.success(context, "Added to cart", Toasty.LENGTH_SHORT).show();
+            // click and increase count 1++
+            count++;
+            // if alredy added to cart show toast
+            if (position == 1) {
+
+
+            }
+
+
+
         });
 
 

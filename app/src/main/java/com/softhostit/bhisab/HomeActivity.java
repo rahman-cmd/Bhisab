@@ -145,8 +145,11 @@ public class HomeActivity extends AppCompatActivity  {
 
         posPrint = findViewById(R.id.posPrint);
         posPrint.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), PosActivity.class));
-            /*Toasty.success(HomeActivity.this, "Success!", Toast.LENGTH_SHORT, true).show();*/
+            Intent intent = new Intent(HomeActivity.this, PosActivity.class);
+            intent.putExtra("domain", domain);
+            intent.putExtra("username", username);
+            startActivity(intent);
+
         });
 
         coustomer = findViewById(R.id.coustomer);
