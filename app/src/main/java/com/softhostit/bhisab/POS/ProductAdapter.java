@@ -6,7 +6,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.softhostit.bhisab.Constant;
-import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.R;
 import com.softhostit.bhisab.database.DatabaseAccess;
 
@@ -28,7 +25,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private Context context;
     List<ProductModel> productModelList;
-    public static int count = 0;
+    DatabaseAccess databaseAccess;
+    public static int count;
 
     public ProductAdapter(Context context, List<ProductModel> productModelList) {
         this.context = context;
@@ -52,6 +50,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productBuyPrice.setText("" + productModel.getBuy_price());
         holder.productStock.setText("Stock: " + productModel.getOpenstock());
 
+        databaseAccess = DatabaseAccess.getInstance(context);
+
 
         String image = productModel.getImages();
         String domain = productModel.getDomain();
@@ -74,11 +74,44 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
 
 
+        int id = (productModel.getId());
+        String name = productModel.getName();
+        int sell_price = (productModel.getSell_price());
+        int buy_price = (productModel.getBuy_price());
+        String openstock = productModel.getOpenstock();
+        String images = productModel.getImages();
+        String barcode = productModel.getBarcode();
+
+
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
-            count++;
-            PosActivity.txtCount.setText("" + count);
+//            count++;
+//            PosActivity.txtCount.setText("" + count);
 
+            databaseAccess.open();
+
+            int check = databaseAccess.addProductToCart(id, name, sell_price, buy_price, openstock, images, barcode, domain);
+
+            databaseAccess.open();
+            int count = databaseAccess.getCartItemCount();
+            if (count == 0) {
+                PosActivity.txtCount.setVisibility(View.INVISIBLE);
+            } else {
+                PosActivity.txtCount.setVisibility(View.VISIBLE);
+                PosActivity.txtCount.setText(String.valueOf(count));
+            }
+
+            if (check == 1) {
+                Toasty.success(context, R.string.product_added_to_cart, Toast.LENGTH_SHORT).show();
+            } else if (check == 2) {
+
+                Toasty.info(context, R.string.product_already_added_to_cart, Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                Toasty.error(context, R.string.product_added_to_cart_failed_try_again, Toast.LENGTH_SHORT).show();
+
+            }
 
 
         });
