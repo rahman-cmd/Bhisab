@@ -3,52 +3,31 @@ package com.softhostit.bhisab.POS;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.softhostit.bhisab.Constant;
-import com.softhostit.bhisab.Dashboard.DashboardModel;
-import com.softhostit.bhisab.HomeActivity;
-import com.softhostit.bhisab.Login.LoginActivity;
-import com.softhostit.bhisab.Login.SharedPrefManager;
-import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
-import com.softhostit.bhisab.database.DatabaseAccess;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +40,6 @@ public class PosActivity extends AppCompatActivity {
     List<ProductModel> productModelList;
     private ProductAdapter productAdapter;
     private RecyclerView product_list_recycler_view;
-    DatabaseAccess databaseAccess;
     ProgressBar progressBar;
 
     private static String JSON_URL = "https://mocki.io/v1/1fd35679-bddf-4fc2-8621-a666f88e35c0";
@@ -88,7 +66,6 @@ public class PosActivity extends AppCompatActivity {
         img_back = findViewById(R.id.img_back);
         img_cart = findViewById(R.id.img_cart);
         txtCount = findViewById(R.id.txt_count);
-        databaseAccess = DatabaseAccess.getInstance(PosActivity.this);
 
         imgScanner.setOnClickListener(v -> {
             Intent intent = new Intent(PosActivity.this, ScannerActivity.class);

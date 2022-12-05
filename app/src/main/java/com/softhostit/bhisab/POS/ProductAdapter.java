@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.softhostit.bhisab.R;
-import com.softhostit.bhisab.database.DatabaseAccess;
+import com.softhostit.bhisab.database.DatabaseHelper;
 
 import java.util.List;
 
@@ -26,7 +26,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private Context context;
     List<ProductModel> productModelList;
-    DatabaseAccess databaseAccess;
     public static int count;
 
     public ProductAdapter(Context context, List<ProductModel> productModelList) {
@@ -51,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productBuyPrice.setText("" + productModel.getBuy_price());
 
 
-        databaseAccess = DatabaseAccess.getInstance(context);
+
 
 
         String image = productModel.getImages();
@@ -98,34 +97,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
-//            count++;
-//            PosActivity.txtCount.setText("" + count);
+            DatabaseHelper productDB  = new DatabaseHelper(context.getApplicationContext());
 
-            databaseAccess.open();
-
-            int check = databaseAccess.addProductToCart(id, name, sell_price, buy_price, openstock, images, barcode, domain);
-
-            databaseAccess.open();
-            int count = databaseAccess.getCartItemCount();
-            if (count == 0) {
-                PosActivity.txtCount.setVisibility(View.INVISIBLE);
-            } else {
+            boolean isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
+            if (isInserted == true){
+                Toasty.success(context, "Success", Toasty.LENGTH_SHORT).show();
+                count++;
+                PosActivity.txtCount.setText("" + count);
                 PosActivity.txtCount.setVisibility(View.VISIBLE);
-                PosActivity.txtCount.setText(String.valueOf(count));
             }
-
-            if (check == 1) {
-                Toasty.success(context, R.string.product_added_to_cart, Toast.LENGTH_SHORT).show();
-            } else if (check == 2) {
-
-                Toasty.info(context, R.string.product_already_added_to_cart, Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                Toasty.error(context, R.string.product_added_to_cart_failed_try_again, Toast.LENGTH_SHORT).show();
-
-            }
-
 
         });
 
@@ -143,6 +123,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ImageView img_product;
 
 
+
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -153,6 +134,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             img_product = itemView.findViewById(R.id.img_product);
             addCart = itemView.findViewById(R.id.addCart);
+
+
 
 
         }
