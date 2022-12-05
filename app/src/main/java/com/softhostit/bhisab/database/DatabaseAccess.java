@@ -54,22 +54,29 @@ public class DatabaseAccess {
     }
 
     // instart of this method we can use addProductToCart() method
-    public int addProductToCart(int id, String name, int sell_price, int buy_price, String openstock, String images, String barcode, String domain) {
+
+
+
+
+    public int addProductToCart(int id, String name, int sell_price, int buy_price, int openstock, String images, String barcode, String domain) {
 
 
         Cursor result = database.rawQuery("SELECT * FROM product_cart WHERE product_id='" + id + "'", null);
+
+
+
         if (result.getCount() > 1) {
             return 2;
         } else {
             ContentValues contentValues = new ContentValues();
-            contentValues.put("product_id", id);
-            contentValues.put("name", name);
-            contentValues.put("sell_price", sell_price);
-            contentValues.put("buy_price", buy_price);
-            contentValues.put("openstock", openstock);
-            contentValues.put("images", images);
-            contentValues.put("barcode", barcode);
-            contentValues.put("domain", domain);
+            contentValues.put(Constant.PRODUCT_ID, id);
+            contentValues.put(Constant.PRODUCT_NAME, name);
+            contentValues.put(Constant.PRODUCT_SELL_PRICE, sell_price);
+            contentValues.put(Constant.PRODUCT_BUY_PRICE, buy_price);
+            contentValues.put(Constant.PRODUCT_STOCK, openstock);
+            contentValues.put(Constant.PRODUCT_IMAGE, images);
+            contentValues.put(Constant.PRODUCT_BARCODE, barcode);
+            contentValues.put(Constant.PRODUCT_DOMAIN, domain);
 
 
             long check = database.insert(Constant.productCart, null, contentValues);
@@ -90,7 +97,6 @@ public class DatabaseAccess {
 
     //get cart item count
     public int getCartItemCount() {
-
         Cursor cursor = database.rawQuery("SELECT * FROM product_cart", null);
         int itemCount = cursor.getCount();
         cursor.close();

@@ -3,6 +3,7 @@ package com.softhostit.bhisab.POS;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productName.setText("" + productModel.getName());
         holder.productSellPrice.setText("" + productModel.getSell_price());
         holder.productBuyPrice.setText("" + productModel.getBuy_price());
-        holder.productStock.setText("Stock: " + productModel.getOpenstock());
+
 
         databaseAccess = DatabaseAccess.getInstance(context);
 
@@ -58,9 +59,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         String image_url = "https://" + domain + "/php/product/" + image;
 
         // stock will be shown in red color if stock is less than 1
-//        if ((productModel.getOpenstock()) < 10) {
-//            holder.productStock.setTextColor(context.getResources().getColor(R.color.red));
-//        }
+
+
+        if ((productModel.getOpenstock()) > 5) {
+            holder.productStock.setVisibility(View.VISIBLE);
+            holder.productStock.setText(context.getString(R.string.in_stock) + " : " + productModel.getOpenstock());
+        } else if ((productModel.getOpenstock()) == 0) {
+            holder.productStock.setTextColor(Color.RED);
+            holder.productStock.setVisibility(View.VISIBLE);
+            holder.productStock.setText(context.getString(R.string.not_available) + " : " + productModel.getOpenstock());
+        } else {
+            holder.productStock.setTextColor(Color.RED);
+            holder.productStock.setVisibility(View.VISIBLE);
+            holder.productStock.setText(context.getString(R.string.low_stock) + " : " + productModel.getOpenstock());
+        }
+
 
         // set image from server with glide
         Glide.with(context)
@@ -78,7 +91,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         String name = productModel.getName();
         int sell_price = (productModel.getSell_price());
         int buy_price = (productModel.getBuy_price());
-        String openstock = productModel.getOpenstock();
+        int openstock = productModel.getOpenstock();
         String images = productModel.getImages();
         String barcode = productModel.getBarcode();
 

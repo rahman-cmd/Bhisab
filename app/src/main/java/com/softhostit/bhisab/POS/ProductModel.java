@@ -5,14 +5,14 @@ public class ProductModel {
     private String name;
     private int sell_price;
     private int buy_price;
-    private String openstock;
+    private int openstock;
     private String images;
     private String barcode;
     private String domain;
 
     public ProductModel() {}
 
-    public ProductModel(int id, String name, int sell_price, int buy_price, String openstock, String images, String barcode, String domain) {
+    public ProductModel(int id, String name, int sell_price, int buy_price, int openstock, String images, String barcode, String domain) {
         this.id = id;
         this.name = name;
         this.sell_price = sell_price;
@@ -55,11 +55,11 @@ public class ProductModel {
         this.buy_price = buy_price;
     }
 
-    public String getOpenstock() {
+    public int getOpenstock() {
         return openstock;
     }
 
-    public void setOpenstock(String openstock) {
+    public void setOpenstock(int openstock) {
         this.openstock = openstock;
     }
 

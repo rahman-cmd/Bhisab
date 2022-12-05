@@ -175,7 +175,7 @@ public class PosActivity extends AppCompatActivity {
                                     model.setName(productObject.getString("name"));
                                     model.setSell_price((productObject.getInt("sell_price")));
                                     model.setBuy_price((productObject.getInt("buy_price")));
-                                    model.setOpenstock((productObject.getString("openstock")));
+                                    model.setOpenstock((productObject.getInt("openstock")));
                                     model.setImages(productObject.getString("images"));
                                     model.setBarcode(productObject.getString("barcode"));
                                     model.setDomain(productObject.getString("domain"));
