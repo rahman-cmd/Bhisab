@@ -1,11 +1,13 @@
 package com.softhostit.bhisab.POS;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.database.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +52,8 @@ public class PosActivity extends AppCompatActivity {
     public static EditText etxtSearch;
     public static TextView txtCount;
 
+    DatabaseHelper cartDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,8 @@ public class PosActivity extends AppCompatActivity {
 
         // hide action bar
         getSupportActionBar().hide();
+
+        cartDB = new DatabaseHelper(this);
 
 
         progressBar = findViewById(R.id.progressBar);
@@ -200,7 +207,42 @@ public class PosActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
+        viewAll();
 
+
+    }
+
+    public void showMsg(String title, String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+    }
+
+
+    private void viewAll() {
+        img_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor res = cartDB.getAllData();
+                if (res.getCount() == 0) {
+                    showMsg("Alert", "No Product in Cart");
+                    return;
+                }
+
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()) {
+                    buffer.append("ID :" + res.getInt(1) + "\n");
+                    buffer.append("Name :" + res.getString(2) + "\n");
+                    buffer.append("Price :" + res.getInt(3) + "\n\n");
+                }
+
+
+                showMsg("Data",buffer.toString());
+
+            }
+        });
     }
 
 

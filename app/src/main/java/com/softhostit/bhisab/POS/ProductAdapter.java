@@ -3,6 +3,7 @@ package com.softhostit.bhisab.POS;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +51,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productBuyPrice.setText("" + productModel.getBuy_price());
 
 
-
-
-
         String image = productModel.getImages();
         String domain = productModel.getDomain();
         String image_url = "https://" + domain + "/php/product/" + image;
@@ -94,18 +92,38 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         String images = productModel.getImages();
         String barcode = productModel.getBarcode();
 
+        DatabaseHelper product = new DatabaseHelper(context.getApplicationContext());
+        Cursor res = product.getAllData();
+        PosActivity.txtCount.setText("" + res.getCount());
+
 
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
-            DatabaseHelper productDB  = new DatabaseHelper(context.getApplicationContext());
+            DatabaseHelper productDB = new DatabaseHelper(context.getApplicationContext());
 
-            boolean isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
-            if (isInserted == true){
-                Toasty.success(context, "Success", Toasty.LENGTH_SHORT).show();
-                count++;
-                PosActivity.txtCount.setText("" + count);
-                PosActivity.txtCount.setVisibility(View.VISIBLE);
+            if (productModel.getOpenstock() <=0){
+                Toasty.warning(context, R.string.stock_not_available_please_update_stock, Toast.LENGTH_SHORT).show();
+            } else {
+                boolean isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
+
+                if (isInserted == true){
+//                    Toasty.success(context, "Success", Toasty.LENGTH_SHORT).show();
+//                    count++;
+                    PosActivity.txtCount.setVisibility(View.VISIBLE);
+                }
+//
+//                if (isInserted){
+//                    Toasty.success(context, R.string.product_added_to_cart, Toast.LENGTH_SHORT).show();
+//                } else if (isInserted){
+//                    Toasty.info(context, R.string.product_already_added_to_cart, Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toasty.error(context, R.string.product_added_to_cart_failed_try_again, Toast.LENGTH_SHORT).show();
+//                }
             }
+
+
+
+
 
         });
 
@@ -123,7 +141,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ImageView img_product;
 
 
-
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -134,8 +151,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             img_product = itemView.findViewById(R.id.img_product);
             addCart = itemView.findViewById(R.id.addCart);
-
-
 
 
         }
