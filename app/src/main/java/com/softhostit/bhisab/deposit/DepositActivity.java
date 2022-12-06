@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -36,6 +37,7 @@ public class DepositActivity extends AppCompatActivity {
     List<DepositModel> depositModels;
     private DepositAdapter depositAdapter;
     ProgressBar progressBar;
+    ImageView noData;
 
     RecyclerView deposit_recycler_view;
 
@@ -47,6 +49,7 @@ public class DepositActivity extends AppCompatActivity {
 
         deposit_recycler_view = findViewById(R.id.deposit_recycler_view);
         progressBar = findViewById(R.id.progressBar);
+        noData = findViewById(R.id.noData);
 
         categoryList();
 
@@ -73,7 +76,7 @@ public class DepositActivity extends AppCompatActivity {
                             JSONArray dataArray = obj.getJSONArray("categories");
 
                             if(dataArray.length() == 0){
-                                Toasty.error(DepositActivity.this, "No data found", Toasty.LENGTH_SHORT).show();
+                                noData.setVisibility(View.VISIBLE);
                             }
                             else {
                                 for (int i = 0; i < dataArray.length(); i++) {
