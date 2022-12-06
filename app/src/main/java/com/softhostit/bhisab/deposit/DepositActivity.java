@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -16,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
@@ -40,6 +44,7 @@ public class DepositActivity extends AppCompatActivity {
     ImageView noData;
 
     RecyclerView deposit_recycler_view;
+    FloatingActionButton addDeposit;
 
 
     @Override
@@ -50,10 +55,75 @@ public class DepositActivity extends AppCompatActivity {
         deposit_recycler_view = findViewById(R.id.deposit_recycler_view);
         progressBar = findViewById(R.id.progressBar);
         noData = findViewById(R.id.noData);
+        addDeposit = findViewById(R.id.addDeposit);
+
+        addDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
 
         categoryList();
 
 
+    }
+
+    private void showAlertDialog() {
+        // show dialog
+        final Dialog dialog = new Dialog(DepositActivity.this);
+        dialog.setContentView(R.layout.add_category_dialog);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        EditText addCategory = dialog.findViewById(R.id.addCategory);
+        Button addCategoryBtn = dialog.findViewById(R.id.addCategoryBtn);
+
+        addCategoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = addCategory.getText().toString().trim();
+                if (category.isEmpty()) {
+                    addCategory.setError("Enter Deposit Category");
+                    addCategory.requestFocus();
+                    return;
+                }
+                addCategory(category);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void addCategory(String category) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.BASE_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    if (success.equals("1")) {
+                        Toasty.success(DepositActivity.this, "Deposit Category Added Successfully", Toasty.LENGTH_SHORT).show();
+                        categoryList();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toasty.error(DepositActivity.this, "Error: " + e.toString(), Toasty.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toasty.error(DepositActivity.this, "Error: " + error.toString(), Toasty.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("category", category);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(DepositActivity.this).addToRequestQueue(stringRequest);
     }
 
     private void categoryList() {

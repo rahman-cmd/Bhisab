@@ -7,7 +7,7 @@
     tools:context=".deposit.DepositActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/addDeposit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -26,7 +26,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="3"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"
+        app:layout_constraintBottom_toTopOf="@+id/addDeposit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -72,15 +72,16 @@
         tools:listitem="@layout/deposit_cat_item" />
 
     <ImageView
-        android:visibility="invisible"
         android:id="@+id/noData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:padding="150dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/not_found" />
 
     <ProgressBar
