@@ -63,8 +63,6 @@ public class DepositActivity extends AppCompatActivity {
         // add data to array list
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CATEGORY_ITEM,
                 // show circular progress bar
-
-
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -74,16 +72,18 @@ public class DepositActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             JSONArray dataArray = obj.getJSONArray("categories");
 
-                            for (int i = 0; i < dataArray.length(); i++) {
-                                DepositModel depositModel = new DepositModel();
-                                JSONObject dataobj = dataArray.getJSONObject(i);
-                                depositModel.setId(dataobj.getInt("id"));
-                                depositModel.setName(dataobj.getString("name"));
-                                depositModels.add(depositModel);
-                                Toasty.success(DepositActivity.this, "Success", Toasty.LENGTH_SHORT).show();
+                            if(dataArray.length() == 0){
+                                Toasty.error(DepositActivity.this, "No data found", Toasty.LENGTH_SHORT).show();
                             }
-
-
+                            else {
+                                for (int i = 0; i < dataArray.length(); i++) {
+                                    DepositModel depositModel = new DepositModel();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+                                    depositModel.setId(dataobj.getInt("id"));
+                                    depositModel.setName(dataobj.getString("name"));
+                                    depositModels.add(depositModel);
+                                }
+                            }
 
 
                             //creating adapter object and setting it to recyclerview
