@@ -104,26 +104,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             if (productModel.getOpenstock() <=0){
                 Toasty.warning(context, R.string.stock_not_available_please_update_stock, Toast.LENGTH_SHORT).show();
             } else {
-                boolean isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
+                int isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
 
-                if (isInserted == true){
-//                    Toasty.success(context, "Success", Toasty.LENGTH_SHORT).show();
-//                    count++;
+                if (isInserted > 0) {
                     PosActivity.txtCount.setVisibility(View.VISIBLE);
                 }
-//
-//                if (isInserted){
-//                    Toasty.success(context, R.string.product_added_to_cart, Toast.LENGTH_SHORT).show();
-//                } else if (isInserted){
-//                    Toasty.info(context, R.string.product_already_added_to_cart, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toasty.error(context, R.string.product_added_to_cart_failed_try_again, Toast.LENGTH_SHORT).show();
-//                }
             }
-
-
-
-
 
         });
 

@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertData(Integer id, String name, Integer sell_price, Integer buy_price, Integer openstock, String images, String barcode, String domain) {
+    public int insertData(Integer id, String name, Integer sell_price, Integer buy_price, Integer openstock, String images, String barcode, String domain) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, id);
@@ -44,11 +44,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_9, domain);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        if (result == -1)
+            return 0;
+        else
+            return 1;
 
     }
 

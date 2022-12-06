@@ -165,6 +165,8 @@ public class HomeActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, DepositActivity.class);
+                intent.putExtra("domain", domain);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 

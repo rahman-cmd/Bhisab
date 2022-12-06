@@ -13,6 +13,7 @@ public class Constant {
     public static final String URL_REGISTER = BASE_URL + "newuser.php/";
     public static final String URL_SEARCH = BASE_URL + "product/barcode_search.php/";
     public static final String URL_ALL_PRODUCT = BASE_URL + "product/list.php/";
+    public static final String CATEGORY_ITEM = BASE_URL + "deposit/category.php";
 
     //For retrofit base url must end with /
 //    public static final String PRODUCT_IMAGE_URL = "http://bhishab.palashhossain.com/product_images/";
