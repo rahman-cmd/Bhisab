@@ -21,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
+import com.softhostit.bhisab.Login.SharedPrefManager;
+import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
 
@@ -95,6 +97,9 @@ public class DepositActivity extends AppCompatActivity {
     }
 
     private void addCategory(String category) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.BASE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -119,7 +124,12 @@ public class DepositActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("category", category);
+                params.put("name", category);
+                params.put("auto_select", "");
+                params.put("no_delete", "");
+                params.put("ct", "");
+                params.put("username", username);
+                params.put("domain", domain);
                 return params;
             }
         };
