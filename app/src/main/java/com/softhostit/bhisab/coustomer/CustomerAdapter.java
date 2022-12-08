@@ -44,7 +44,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
         String fullUrl = "https://" + domain + "/thumb.php?src=/home/bhisa545b/public_html/main_software/php/contact/../../" + imageUrl;
 
 
-        Glide.with(context).load(fullUrl).into(holder.profile_image);
+        // show defult image if image is not available
+        if (imageUrl.equals("null")) {
+            holder.profile_image.setImageResource(R.drawable.ic_person);
+        } else {
+            Glide.with(context).load(fullUrl).into(holder.profile_image);
+        }
 
         holder.contact_info.setText("" + customerModel.getFname() + "\n" + customerModel.getCname() + "\n" + customerModel.getPhone1());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
