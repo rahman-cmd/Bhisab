@@ -1,15 +1,11 @@
 package com.softhostit.bhisab;
 
-import static android.content.ContentValues.TAG;
-import static com.softhostit.bhisab.R.id.c_name;
-import static org.apache.poi.sl.usermodel.PresetColor.Menu;
+
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +29,7 @@ import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.POS.PosActivity;
+import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.deposit.DepositActivity;
 
 import org.json.JSONException;
@@ -156,7 +153,10 @@ public class HomeActivity extends AppCompatActivity  {
         coustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toasty.success(HomeActivity.this, "Success!", Toasty.LENGTH_SHORT, true).show();
+                Intent intent = new Intent(HomeActivity.this, CoustomerActivity.class);
+                intent.putExtra("domain", domain);
+                intent.putExtra("username", username);
+                startActivity(intent);
             }
         });
 

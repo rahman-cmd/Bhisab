@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".coustomer.CoustomerActivity"/>
+            android:name=".coustomer.CoustomerActivity"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".deposit.DepositActivity"
             android:parentActivityName=".HomeActivity" />

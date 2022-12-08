@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:layout_marginRight="5sp"
+    android:layout_marginBottom="3sp"
+    android:id="@+id/cardView"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="5sp"
+    app:cardElevation="5sp">
+
+    <LinearLayout
+        android:padding="5sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_person"
+            android:layout_weight="1"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_weight="2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/contact_info"
+                android:layout_weight="2"
+                android:textColor="@color/black"
+                android:fontFamily="@font/solaimanlipi"
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="কাস্টমার নাম : এস.এম. মনির \nকোম্পানীর নাম : সান লাইট\nফোন : ০১৭৭০৯৯১৫০৮" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_forward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
