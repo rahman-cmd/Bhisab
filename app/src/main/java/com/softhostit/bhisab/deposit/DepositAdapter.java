@@ -38,7 +38,7 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DepositModel depositModel = depositModelList.get(position);
 
-        holder.cat_tv.setText("" + depositModel.getName());
+        holder.cat_tv.setText("" + depositModel.getId());
         holder.categoryName.setText("" + depositModel.getName());
 
     }
