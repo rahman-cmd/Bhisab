@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5sp"
         android:weightSum="3"
         app:layout_constraintBottom_toTopOf="@+id/addDeposit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,8 +34,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TableRow android:background="#2196F3" android:padding="10dp">
                 <TextView
