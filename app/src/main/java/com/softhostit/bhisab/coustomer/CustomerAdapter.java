@@ -46,7 +46,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
 
         // show defult image if image is not available
         if (imageUrl.equals("null")) {
-            holder.profile_image.setImageResource(R.drawable.ic_person);
+            holder.profile_image.setImageResource(R.drawable.image_placeholder);
         } else {
             Glide.with(context).load(fullUrl).into(holder.profile_image);
         }
