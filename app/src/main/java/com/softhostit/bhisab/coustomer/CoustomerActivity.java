@@ -37,7 +37,7 @@ public class CoustomerActivity extends AppCompatActivity {
     List<CustomerModel> customerModelList;
     private CustomerAdapter customerAdapter;
     RecyclerView customerRecyclerView;
-    LinearLayout progressBarCustomer;
+    ProgressBar progressBarCustomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
