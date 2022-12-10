@@ -51,7 +51,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
             Glide.with(context).load(fullUrl).into(holder.profile_image);
         }
 
-        holder.contact_info.setText("" + customerModel.getFname() + "\n" + customerModel.getCname() + "\n" + customerModel.getPhone1());
+        holder.contact_info.setText("" + customerModel.getFname() + "\n" + customerModel.getAddress() + "\n" + customerModel.getPhone1());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
