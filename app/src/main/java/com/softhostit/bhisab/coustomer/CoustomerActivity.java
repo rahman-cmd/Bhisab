@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -39,6 +40,7 @@ public class CoustomerActivity extends AppCompatActivity {
     List<CustomerModel> customerModelList;
     private CustomerAdapter customerAdapter;
     RecyclerView customerRecyclerView;
+    ProgressBar progressBarCustomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class CoustomerActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Customer");
 
         customerRecyclerView = findViewById(R.id.customerRecyclerView);
+        progressBarCustomer = findViewById(R.id.progressBarCustomer);
 
         coustomerList();
 
@@ -62,12 +65,11 @@ public class CoustomerActivity extends AppCompatActivity {
         customerModelList = new ArrayList<>();
         // add data to array list
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_LIST,
-                // show circular progress bar
-
-
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBarCustomer.setVisibility(View.GONE);
+                        customerRecyclerView.setVisibility(View.VISIBLE);
                         try {
                             //converting response to json array
                             JSONArray array = new JSONArray(response);
@@ -113,7 +115,8 @@ public class CoustomerActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressBarCustomer.setVisibility(View.GONE);
+                        customerRecyclerView.setVisibility(View.VISIBLE);
                         Toasty.error(getApplicationContext(), "Something went wrong", Toasty.LENGTH_SHORT).show();
 
                     }

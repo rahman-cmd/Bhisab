@@ -74,14 +74,16 @@ public class HomeActivity extends AppCompatActivity  {
 
         // show the dashboard data
 //        api call every 3 second
-        final Handler handler = new Handler();
+/*        final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 getDashboardData();
                 handler.postDelayed(this, 1000);
             }
-        }, 1000);
+        }, 1000);*/
+
+        getDashboardData();
 
         // show the dashboard data
 
