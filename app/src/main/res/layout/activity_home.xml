@@ -28,6 +28,7 @@
 
 
     <ScrollView
+        android:scrollbars="none"
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -490,8 +491,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -533,8 +534,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -577,8 +578,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -631,8 +632,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -675,8 +676,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -719,8 +720,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -758,6 +759,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:layout_marginBottom="15dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_width="match_parent"
@@ -772,8 +774,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -815,8 +817,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -859,8 +861,8 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="5dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="2dp"
                                 app:cardPreventCornerOverlap="true">
 
 
