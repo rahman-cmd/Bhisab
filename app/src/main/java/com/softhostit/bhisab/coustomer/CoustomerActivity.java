@@ -1,13 +1,17 @@
 package com.softhostit.bhisab.coustomer;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +50,8 @@ public class CoustomerActivity extends AppCompatActivity {
     RecyclerView customerRecyclerView;
     ProgressBar progressBarCustomer;
 
+    private ArrayList<String> categoryNameArrayList, categoryIdArrayList;
+
     FloatingActionButton mAddFab, add_customer_fab, add_customer_group_fab;
 
     // These are taken to make visible and invisible along with FABs
@@ -63,7 +69,9 @@ public class CoustomerActivity extends AppCompatActivity {
         customerRecyclerView = findViewById(R.id.customerRecyclerView);
         progressBarCustomer = findViewById(R.id.progressBarCustomer);
 
+
         coustomerList();
+        loadCategories();
         mAddFab = findViewById(R.id.add_fab);
 
         // FAB button
@@ -100,7 +108,105 @@ public class CoustomerActivity extends AppCompatActivity {
 
         add_customer_fab.setOnClickListener(view -> {
             // show the dialog to add customer group
-            Toasty.info(getApplicationContext(), "Add Customer", Toast.LENGTH_SHORT).show();
+            final Dialog dialog = new Dialog(CoustomerActivity.this);
+            dialog.setContentView(R.layout.add_customer_dialog);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+
+            EditText addCustomerFirstName = dialog.findViewById(R.id.addCustomerFirstName);
+            EditText addCustomerLastName = dialog.findViewById(R.id.addCustomerLastName);
+            EditText addCustomerPhone = dialog.findViewById(R.id.addCustomerPhone);
+            EditText addCustomerAddress = dialog.findViewById(R.id.addCustomerAddress);
+            EditText addCustomerEmail = dialog.findViewById(R.id.addCustomerEmail);
+            TextView addCustomerGroup = dialog.findViewById(R.id.addCustomerGroup);
+            Button addCustomerButton = dialog.findViewById(R.id.addCustomerButton);
+
+            addCustomerGroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // add customer category dialog start
+                    // get string array of categories from arraylist
+                    String[] categories = new String[categoryNameArrayList.size()];
+                    for (int i = 0; i < categoryNameArrayList.size(); i++) {
+                        categories[i] = categoryNameArrayList.get(i);
+                    }
+
+                    // dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CoustomerActivity.this);
+                    builder.setTitle("Choose Category")
+                            .setItems(categories, new DialogInterface.OnClickListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // get selected category id
+                                    String selectedCategoryId = categoryIdArrayList.get(which);
+                                    // get selected category name
+                                    String selectedCategoryName = categoryNameArrayList.get(which);
+                                    // set category name on textview
+                                    addCustomerGroup.setText(selectedCategoryName);
+
+
+
+                                }
+                            })
+                            .show();
+
+                    // add customer category dialog end
+                }
+            });
+
+
+
+
+
+            addCustomerButton.setOnClickListener(view1 -> {
+                String customerName = addCustomerFirstName.getText().toString();
+                String customerLastName = addCustomerLastName.getText().toString();
+                String customerPhone = addCustomerPhone.getText().toString();
+                String customerAddress = addCustomerAddress.getText().toString();
+                String customerEmail = addCustomerEmail.getText().toString();
+                String customerGroup = addCustomerGroup.getText().toString();
+
+                if (customerName.isEmpty()) {
+                    addCustomerFirstName.setError("Enter Customer First Name");
+                    addCustomerFirstName.requestFocus();
+                    return;
+                }
+
+                if (customerLastName.isEmpty()) {
+                    addCustomerLastName.setError("Enter Customer Last Name");
+                    addCustomerLastName.requestFocus();
+                    return;
+                }
+
+                if (customerPhone.isEmpty()) {
+                    addCustomerPhone.setError("Enter Customer Phone");
+                    addCustomerPhone.requestFocus();
+                    return;
+                }
+
+                if (customerAddress.isEmpty()) {
+                    addCustomerAddress.setError("Enter Customer Address");
+                    addCustomerAddress.requestFocus();
+                    return;
+                }
+
+                if (customerEmail.isEmpty()) {
+                    addCustomerEmail.setError("Enter Customer Email");
+                    addCustomerEmail.requestFocus();
+                    return;
+                }
+
+                if (customerGroup.isEmpty()) {
+                    addCustomerGroup.setError("Enter Customer Group");
+                    addCustomerGroup.requestFocus();
+                    return;
+                }
+
+                addCustomer(customerName, customerLastName, customerPhone, customerAddress, customerEmail, customerGroup);
+                dialog.dismiss();
+            });
+
 
         });
 
@@ -130,6 +236,100 @@ public class CoustomerActivity extends AppCompatActivity {
 
 
         });
+    }
+
+    private void loadCategories() {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        categoryNameArrayList = new ArrayList<>();
+        categoryIdArrayList = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.customer_group, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response", response);
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+                        String id = object.getString("id");
+                        String name = object.getString("name");
+                        categoryIdArrayList.add(id);
+                        categoryNameArrayList.add(name);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(CoustomerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                return params;
+            }
+        };
+
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+
+
+    private void addCustomer(String customerName, String customerLastName, String customerPhone, String customerAddress, String customerEmail, String customerGroup) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+        progressBarCustomer.setVisibility(View.VISIBLE);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_ADD_CUSTOMER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressBarCustomer.setVisibility(View.GONE);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (!jsonObject.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        coustomerList();
+                    } else {
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(CoustomerActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                    progressBarCustomer.setVisibility(View.GONE);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(CoustomerActivity.this, "Error " + error.toString(), Toast.LENGTH_SHORT).show();
+                progressBarCustomer.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id + "");
+                params.put("domain", domain);
+                params.put("fname", customerName);
+                params.put("lname", customerLastName);
+                params.put("phone1", customerPhone);
+                params.put("address", customerAddress);
+                params.put("email", customerEmail);
+                params.put("group", customerGroup);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(CoustomerActivity.this).addToRequestQueue(stringRequest);
     }
 
     private void addGroup(String group) {
