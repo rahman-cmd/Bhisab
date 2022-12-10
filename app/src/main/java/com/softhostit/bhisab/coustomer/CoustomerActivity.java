@@ -133,7 +133,7 @@ public class CoustomerActivity extends AppCompatActivity {
                         categories[i] = categoryNameArrayList.get(i);
                     }
 
-                    // dialog
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(CoustomerActivity.this);
                     builder.setTitle("Choose Category")
                             .setItems(categories, new DialogInterface.OnClickListener() {
@@ -146,10 +146,6 @@ public class CoustomerActivity extends AppCompatActivity {
                                     String selectedCategoryName = categoryNameArrayList.get(which);
                                     // set category name on textview
                                     addCustomerGroup.setText(selectedCategoryName);
-
-
-
-
                                 }
                             })
                             .show();
