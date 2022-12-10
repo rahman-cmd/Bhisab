@@ -54,6 +54,8 @@ public class DepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deposit_activity);
 
+        getSupportActionBar().setTitle("Deposit Category");
+
         deposit_recycler_view = findViewById(R.id.deposit_recycler_view);
         progressBar = findViewById(R.id.progressBar);
         noData = findViewById(R.id.noData);

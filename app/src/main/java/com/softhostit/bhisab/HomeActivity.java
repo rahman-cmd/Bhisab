@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +36,11 @@ import com.softhostit.bhisab.deposit.DepositActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
 
@@ -69,58 +73,17 @@ public class HomeActivity extends AppCompatActivity  {
 
 
         // show the dashboard data
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DASHBOARD,
-                new Response.Listener<String>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-
-                            JSONObject userJson = obj.getJSONObject("dashboard");
-                            DashboardModel dashboardModel = new DashboardModel(
-                                    userJson.getString("domain"),
-                                    userJson.getString("username"),
-                                    userJson.getString("today_sales"),
-                                    userJson.getString("today_expense"),
-                                    userJson.getString("today_receive"),
-                                    userJson.getString("today_balance")
-                            );
-
-
-                            dailySales.setText("৳ " + dashboardModel.getToday_sales());
-                            today_expense.setText("৳ " + dashboardModel.getToday_expense());
-                            today_receive.setText("৳ " + dashboardModel.getToday_receive());
-                            today_balance.setText("৳ " + dashboardModel.getToday_balance());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toasty.error(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                }) {
+//        api call every 3 second
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("domain", domain);
-                params.put("username", username);
-                return params;
+            public void run() {
+                getDashboardData();
+                handler.postDelayed(this, 1000);
             }
-        };
+        }, 1000);
 
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-        // get dashboard data
-
+        // show the dashboard data
 
 //        nav_view = findViewById(R.id.nav_view);
 //        nav_view.setItemIconTintList(null);
@@ -176,6 +139,60 @@ public class HomeActivity extends AppCompatActivity  {
         });
 
 
+    }
+
+    private void getDashboardData() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DASHBOARD,
+                new Response.Listener<String>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(String response) {
+
+
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+
+                            JSONObject userJson = obj.getJSONObject("dashboard");
+                            DashboardModel dashboardModel = new DashboardModel(
+                                    userJson.getString("domain"),
+                                    userJson.getString("username"),
+                                    userJson.getString("today_sales"),
+                                    userJson.getString("today_expense"),
+                                    userJson.getString("today_receive"),
+                                    userJson.getString("today_balance")
+                            );
+
+
+                            dailySales.setText("৳ " + dashboardModel.getToday_sales());
+                            today_expense.setText("৳ " + dashboardModel.getToday_expense());
+                            today_receive.setText("৳ " + dashboardModel.getToday_receive());
+                            today_balance.setText("৳ " + dashboardModel.getToday_balance());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toasty.error(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+        // get dashboard data
     }
 
     // log out option menu
