@@ -100,15 +100,18 @@ public class DepositActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.BASE_URL, new Response.Listener<String>() {
+        int user_id = intent.getIntExtra("user_id", 0);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CATEGORY_CREATE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    if (success.equals("1")) {
-                        Toasty.success(DepositActivity.this, "Deposit Category Added Successfully", Toasty.LENGTH_SHORT).show();
+
+                    if (!jsonObject.getBoolean("error")) {
+                        Toasty.success(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
                         categoryList();
+                    } else {
+                        Toasty.error(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,6 +130,7 @@ public class DepositActivity extends AppCompatActivity {
                 params.put("name", category);
                 params.put("auto_select", "");
                 params.put("no_delete", "");
+                params.put("user_id", user_id + "");
                 params.put("ct", "");
                 params.put("username", username);
                 params.put("domain", domain);

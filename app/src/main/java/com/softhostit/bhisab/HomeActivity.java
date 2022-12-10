@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity  {
     final String domain = user.getDomain();
     final String username = user.getUsername();
     final String store_name = user.getName();
+    final int id = user.getId();
 
 
     @Override
@@ -167,6 +168,7 @@ public class HomeActivity extends AppCompatActivity  {
                 Intent intent = new Intent(HomeActivity.this, DepositActivity.class);
                 intent.putExtra("domain", domain);
                 intent.putExtra("username", username);
+                intent.putExtra("user_id", id);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 

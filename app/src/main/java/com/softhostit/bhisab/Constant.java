@@ -14,6 +14,7 @@ public class Constant {
     public static final String URL_SEARCH = BASE_URL + "product/barcode_search.php/";
     public static final String URL_ALL_PRODUCT = BASE_URL + "product/list.php/";
     public static final String CATEGORY_ITEM = BASE_URL + "deposit/category.php";
+    public static final String CATEGORY_CREATE = BASE_URL + "deposit/cre_cat.php";
     public static final String CLIENT_LIST = BASE_URL + "client/list.php";
 
     //For retrofit base url must end with /
