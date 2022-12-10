@@ -1,7 +1,6 @@
 package com.softhostit.bhisab.coustomer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -18,9 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
-import com.softhostit.bhisab.POS.PosActivity;
-import com.softhostit.bhisab.POS.ProductAdapter;
-import com.softhostit.bhisab.POS.ProductModel;
 import com.softhostit.bhisab.R;
 
 import org.json.JSONArray;
@@ -40,7 +37,7 @@ public class CoustomerActivity extends AppCompatActivity {
     List<CustomerModel> customerModelList;
     private CustomerAdapter customerAdapter;
     RecyclerView customerRecyclerView;
-    ProgressBar progressBarCustomer;
+    LinearLayout progressBarCustomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
