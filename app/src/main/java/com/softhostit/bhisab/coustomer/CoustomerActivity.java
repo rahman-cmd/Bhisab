@@ -42,10 +42,10 @@ public class CoustomerActivity extends AppCompatActivity {
     RecyclerView customerRecyclerView;
     ProgressBar progressBarCustomer;
 
-    FloatingActionButton mAddFab, mAddAlarmFab;
+    FloatingActionButton mAddFab, add_customer_fab, add_customer_group_fab;
 
     // These are taken to make visible and invisible along with FABs
-    TextView addAlarmActionText;
+    TextView add_customer_action_text, add_customer_group_action_text;
 
     // to check whether sub FAB buttons are visible or not.
     Boolean isAllFabsVisible;
@@ -60,29 +60,46 @@ public class CoustomerActivity extends AppCompatActivity {
         progressBarCustomer = findViewById(R.id.progressBarCustomer);
 
         coustomerList();
-
         mAddFab = findViewById(R.id.add_fab);
 
-        mAddAlarmFab = findViewById(R.id.add_alarm_fab);
-        addAlarmActionText = findViewById(R.id.add_alarm_action_text);
+        // FAB button
+        add_customer_fab = findViewById(R.id.add_customer_fab);
+        add_customer_group_fab = findViewById(R.id.add_customer_group_fab);
 
-        mAddAlarmFab.setVisibility(View.GONE);
-        addAlarmActionText.setVisibility(View.GONE);
+        // Also register the action name text, of all the FABs.
+        add_customer_action_text = findViewById(R.id.add_customer_action_text);
+        add_customer_group_action_text = findViewById(R.id.add_customer_group_action_text);
+
+        // Now set all the FABs and all the action name texts as GONE
+        add_customer_fab.setVisibility(View.GONE);
+        add_customer_group_fab.setVisibility(View.GONE);
+        add_customer_action_text.setVisibility(View.GONE);
+        add_customer_group_action_text.setVisibility(View.GONE);
+
         isAllFabsVisible = false;
 
         mAddFab.setOnClickListener(view -> {
             if (!isAllFabsVisible) {
-                mAddAlarmFab.show();
-                addAlarmActionText.setVisibility(View.VISIBLE);
+                add_customer_fab.show();
+                add_customer_group_fab.show();
+                add_customer_action_text.setVisibility(View.VISIBLE);
+                add_customer_group_action_text.setVisibility(View.VISIBLE);
                 isAllFabsVisible = true;
             } else {
-                mAddAlarmFab.hide();
-                addAlarmActionText.setVisibility(View.GONE);
+                add_customer_fab.hide();
+                add_customer_group_fab.hide();
+                add_customer_action_text.setVisibility(View.GONE);
+                add_customer_group_action_text.setVisibility(View.GONE);
                 isAllFabsVisible = false;
             }
         });
 
-        mAddAlarmFab.setOnClickListener(
+        add_customer_group_fab.setOnClickListener(
+                view -> Toast.makeText(getApplicationContext(), "Person Added", Toast.LENGTH_SHORT
+                ).show());
+
+
+        add_customer_fab.setOnClickListener(
                 view -> Toast.makeText(getApplicationContext(), "Alarm Added", Toast.LENGTH_SHORT
                 ).show());
     }
