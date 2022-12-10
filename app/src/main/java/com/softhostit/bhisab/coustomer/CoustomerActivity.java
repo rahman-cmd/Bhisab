@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
@@ -39,6 +42,14 @@ public class CoustomerActivity extends AppCompatActivity {
     RecyclerView customerRecyclerView;
     ProgressBar progressBarCustomer;
 
+    FloatingActionButton mAddFab, mAddAlarmFab;
+
+    // These are taken to make visible and invisible along with FABs
+    TextView addAlarmActionText;
+
+    // to check whether sub FAB buttons are visible or not.
+    Boolean isAllFabsVisible;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +61,33 @@ public class CoustomerActivity extends AppCompatActivity {
 
         coustomerList();
 
+        mAddFab = findViewById(R.id.add_fab);
+
+        mAddAlarmFab = findViewById(R.id.add_alarm_fab);
+        addAlarmActionText = findViewById(R.id.add_alarm_action_text);
+
+        mAddAlarmFab.setVisibility(View.GONE);
+        addAlarmActionText.setVisibility(View.GONE);
+        isAllFabsVisible = false;
+
+        mAddFab.setOnClickListener(view -> {
+            if (!isAllFabsVisible) {
+                mAddAlarmFab.show();
+                addAlarmActionText.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            } else {
+                mAddAlarmFab.hide();
+                addAlarmActionText.setVisibility(View.GONE);
+                isAllFabsVisible = false;
+            }
+        });
+
+        mAddAlarmFab.setOnClickListener(
+                view -> Toast.makeText(getApplicationContext(), "Alarm Added", Toast.LENGTH_SHORT
+                ).show());
     }
+
+
 
     private void coustomerList() {
         // show list of customer here form database
