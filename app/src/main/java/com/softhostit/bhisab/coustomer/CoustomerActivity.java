@@ -100,7 +100,7 @@ public class CoustomerActivity extends AppCompatActivity {
 
         add_customer_fab.setOnClickListener(view -> {
             // show the dialog to add customer group
-            Toasty.info(getApplicationContext(), "Add Customer Group", Toast.LENGTH_SHORT).show();
+            Toasty.info(getApplicationContext(), "Add Customer", Toast.LENGTH_SHORT).show();
 
         });
 
