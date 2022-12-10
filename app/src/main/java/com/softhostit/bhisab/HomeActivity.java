@@ -122,6 +122,7 @@ public class HomeActivity extends AppCompatActivity  {
                 Intent intent = new Intent(HomeActivity.this, CoustomerActivity.class);
                 intent.putExtra("domain", domain);
                 intent.putExtra("username", username);
+                intent.putExtra("user_id", id);
                 startActivity(intent);
             }
         });

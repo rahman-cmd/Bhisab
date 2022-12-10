@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.deposit.DepositActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,16 +98,79 @@ public class CoustomerActivity extends AppCompatActivity {
             }
         });
 
-        add_customer_group_fab.setOnClickListener(
-                view -> Toast.makeText(getApplicationContext(), "Person Added", Toast.LENGTH_SHORT
-                ).show());
+        add_customer_fab.setOnClickListener(view -> {
+            // show the dialog to add customer group
+            Toasty.info(getApplicationContext(), "Add Customer Group", Toast.LENGTH_SHORT).show();
+
+        });
+
+        add_customer_group_fab.setOnClickListener(view -> {
+            // show the dialog to add customer
+            final Dialog dialog = new Dialog(CoustomerActivity.this);
+            dialog.setContentView(R.layout.add_customer_group_dialog);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+
+            EditText addGroup = dialog.findViewById(R.id.addGroup);
+            Button addGroupBtn = dialog.findViewById(R.id.addGroupBtn);
+
+            addGroupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String group = addGroup.getText().toString().trim();
+                    if (group.isEmpty()) {
+                        addGroup.setError("Enter Customer Group Name");
+                        addGroup.requestFocus();
+                        return;
+                    }
+                    addGroup(group);
+                    dialog.dismiss();
+                }
+            });
 
 
-        add_customer_fab.setOnClickListener(
-                view -> Toast.makeText(getApplicationContext(), "Alarm Added", Toast.LENGTH_SHORT
-                ).show());
+        });
     }
 
+    private void addGroup(String group) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_GROUP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (!jsonObject.getBoolean("error")) {
+                        Toasty.success(CoustomerActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                    } else {
+                        Toasty.error(CoustomerActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toasty.error(CoustomerActivity.this, "Error: " + e.toString(), Toasty.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toasty.error(CoustomerActivity.this, "Error: " + error.toString(), Toasty.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", group);
+                params.put("user_id", user_id + "");
+//                params.put("username", username);
+                params.put("domain", domain);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(CoustomerActivity.this).addToRequestQueue(stringRequest);
+    }
 
 
     private void coustomerList() {
@@ -182,7 +249,6 @@ public class CoustomerActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
 
 
     }
