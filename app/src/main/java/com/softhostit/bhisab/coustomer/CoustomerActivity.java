@@ -405,6 +405,7 @@ public class CoustomerActivity extends AppCompatActivity {
                                     model.setUser_id(productObject.getInt("user_id"));
                                     model.setPhoto(productObject.getString("photo"));
                                     model.setDomain(productObject.getString("domain"));
+                                    model.setAddress(productObject.getString("address"));
                                     customerModelList.add(model);
 
 
