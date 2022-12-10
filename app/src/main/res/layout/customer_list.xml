@@ -28,24 +28,23 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_person"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             app:civ_border_width="1dp"
             app:civ_border_color="#FF000000"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:layout_height="wrap_content">
 
             <TextView
                 android:textSize="18sp"
                 android:id="@+id/contact_info"
-                android:layout_weight="2"
                 android:textColor="@color/black"
                 android:fontFamily="@font/solaimanlipi"
                 android:layout_marginLeft="2dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="কাস্টমার নাম : এস.এম. মনির \nকোম্পানীর নাম : সান লাইট\nফোন : ০১৭৭০৯৯১৫০৮" />
 
@@ -54,12 +53,11 @@
         <LinearLayout
             android:gravity="end"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_arrow_forward"
                 android:layout_width="wrap_content"
