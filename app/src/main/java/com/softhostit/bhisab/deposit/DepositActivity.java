@@ -72,7 +72,7 @@ public class DepositActivity extends AppCompatActivity {
             }
         });
 
-        categoryList();
+        depositList();
 
 
     }
@@ -115,7 +115,7 @@ public class DepositActivity extends AppCompatActivity {
 
                     if (!jsonObject.getBoolean("error")) {
                         Toasty.success(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
-                        categoryList();
+                        depositList();
                     } else {
                         Toasty.error(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
                     }
@@ -146,7 +146,7 @@ public class DepositActivity extends AppCompatActivity {
         VolleySingleton.getInstance(DepositActivity.this).addToRequestQueue(stringRequest);
     }
 
-    private void categoryList() {
+    private void depositList() {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
