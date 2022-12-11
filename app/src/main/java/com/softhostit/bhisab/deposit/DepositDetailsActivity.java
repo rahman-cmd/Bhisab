@@ -1,10 +1,13 @@
 package com.softhostit.bhisab.deposit;
 
+import static com.softhostit.bhisab.DeviceListActivity.EXTRA_DEVICE_ADDRESS;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,8 @@ import com.softhostit.bhisab.utils.PrefMng;
 import com.softhostit.bhisab.utils.Tools;
 import com.softhostit.bhisab.utils.WoosimPrnMng;
 import com.softhostit.bhisab.utils.printerFactory;
+
+import es.dmoral.toasty.Toasty;
 
 public class DepositDetailsActivity extends AppCompatActivity {
     TextView total_amount, deposit_info;
@@ -61,11 +66,49 @@ public class DepositDetailsActivity extends AppCompatActivity {
                 //Check if the Bluetooth is available and on.
                 if (!Tools.isBlueToothOn(DepositDetailsActivity.this)) return;
 
-                PrefMng.saveActivePrinter(DepositDetailsActivity.this, PrefMng.PRN_WOOSIM_SELECTED);
+               /* PrefMng.saveActivePrinter(DepositDetailsActivity.this, PrefMng.PRN_WOOSIM_SELECTED);
 
                 //Pick a Bluetooth device
                 Intent i = new Intent(DepositDetailsActivity.this, DeviceListActivity.class);
-                startActivityForResult(i, REQUEST_CONNECT);
+                startActivityForResult(i, REQUEST_CONNECT);*/
+
+                // get bluetooth printer address
+                // get address from shared preferences
+                SharedPreferences sharedPreferences = getSharedPreferences("bluetooth_address", MODE_PRIVATE);
+                String address = sharedPreferences.getString("address", "");
+
+
+
+
+                // get printer instance
+
+                if (address.equals("")) {
+                    // if address is null, then open device list activity
+                    //Print to the printer
+                    Intent intent = new Intent(DepositDetailsActivity.this, DeviceListActivity.class);
+                    startActivityForResult(intent, REQUEST_CONNECT);
+
+                } else {
+                    // if address is not null, then print to the printer
+                    PrefMng.saveActivePrinter(DepositDetailsActivity.this, PrefMng.PRN_WOOSIM_SELECTED);
+
+                    //The interface to print text to thermal printers.
+                    Intent intent = getIntent();
+                    int id = intent.getIntExtra("id", 0);
+                    int time = intent.getIntExtra("time", 0);
+                    String account = intent.getStringExtra("account");
+                    int date = intent.getIntExtra("date", 0);
+                    int amount = intent.getIntExtra("amount", 0);
+                    int user_id = intent.getIntExtra("user_id", 0);
+                    int payer = intent.getIntExtra("payer", 0);
+                    String in_cat = intent.getStringExtra("in_cat");
+                    String des = intent.getStringExtra("des");
+                    String domain = intent.getStringExtra("domain");
+
+                    IPrintToPrinter testPrinter = new DepositModel(id, time, account, date, amount, user_id, payer, in_cat, des, domain, getApplicationContext());
+                    //Connect to the printer and after successful connection issue the print command.
+                    mPrnMng = printerFactory.createPrnMng(getApplicationContext(), address, testPrinter);
+                }
             }
         });
 
@@ -79,22 +122,12 @@ public class DepositDetailsActivity extends AppCompatActivity {
             try {
                 //Get device address to print to.
                 String blutoothAddr = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-                //The interface to print text to thermal printers.
-                Intent intent = getIntent();
-                int id = intent.getIntExtra("id", 0);
-                int time = intent.getIntExtra("time", 0);
-                String account = intent.getStringExtra("account");
-                int date = intent.getIntExtra("date", 0);
-                int amount = intent.getIntExtra("amount", 0);
-                int user_id = intent.getIntExtra("user_id", 0);
-                int payer = intent.getIntExtra("payer", 0);
-                String in_cat = intent.getStringExtra("in_cat");
-                String des = intent.getStringExtra("des");
-                String domain = intent.getStringExtra("domain");
+                // Save the address to the preferences
+                SharedPreferences pref = getSharedPreferences("bluetooth_address", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("address", blutoothAddr);
+                editor.apply();
 
-                IPrintToPrinter testPrinter = new DepositModel(id, time, account, date, amount, user_id, payer, in_cat, des, domain, getApplicationContext());
-                //Connect to the printer and after successful connection issue the print command.
-                mPrnMng = printerFactory.createPrnMng(this, blutoothAddr, testPrinter);
             } catch (Exception e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
