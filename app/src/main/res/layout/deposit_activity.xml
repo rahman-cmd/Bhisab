@@ -19,54 +19,55 @@
         app:layout_constraintVertical_bias="0.96"
         app:srcCompat="@drawable/ic_add" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintBottom_toTopOf="@+id/addDeposit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <!--   <LinearLayout
+           android:id="@+id/linearLayout8"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:weightSum="3"
+           app:layout_constraintBottom_toTopOf="@+id/addDeposit"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintVertical_bias="0.0">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+           <TableLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
 
-            <TableRow android:background="#2196F3" android:padding="10dp">
-                <TextView
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ID" />
-                <TextView
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Category Name" />
-            </TableRow>
-        </TableLayout>
+               <TableRow android:background="#2196F3" android:padding="10dp">
+                   <TextView
+                       android:textStyle="bold"
+                       android:textColor="@color/white"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:text="ID" />
+                   <TextView
+                       android:textColor="@color/white"
+                       android:textStyle="bold"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:text="Category Name" />
+               </TableRow>
+           </TableLayout>
 
 
-    </LinearLayout>
+       </LinearLayout>
+   -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deposit_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/deposit_cat_item" />
+        tools:listitem="@layout/deposit_item" />
 
     <ImageView
         android:id="@+id/noData"
@@ -90,8 +91,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +55,7 @@ public class DepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deposit_activity);
 
-        getSupportActionBar().setTitle("Deposit Category");
+        getSupportActionBar().setTitle("Deposit");
 
         deposit_recycler_view = findViewById(R.id.deposit_recycler_view);
         progressBar = findViewById(R.id.progressBar);
@@ -146,11 +147,12 @@ public class DepositActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
 
         // show data in recycler view
         depositModels = new ArrayList<>();
         // add data to array list
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CATEGORY_ITEM,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.DEPOSIT_LIST,
                 // show circular progress bar
                 new Response.Listener<String>() {
                     @Override
@@ -158,18 +160,27 @@ public class DepositActivity extends AppCompatActivity {
                         deposit_recycler_view.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
                         try {
-                            JSONObject obj = new JSONObject(response);
-                            JSONArray dataArray = obj.getJSONArray("categories");
+                            JSONArray jsonArray = new JSONArray(response);
+//                            JSONArray dataArray = obj.getJSONArray("categories");
+                            Log.d("deposit", jsonArray.toString());
 
-                            if(dataArray.length() == 0){
+                            if(jsonArray.length() == 0){
                                 noData.setVisibility(View.VISIBLE);
                             }
                             else {
-                                for (int i = 0; i < dataArray.length(); i++) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     DepositModel depositModel = new DepositModel();
-                                    JSONObject dataobj = dataArray.getJSONObject(i);
+                                    JSONObject dataobj = jsonArray.getJSONObject(i);
                                     depositModel.setId(dataobj.getInt("id"));
-                                    depositModel.setName(dataobj.getString("name"));
+                                    depositModel.setTime(dataobj.getInt("time"));
+                                    depositModel.setAccount(dataobj.getString("account"));
+                                    depositModel.setDate(dataobj.getInt("date"));
+                                    depositModel.setAmount(dataobj.getInt("amount"));
+                                    depositModel.setUser_id(dataobj.getInt("user_id"));
+                                    depositModel.setPayer(dataobj.getInt("payer"));
+                                    depositModel.setIn_cat(dataobj.getString("in_cat"));
+                                    depositModel.setDes(dataobj.getString("des"));
+                                    depositModel.setDomain(dataobj.getString("domain"));
                                     depositModels.add(depositModel);
                                 }
                             }
@@ -211,6 +222,7 @@ public class DepositActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("domain", domain);
                 params.put("username", username);
+                params.put("user_id", user_id + "");
                 return params;
             }
         };

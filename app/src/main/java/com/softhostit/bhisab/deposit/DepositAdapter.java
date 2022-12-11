@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.deposit_cat_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.deposit_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,8 +39,21 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DepositModel depositModel = depositModelList.get(position);
 
-        holder.cat_tv.setText("" + depositModel.getId());
-        holder.categoryName.setText("" + depositModel.getName());
+//        কাস্টমার নাম : এস.এম. মনির \nতারিখ : ১২/১১/২০২২\nভা.নং : ৫১৮\nটাকার পরিমানঃ ১৫০০\nবিবরণ : বিক্রয়
+        int id = depositModel.getId();
+        int time = depositModel.getTime();
+        String account = depositModel.getAccount();
+        int date = depositModel.getDate();
+        int amount = depositModel.getAmount();
+        int user_id = depositModel.getUser_id();
+        int payer = depositModel.getPayer();
+        String  in_cat = depositModel.getIn_cat();
+        String des = depositModel.getDes();
+        String domain = depositModel.getDomain();
+
+
+
+        holder.deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: "+ date + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
 
     }
 
@@ -50,13 +64,14 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView cat_tv, categoryName;
+        TextView deposit_info;
+        Button print;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cat_tv = itemView.findViewById(R.id.cat_tv);
-            categoryName = itemView.findViewById(R.id.categoryName);
+            deposit_info = itemView.findViewById(R.id.deposit_info);
+            print = itemView.findViewById(R.id.print);
 
         }
     }

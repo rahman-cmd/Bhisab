@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/deposit_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/solaimanlipi"
+                android:paddingLeft="8dp"
+                android:text="কাস্টমার নাম : এস.এম. মনির \nতারিখ : ১২/১১/২০২২\nভা.নং : ৫১৮\nটাকার পরিমানঃ ১৫০০\nবিবরণ : বিক্রয়\nখাতঃ সেল"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_10" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
