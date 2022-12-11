@@ -27,6 +27,8 @@ import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.coustomer.CustomerAdapter;
+import com.softhostit.bhisab.coustomer.CustomerModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +75,7 @@ public class DepositActivity extends AppCompatActivity {
         });
 
         depositList();
+        coustomerList();
 
 
     }
@@ -146,6 +149,63 @@ public class DepositActivity extends AppCompatActivity {
         VolleySingleton.getInstance(DepositActivity.this).addToRequestQueue(stringRequest);
     }
 
+    private void coustomerList() {
+        // show list of customer here form database
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        // add data to array list
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting response to json array
+                            JSONArray array = new JSONArray(response);
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+                                try {
+                                    //getting product object from json array
+                                    JSONObject productObject = array.getJSONObject(i);
+
+                                    int id_client = productObject.getInt("id");
+                                    String fname = productObject.getString("fname");
+                                    Toasty.info(DepositActivity.this, id_client + "" + fname, Toasty.LENGTH_SHORT).show();
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toasty.error(getApplicationContext(), "Something went wrong", Toasty.LENGTH_SHORT).show();
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+
+    }
+
     private void depositList() {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
@@ -164,8 +224,6 @@ public class DepositActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.INVISIBLE);
                         try {
                             JSONArray jsonArray = new JSONArray(response);
-//                            JSONArray dataArray = obj.getJSONArray("categories");
-                            Log.d("deposit", jsonArray.toString());
 
                             if(jsonArray.length() == 0){
                                 noData.setVisibility(View.VISIBLE);
@@ -181,6 +239,13 @@ public class DepositActivity extends AppCompatActivity {
                                     depositModel.setAmount(dataobj.getInt("amount"));
                                     depositModel.setUser_id(dataobj.getInt("user_id"));
                                     depositModel.setPayer(dataobj.getInt("payer"));
+
+//                                    if (payer == client_id) {
+//                                        depositModel.setFname(dataobj.getString("payer"));
+//                                    } else {
+//                                       Toasty.error(DepositActivity.this, "Error: " + "No data found", Toasty.LENGTH_SHORT).show();
+//                                    }
+
                                     depositModel.setIn_cat(dataobj.getString("in_cat"));
                                     depositModel.setDes(dataobj.getString("des"));
                                     depositModel.setDomain(dataobj.getString("domain"));

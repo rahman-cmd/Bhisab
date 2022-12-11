@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHolder> {
     private Context context;
