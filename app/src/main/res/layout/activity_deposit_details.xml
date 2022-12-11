@@ -102,6 +102,27 @@
                         android:textStyle="bold" />
                 </com.balysv.materialripple.MaterialRippleLayout>
 
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp">
+
+
+                    <Button
+                        android:id="@+id/disconnect_printer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/design_default_color_secondary_variant"
+                        android:fontFamily="@font/sailec_regular"
+                        android:text="Disconnect Printer"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </LinearLayout>
 

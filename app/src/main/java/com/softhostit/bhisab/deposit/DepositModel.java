@@ -1,5 +1,6 @@
 package com.softhostit.bhisab.deposit;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.Toast;
@@ -150,6 +151,10 @@ public class DepositModel implements IPrintToPrinter {
             e.printStackTrace();
         }
 
+        Date date1 = new Date(date * 1000L);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
+        String formatted = simpleDateFormat.format(date1);
+
 
 
 //        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
@@ -159,6 +164,7 @@ public class DepositModel implements IPrintToPrinter {
 //        prnMng.printStr("MD ABDUR RAHMAN", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printNewLine();
         prnMng.printStr("Print at: " + new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault()).format(new Date()), 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Date: " + formatted, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);

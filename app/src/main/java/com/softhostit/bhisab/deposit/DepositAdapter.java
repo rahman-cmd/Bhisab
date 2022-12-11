@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.softhostit.bhisab.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,9 +54,14 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
         String des = depositModel.getDes();
         String domain = depositModel.getDomain();
 
+        // 1670349600 = 2022-07-31 00:00:00 strtotime
+        // Timestamp To Date Converter
+        Date date1 = new Date(date * 1000L);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
+        String formatted = simpleDateFormat.format(date1);
 
 
-        holder.deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: "+ date + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
+        holder.deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: "+ formatted + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
         holder.print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -22,11 +22,14 @@ import com.softhostit.bhisab.utils.Tools;
 import com.softhostit.bhisab.utils.WoosimPrnMng;
 import com.softhostit.bhisab.utils.printerFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import es.dmoral.toasty.Toasty;
 
 public class DepositDetailsActivity extends AppCompatActivity {
     TextView total_amount, deposit_info;
-    Button btn_thermal_printer;
+    Button btn_thermal_printer, disconnect_printer;
     private static final int REQUEST_CONNECT = 100;
 
     private WoosimPrnMng mPrnMng = null;
@@ -40,6 +43,7 @@ public class DepositDetailsActivity extends AppCompatActivity {
         total_amount = findViewById(R.id.total_amount);
         deposit_info = findViewById(R.id.deposit_info);
         btn_thermal_printer = findViewById(R.id.btn_thermal_printer);
+        disconnect_printer = findViewById(R.id.disconnect_printer);
         getSupportActionBar().setTitle("Deposit Details");
 
         Intent intent = getIntent();
@@ -54,10 +58,14 @@ public class DepositDetailsActivity extends AppCompatActivity {
         String des = intent.getStringExtra("des");
         String domain = intent.getStringExtra("domain");
 
+        // Timestamp To Date Converter
+        Date date1 = new Date(date * 1000L);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
+        String formatted = simpleDateFormat.format(date1);
 
 
         total_amount.setText("টাকার পরিমানঃ " + amount);
-        deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: " + date + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
+        deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: " + formatted + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
 
         btn_thermal_printer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +84,6 @@ public class DepositDetailsActivity extends AppCompatActivity {
                 // get address from shared preferences
                 SharedPreferences sharedPreferences = getSharedPreferences("bluetooth_address", MODE_PRIVATE);
                 String address = sharedPreferences.getString("address", "");
-
-
 
 
                 // get printer instance
@@ -109,6 +115,19 @@ public class DepositDetailsActivity extends AppCompatActivity {
                     //Connect to the printer and after successful connection issue the print command.
                     mPrnMng = printerFactory.createPrnMng(getApplicationContext(), address, testPrinter);
                 }
+            }
+        });
+
+        disconnect_printer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // clear shared preferences
+                SharedPreferences sharedPreferences = getSharedPreferences("bluetooth_address", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+
+                Toasty.success(DepositDetailsActivity.this, "Printer Disconnected", Toast.LENGTH_SHORT).show();
             }
         });
 
