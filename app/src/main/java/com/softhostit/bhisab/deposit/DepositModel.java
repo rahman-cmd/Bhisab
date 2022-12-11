@@ -1,6 +1,24 @@
 package com.softhostit.bhisab.deposit;
 
-public class DepositModel {
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.pdf_report.BarCodeEncoder;
+import com.softhostit.bhisab.utils.IPrintToPrinter;
+import com.softhostit.bhisab.utils.WoosimPrnMng;
+import com.woosim.printer.WoosimCmd;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
+
+public class DepositModel implements IPrintToPrinter {
     private int id;
     private int time;
     private String account;
@@ -11,12 +29,13 @@ public class DepositModel {
     private String in_cat;
     private String des;
     private String domain;
-
+    private Context context;
+    Bitmap bm;
 
     public DepositModel() {
     }
 
-    public DepositModel(int id, int time, String account, int date, int amount, int user_id, int payer, String in_cat, String des, String domain) {
+    public DepositModel(int id, int time, String account, int date, int amount, int user_id, int payer, String in_cat, String des, String domain, Context context) {
         this.id = id;
         this.time = time;
         this.account = account;
@@ -27,6 +46,7 @@ public class DepositModel {
         this.in_cat = in_cat;
         this.des = des;
         this.domain = domain;
+        this.context = context;
     }
 
     public int getId() {
@@ -107,5 +127,72 @@ public class DepositModel {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public void printContent(WoosimPrnMng prnMng) {
+
+        //Generate barcode
+        BarCodeEncoder qrCodeEncoder = new BarCodeEncoder();
+        bm = null;
+
+        try {
+            bm = qrCodeEncoder.encodeAsBitmap(domain, BarcodeFormat.CODE_128, 400, 48);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+
+
+//        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr(domain, 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr("Customer Receipt ", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr("Contact: " + "01770991502", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr("MD ABDUR RAHMAN", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printNewLine();
+        prnMng.printStr("Print at: " + new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault()).format(new Date()), 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Payer: " + payer, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Category: " + in_cat, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("Description: " + des, 1, WoosimCmd.ALIGN_LEFT);
+//        prnMng.printStr("User ID: " + user_id, 1, WoosimCmd.ALIGN_LEFT);
+//
+//        prnMng.printStr("--------------------------------");
+//        prnMng.printStr("  Deposit        RECEIPT", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr("--------------------------------");
+//
+//        prnMng.printStr("Thank you for your business", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printNewLine();
+//        prnMng.printStr("--------------------------------");
+//        prnMng.printStr("Powered by Soft Host It", 1, WoosimCmd.ALIGN_CENTER);
+//        prnMng.printStr("www.softhostit.com", 1, WoosimCmd.ALIGN_CENTER);
+//
+//
+        prnMng.printNewLine();
+//        prnMng.printStr("Bhisab", 1, WoosimCmd.ALIGN_CENTER);
+//        //print barcode
+//        prnMng.printPhoto(bm);
+        prnMng.printNewLine();
+        printEnded(prnMng);
+    }
+
+    @Override
+    public void printEnded(WoosimPrnMng prnMng) {
+        //Do any finalization you like after print ended.
+        if (prnMng.printSucc()) {
+            Toasty.success(context, R.string.print_succ, Toast.LENGTH_LONG).show();
+        } else {
+            Toasty.error(context, R.string.print_error, Toast.LENGTH_LONG).show();
+        }
     }
 }

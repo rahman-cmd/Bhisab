@@ -1,0 +1,112 @@
+package com.softhostit.bhisab.deposit;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.softhostit.bhisab.DeviceListActivity;
+import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.utils.IPrintToPrinter;
+import com.softhostit.bhisab.utils.PrefMng;
+import com.softhostit.bhisab.utils.Tools;
+import com.softhostit.bhisab.utils.WoosimPrnMng;
+import com.softhostit.bhisab.utils.printerFactory;
+
+public class DepositDetailsActivity extends AppCompatActivity {
+    TextView total_amount, deposit_info;
+    Button btn_thermal_printer;
+    private static final int REQUEST_CONNECT = 100;
+
+    private WoosimPrnMng mPrnMng = null;
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_deposit_details);
+
+        total_amount = findViewById(R.id.total_amount);
+        deposit_info = findViewById(R.id.deposit_info);
+        btn_thermal_printer = findViewById(R.id.btn_thermal_printer);
+        getSupportActionBar().setTitle("Deposit Details");
+
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", 0);
+        int time = intent.getIntExtra("time", 0);
+        String account = intent.getStringExtra("account");
+        int date = intent.getIntExtra("date", 0);
+        int amount = intent.getIntExtra("amount", 0);
+        int user_id = intent.getIntExtra("user_id", 0);
+        int payer = intent.getIntExtra("payer", 0);
+        String in_cat = intent.getStringExtra("in_cat");
+        String des = intent.getStringExtra("des");
+        String domain = intent.getStringExtra("domain");
+
+
+
+        total_amount.setText("টাকার পরিমানঃ " + amount);
+        deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: " + date + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
+
+        btn_thermal_printer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Check if the Bluetooth is available and on.
+                if (!Tools.isBlueToothOn(DepositDetailsActivity.this)) return;
+
+                PrefMng.saveActivePrinter(DepositDetailsActivity.this, PrefMng.PRN_WOOSIM_SELECTED);
+
+                //Pick a Bluetooth device
+                Intent i = new Intent(DepositDetailsActivity.this, DeviceListActivity.class);
+                startActivityForResult(i, REQUEST_CONNECT);
+            }
+        });
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CONNECT && resultCode == RESULT_OK) {
+            try {
+                //Get device address to print to.
+                String blutoothAddr = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                //The interface to print text to thermal printers.
+                Intent intent = getIntent();
+                int id = intent.getIntExtra("id", 0);
+                int time = intent.getIntExtra("time", 0);
+                String account = intent.getStringExtra("account");
+                int date = intent.getIntExtra("date", 0);
+                int amount = intent.getIntExtra("amount", 0);
+                int user_id = intent.getIntExtra("user_id", 0);
+                int payer = intent.getIntExtra("payer", 0);
+                String in_cat = intent.getStringExtra("in_cat");
+                String des = intent.getStringExtra("des");
+                String domain = intent.getStringExtra("domain");
+
+                IPrintToPrinter testPrinter = new DepositModel(id, time, account, date, amount, user_id, payer, in_cat, des, domain, getApplicationContext());
+                //Connect to the printer and after successful connection issue the print command.
+                mPrnMng = printerFactory.createPrnMng(this, blutoothAddr, testPrinter);
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mPrnMng != null) mPrnMng.releaseAllocatoins();
+        super.onDestroy();
+    }
+}

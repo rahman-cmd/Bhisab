@@ -3,6 +3,7 @@ package com.softhostit.bhisab.deposit;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,23 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
 
 
         holder.deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: "+ date + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
+        holder.print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DepositDetailsActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("time", time);
+                intent.putExtra("account", account);
+                intent.putExtra("date", date);
+                intent.putExtra("amount", amount);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("payer", payer);
+                intent.putExtra("in_cat", in_cat);
+                intent.putExtra("des", des);
+                intent.putExtra("domain", domain);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

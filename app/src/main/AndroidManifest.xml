@@ -26,6 +26,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DeviceListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".deposit.DepositDetailsActivity"
+            android:parentActivityName=".deposit.DepositActivity" />
+        <activity
             android:name=".coustomer.CoustomerActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
@@ -42,7 +52,7 @@
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".HomeActivity" />
         <activity
-            android:name="com.softhostit.bhisab.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
