@@ -21,6 +21,7 @@ public class Constant {
     public static final String customer_group = BASE_URL + "client/group.php";
     public static final String DEPOSIT_LIST = BASE_URL + "deposit/list.php";
     public static final String CLIENT_ID = BASE_URL + "client/client_id.php";
+    public static final String DEPOSIT_CREATE = BASE_URL + "deposit/create.php";
 
     //For retrofit base url must end with /
 //    public static final String PRODUCT_IMAGE_URL = "http://bhishab.palashhossain.com/product_images/";

@@ -1,20 +1,26 @@
 package com.softhostit.bhisab.deposit;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +33,7 @@ import com.softhostit.bhisab.Login.SharedPrefManager;
 import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.coustomer.CustomerAdapter;
 import com.softhostit.bhisab.coustomer.CustomerModel;
 
@@ -34,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,11 +56,21 @@ public class DepositActivity extends AppCompatActivity {
     private Context context;
     List<DepositModel> depositModels;
     private DepositAdapter depositAdapter;
+
+
+    List<CustomerModel> customerModelList;
+    private CustomerAdapter customerAdapter;
+
+    private ArrayList<String> customerNameArrayList, customerIdArrayList;
+
+
     ProgressBar progressBar;
     ImageView noData;
-
+    Boolean isAllFabsVisible;
     RecyclerView deposit_recycler_view;
-    FloatingActionButton addDeposit;
+    FloatingActionButton addCategory, add_fab, addDeposit;
+
+    TextView add_deposit_action_text, add_category_action_text;
 
 
     @Override
@@ -65,19 +83,263 @@ public class DepositActivity extends AppCompatActivity {
         deposit_recycler_view = findViewById(R.id.deposit_recycler_view);
         progressBar = findViewById(R.id.progressBar);
         noData = findViewById(R.id.noData);
+
+
+        // FAB button
+        addCategory = findViewById(R.id.addCategory);
+        add_fab = findViewById(R.id.add_fab);
         addDeposit = findViewById(R.id.addDeposit);
 
-        addDeposit.setOnClickListener(new View.OnClickListener() {
+        // Also register the action name text, of all the FABs.
+        add_deposit_action_text = findViewById(R.id.add_deposit_action_text);
+        add_category_action_text = findViewById(R.id.add_category_action_text);
+
+        // Now set all the FABs and all the action name texts as GONE
+        addCategory.setVisibility(View.GONE);
+        addDeposit.setVisibility(View.GONE);
+        add_deposit_action_text.setVisibility(View.GONE);
+        add_category_action_text.setVisibility(View.GONE);
+
+        isAllFabsVisible = false;
+
+        add_fab.setOnClickListener(view -> {
+            if (!isAllFabsVisible) {
+                addCategory.show();
+                addDeposit.show();
+                add_deposit_action_text.setVisibility(View.VISIBLE);
+                add_category_action_text.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            } else {
+                addCategory.hide();
+                addDeposit.hide();
+                add_deposit_action_text.setVisibility(View.GONE);
+                add_category_action_text.setVisibility(View.GONE);
+                isAllFabsVisible = false;
+            }
+        });
+
+        addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAlertDialog();
             }
         });
 
+        addDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddDepositDialog();
+            }
+        });
+
         depositList();
 
 
+    }
 
+    private void showAddDepositDialog() {
+        loadCustomer();
+        // show dialog
+        final Dialog dialog = new Dialog(DepositActivity.this);
+        dialog.setContentView(R.layout.add_deposit_dialog);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        EditText addDepositEt = dialog.findViewById(R.id.addDepositEt);
+        EditText addDepositNote = dialog.findViewById(R.id.addDepositNote);
+        Button addDepositBtn = dialog.findViewById(R.id.addDepositBtn);
+        TextView addDepositDate = dialog.findViewById(R.id.addDepositDate);
+        TextView addDepositCustomerName = dialog.findViewById(R.id.addDepositCustomerName);
+
+        addDepositCustomerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // add customer category dialog start
+                // get string array of categories from arraylist
+                String[] categories = new String[customerNameArrayList.size()];
+                for (int i = 0; i < customerNameArrayList.size(); i++) {
+                    categories[i] = customerNameArrayList.get(i);
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DepositActivity.this);
+                builder.setTitle("Choose Customer")
+                        .setItems(categories, new DialogInterface.OnClickListener() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // get selected category id
+                                String selectedCategoryId = customerIdArrayList.get(which);
+                                // get selected category name
+                                String selectedCategoryName = customerNameArrayList.get(which);
+                                // set category name on textview
+                                addDepositCustomerName.setText(selectedCategoryName);
+                            }
+                        })
+                        .show();
+
+                // add customer category dialog end
+
+            }
+        });
+
+
+        addDepositBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deposit = addDepositEt.getText().toString().trim();
+                String note = addDepositNote.getText().toString().trim();
+                String date = addDepositDate.getText().toString().trim();
+
+                if (deposit.isEmpty()) {
+                    addDepositEt.setError("Enter deposit amount");
+                    addDepositEt.requestFocus();
+                    return;
+                }
+
+                if (date.isEmpty()) {
+                    addDepositDate.setError("Select date");
+                    addDepositDate.requestFocus();
+                    return;
+                }
+
+
+                addDeposit(deposit, note, date);
+                dialog.dismiss();
+            }
+        });
+
+
+
+        addDepositDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(addDepositDate);
+            }
+        });
+
+
+    }
+
+    // load customer data
+    private void loadCustomer() {
+        // show list of customer here form database
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+
+        // show data in recycler view
+        customerNameArrayList = new ArrayList<>();
+        customerIdArrayList = new ArrayList<>();
+        // add data to array list
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting response to json array
+                            JSONArray array = new JSONArray(response);
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+                                try {
+                                    //getting product object from json array
+                                    JSONObject productObject = array.getJSONObject(i);
+
+                                    int id = productObject.getInt("id");
+                                    String customerName = productObject.getString("fname");
+                                    customerIdArrayList.add(String.valueOf(id));
+                                    customerNameArrayList.add(customerName);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toasty.error(getApplicationContext(), "Something went wrong", Toasty.LENGTH_SHORT).show();
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+
+    }
+
+    private void addDeposit(String deposit, String note, String date) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+        String account = depositModels.get(0).getAccount();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.DEPOSIT_CREATE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (!jsonObject.getBoolean("error")) {
+                        Toasty.success(DepositActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        depositList();
+                    } else {
+                        Toasty.error(DepositActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toasty.error(DepositActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                // date convert to timestamp
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                long ts = 0;
+                try {
+                    ts = dateFormat.parse(date).getTime() / 1000;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Log.d("TAG", "onDateSet: " + ts);
+
+
+                params.put("domain", domain);
+                params.put("user_id", user_id + "");
+                params.put("client_id", "client_id");
+                params.put("date", ts + "");
+                params.put("account", "account");
+                params.put("des", note);
+                params.put("amount", deposit);
+                params.put("in_ca", "in_cat");
+
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private void showAlertDialog() {
@@ -103,6 +365,17 @@ public class DepositActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void showDatePickerDialog(TextView addDepositDate) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(DepositActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                addDepositDate.setText(date);
+            }
+        }, 2020, 0, 1);
+        datePickerDialog.show();
     }
 
     private void addCategory(String category) {
@@ -173,7 +446,6 @@ public class DepositActivity extends AppCompatActivity {
                                     Toasty.info(DepositActivity.this, id_client + "" + fname, Toasty.LENGTH_SHORT).show();
 
 
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -223,10 +495,9 @@ public class DepositActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
 
-                            if(jsonArray.length() == 0){
+                            if (jsonArray.length() == 0) {
                                 noData.setVisibility(View.VISIBLE);
-                            }
-                            else {
+                            } else {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     DepositModel depositModel = new DepositModel();
                                     JSONObject dataobj = jsonArray.getJSONObject(i);

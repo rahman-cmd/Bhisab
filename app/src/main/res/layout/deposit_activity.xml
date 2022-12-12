@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".deposit.DepositActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addDeposit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96"
-        app:srcCompat="@drawable/ic_add" />
-
     <!--   <LinearLayout
            android:id="@+id/linearLayout8"
            android:layout_width="match_parent"
@@ -91,6 +78,77 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Floating action button for add alarm -->
+    <!-- Make sure that you are constraining this
+         button to the parent button -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addDeposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:visibility="visible"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/addCategory"
+        app:layout_constraintEnd_toEndOf="@+id/addCategory"
+        app:layout_constraintStart_toStartOf="@+id/addCategory"
+        app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+        android:padding="8dp"
+        android:background="#03D9C5"
+        android:visibility="visible"
+        android:id="@+id/add_deposit_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Add Deposit"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/addDeposit"
+        app:layout_constraintEnd_toStartOf="@+id/addDeposit"
+        app:layout_constraintTop_toTopOf="@+id/addDeposit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:visibility="visible"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/add_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_fab"
+        app:srcCompat="@drawable/ic_category" />
+
+    <TextView
+        android:padding="8dp"
+        android:background="#03D9C5"
+        android:visibility="visible"
+        android:id="@+id/add_category_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Add Category"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/addCategory"
+        app:layout_constraintEnd_toStartOf="@+id/addCategory"
+        app:layout_constraintTop_toTopOf="@+id/addCategory" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
