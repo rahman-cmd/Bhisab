@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.softhostit.bhisab.Dashboard.DashboardModel;
+import com.softhostit.bhisab.deposit.DepositModel;
 import com.softhostit.bhisab.register.RegisterModel;
 
 public class SharedPrefManager {

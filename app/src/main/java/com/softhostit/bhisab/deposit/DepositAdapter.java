@@ -12,14 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.softhostit.bhisab.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 
 
 public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHolder> {
@@ -52,7 +50,7 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
         int amount = depositModel.getAmount();
         int user_id = depositModel.getUser_id();
         int payer = depositModel.getPayer();
-        String  in_cat = depositModel.getIn_cat();
+        String in_cat = depositModel.getIn_cat();
         String des = depositModel.getDes();
         String domain = depositModel.getDomain();
 

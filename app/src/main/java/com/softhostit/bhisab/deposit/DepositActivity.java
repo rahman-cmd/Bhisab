@@ -75,7 +75,7 @@ public class DepositActivity extends AppCompatActivity {
         });
 
         depositList();
-        coustomerList();
+
 
 
     }
@@ -178,12 +178,10 @@ public class DepositActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -239,13 +237,6 @@ public class DepositActivity extends AppCompatActivity {
                                     depositModel.setAmount(dataobj.getInt("amount"));
                                     depositModel.setUser_id(dataobj.getInt("user_id"));
                                     depositModel.setPayer(dataobj.getInt("payer"));
-
-//                                    if (payer == client_id) {
-//                                        depositModel.setFname(dataobj.getString("payer"));
-//                                    } else {
-//                                       Toasty.error(DepositActivity.this, "Error: " + "No data found", Toasty.LENGTH_SHORT).show();
-//                                    }
-
                                     depositModel.setIn_cat(dataobj.getString("in_cat"));
                                     depositModel.setDes(dataobj.getString("des"));
                                     depositModel.setDomain(dataobj.getString("domain"));
@@ -259,30 +250,22 @@ public class DepositActivity extends AppCompatActivity {
                             depositAdapter = new DepositAdapter(DepositActivity.this, depositModels);
                             // set adapter to recyclerview
                             deposit_recycler_view.setHasFixedSize(true);
-
                             // set LayoutManager to RecyclerView
                             deposit_recycler_view.setLayoutManager(new LinearLayoutManager(DepositActivity.this));
-
                             deposit_recycler_view.setAdapter(depositAdapter);
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toasty.error(DepositActivity.this, "Error 1: " + e.toString(), Toasty.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                         }
-
                     }
-
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressBar.setVisibility(View.INVISIBLE);
                         deposit_recycler_view.setVisibility(View.VISIBLE);
-
                         Toasty.error(DepositActivity.this, "Something went wrong", Toasty.LENGTH_SHORT).show();
-
                     }
                 }) {
             @Override
@@ -294,8 +277,6 @@ public class DepositActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
     }
 }
