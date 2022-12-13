@@ -44,6 +44,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -150,6 +151,7 @@ public class DepositActivity extends AppCompatActivity {
         Button addDepositBtn = dialog.findViewById(R.id.addDepositBtn);
         TextView addDepositDate = dialog.findViewById(R.id.addDepositDate);
         TextView addDepositCustomerName = dialog.findViewById(R.id.addDepositCustomerName);
+        TextView addDepositCustomerId = dialog.findViewById(R.id.addDepositCustomerId);
 
         addDepositCustomerName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +175,7 @@ public class DepositActivity extends AppCompatActivity {
                                 String selectedCategoryName = customerNameArrayList.get(which);
                                 // set category name on textview
                                 addDepositCustomerName.setText(selectedCategoryName);
+                                addDepositCustomerId.setText(selectedCategoryId);
                             }
                         })
                         .show();
@@ -189,6 +192,14 @@ public class DepositActivity extends AppCompatActivity {
                 String deposit = addDepositEt.getText().toString().trim();
                 String note = addDepositNote.getText().toString().trim();
                 String date = addDepositDate.getText().toString().trim();
+                String customerName = addDepositCustomerName.getText().toString().trim();
+                int id = Integer.parseInt(addDepositCustomerId.getText().toString().trim());
+
+                if (customerName.isEmpty()) {
+                    addDepositCustomerName.setError("Select customer");
+                    addDepositCustomerName.requestFocus();
+                    return;
+                }
 
                 if (deposit.isEmpty()) {
                     addDepositEt.setError("Enter deposit amount");
@@ -203,7 +214,7 @@ public class DepositActivity extends AppCompatActivity {
                 }
 
 
-                addDeposit(deposit, note, date);
+                addDeposit(deposit, note, date, id);
                 dialog.dismiss();
             }
         });
@@ -282,7 +293,7 @@ public class DepositActivity extends AppCompatActivity {
 
     }
 
-    private void addDeposit(String deposit, String note, String date) {
+    private void addDeposit(String deposit, String note, String date, int id) {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
@@ -327,12 +338,12 @@ public class DepositActivity extends AppCompatActivity {
 
                 params.put("domain", domain);
                 params.put("user_id", user_id + "");
-                params.put("client_id", "client_id");
+                params.put("client_id", id + "");
                 params.put("date", ts + "");
-                params.put("account", "account");
+                params.put("account", "2278");
                 params.put("des", note);
                 params.put("amount", deposit);
-                params.put("in_ca", "in_cat");
+                params.put("in_cat", "1654");
 
 
                 return params;
@@ -368,13 +379,21 @@ public class DepositActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog(TextView addDepositDate) {
+        // get current date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // date picker dialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(DepositActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                addDepositDate.setText(date);
+                // set date to text view
+                addDepositDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
             }
-        }, 2020, 0, 1);
+        }, year, month, day);
+
         datePickerDialog.show();
     }
 
