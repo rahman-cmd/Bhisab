@@ -21,7 +21,6 @@ import es.dmoral.toasty.Toasty;
 
 public class DepositModel implements IPrintToPrinter {
     private int id;
-    private int time;
     private String account;
     private int date;
     private int amount;
@@ -30,15 +29,15 @@ public class DepositModel implements IPrintToPrinter {
     private String in_cat;
     private String des;
     private String domain;
+    private String fname;
     private Context context;
     Bitmap bm;
 
     public DepositModel() {
     }
 
-    public DepositModel(int id, int time, String account, int date, int amount, int user_id, int payer, String in_cat, String des, String domain, Context context) {
+    public DepositModel(int id, String account, int date, int amount, int user_id, int payer, String in_cat, String des, String domain, String fname, Context context) {
         this.id = id;
-        this.time = time;
         this.account = account;
         this.date = date;
         this.amount = amount;
@@ -47,6 +46,7 @@ public class DepositModel implements IPrintToPrinter {
         this.in_cat = in_cat;
         this.des = des;
         this.domain = domain;
+        this.fname = fname;
         this.context = context;
     }
 
@@ -56,14 +56,6 @@ public class DepositModel implements IPrintToPrinter {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public String getAccount() {
@@ -130,6 +122,14 @@ public class DepositModel implements IPrintToPrinter {
         this.domain = domain;
     }
 
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
     public Context getContext() {
         return context;
     }
@@ -165,10 +165,11 @@ public class DepositModel implements IPrintToPrinter {
 //        prnMng.printNewLine();
         prnMng.printStr("Print at: " + new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault()).format(new Date()), 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Date: " + formatted, 1, WoosimCmd.ALIGN_LEFT);
-//        prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Name: " + fname, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
-//        prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);
-//        prnMng.printStr("Payer: " + payer, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);
+
 //        prnMng.printStr("Category: " + in_cat, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Description: " + des, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("User ID: " + user_id, 1, WoosimCmd.ALIGN_LEFT);

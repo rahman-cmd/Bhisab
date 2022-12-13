@@ -64,6 +64,8 @@ public class DepositActivity extends AppCompatActivity {
 
     private ArrayList<String> customerNameArrayList, customerIdArrayList;
 
+    private ArrayList<String> bankIdArrayList, bankNameArrayList;
+
 
     ProgressBar progressBar;
     ImageView noData;
@@ -140,6 +142,7 @@ public class DepositActivity extends AppCompatActivity {
 
     private void showAddDepositDialog() {
         loadCustomer();
+        loadBankList();
         // show dialog
         final Dialog dialog = new Dialog(DepositActivity.this);
         dialog.setContentView(R.layout.add_deposit_dialog);
@@ -150,8 +153,12 @@ public class DepositActivity extends AppCompatActivity {
         EditText addDepositNote = dialog.findViewById(R.id.addDepositNote);
         Button addDepositBtn = dialog.findViewById(R.id.addDepositBtn);
         TextView addDepositDate = dialog.findViewById(R.id.addDepositDate);
+
         TextView addDepositCustomerName = dialog.findViewById(R.id.addDepositCustomerName);
         TextView addDepositCustomerId = dialog.findViewById(R.id.addDepositCustomerId);
+
+        TextView addDepositBankName = dialog.findViewById(R.id.addDepositBankName);
+        TextView addDepositBankId = dialog.findViewById(R.id.addDepositBankId);
 
         addDepositCustomerName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +192,45 @@ public class DepositActivity extends AppCompatActivity {
             }
         });
 
+        addDepositBankName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // add customer category dialog start
+                // get string array of categories from arraylist
+                String[] bank = new String[bankNameArrayList.size()];
+                for (int i = 0; i < bankNameArrayList.size(); i++) {
+                    bank[i] = bankNameArrayList.get(i);
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DepositActivity.this);
+                builder.setTitle("Choose Account")
+                        .setItems(bank, new DialogInterface.OnClickListener() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // get selected category id
+                                String selectedAccountId = bankIdArrayList.get(which);
+                                // get selected category name
+                                String selectedAccountName = bankNameArrayList.get(which);
+                                // set category name on textview
+                                addDepositBankName.setText(selectedAccountName);
+                                addDepositBankId.setText(selectedAccountId);
+                            }
+                        })
+                        .show();
+
+                // add customer category dialog end
+            }
+        });
+
+
+        addDepositDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(addDepositDate);
+            }
+        });
+
 
         addDepositBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,11 +239,20 @@ public class DepositActivity extends AppCompatActivity {
                 String note = addDepositNote.getText().toString().trim();
                 String date = addDepositDate.getText().toString().trim();
                 String customerName = addDepositCustomerName.getText().toString().trim();
+                String addDepositBank = addDepositBankName.getText().toString().trim();
+
+                int bankId = Integer.parseInt(addDepositBankId.getText().toString().trim());
                 int id = Integer.parseInt(addDepositCustomerId.getText().toString().trim());
 
                 if (customerName.isEmpty()) {
                     addDepositCustomerName.setError("Select customer");
                     addDepositCustomerName.requestFocus();
+                    return;
+                }
+
+                if (addDepositBank.isEmpty()) {
+                    addDepositBankName.setError("Select account");
+                    addDepositBankName.requestFocus();
                     return;
                 }
 
@@ -214,19 +269,65 @@ public class DepositActivity extends AppCompatActivity {
                 }
 
 
-                addDeposit(deposit, note, date, id);
+                addDeposit(deposit, note, date, id, bankId);
                 dialog.dismiss();
             }
         });
 
 
 
-        addDepositDate.setOnClickListener(new View.OnClickListener() {
+
+
+    }
+
+    private void loadBankList() {
+        // show list of customer here form database
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+
+
+        bankIdArrayList = new ArrayList<>();
+        bankNameArrayList = new ArrayList<>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.BANK_LIST, new Response.Listener<String>() {
             @Override
-            public void onClick(View v) {
-                showDatePickerDialog(addDepositDate);
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+
+                        int id = object.getInt("id");
+                        String acctitle = object.getString("acctitle");
+
+                        bankIdArrayList.add(String.valueOf(id));
+                        bankNameArrayList.add(acctitle);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DepositActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                params.put("id", user_id + "");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
 
     }
@@ -293,7 +394,7 @@ public class DepositActivity extends AppCompatActivity {
 
     }
 
-    private void addDeposit(String deposit, String note, String date, int id) {
+    private void addDeposit(String deposit, String note, String date, int id, int bankId) {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
@@ -340,7 +441,7 @@ public class DepositActivity extends AppCompatActivity {
                 params.put("user_id", user_id + "");
                 params.put("client_id", id + "");
                 params.put("date", ts + "");
-                params.put("account", "2278");
+                params.put("account", bankId + "");
                 params.put("des", note);
                 params.put("amount", deposit);
                 params.put("in_cat", "1654");
@@ -521,15 +622,15 @@ public class DepositActivity extends AppCompatActivity {
                                     DepositModel depositModel = new DepositModel();
                                     JSONObject dataobj = jsonArray.getJSONObject(i);
                                     depositModel.setId(dataobj.getInt("id"));
-                                    depositModel.setTime(dataobj.getInt("time"));
                                     depositModel.setAccount(dataobj.getString("account"));
                                     depositModel.setDate(dataobj.getInt("date"));
                                     depositModel.setAmount(dataobj.getInt("amount"));
                                     depositModel.setUser_id(dataobj.getInt("user_id"));
                                     depositModel.setPayer(dataobj.getInt("payer"));
-                                    depositModel.setIn_cat(dataobj.getString("in_cat"));
+                                    depositModel.setIn_cat(dataobj.getString("name"));
                                     depositModel.setDes(dataobj.getString("des"));
                                     depositModel.setDomain(dataobj.getString("domain"));
+                                    depositModel.setFname(dataobj.getString("fname"));
                                     depositModels.add(depositModel);
                                 }
                             }

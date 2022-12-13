@@ -48,15 +48,15 @@ public class DepositDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
-        int time = intent.getIntExtra("time", 0);
         String account = intent.getStringExtra("account");
         int date = intent.getIntExtra("date", 0);
         int amount = intent.getIntExtra("amount", 0);
         int user_id = intent.getIntExtra("user_id", 0);
         int payer = intent.getIntExtra("payer", 0);
-        String in_cat = intent.getStringExtra("in_cat");
+        String in_cat = intent.getStringExtra("name");
         String des = intent.getStringExtra("des");
         String domain = intent.getStringExtra("domain");
+        String fname = intent.getStringExtra("fname");
 
         // Timestamp To Date Converter
         Date date1 = new Date(date * 1000L);
@@ -65,7 +65,7 @@ public class DepositDetailsActivity extends AppCompatActivity {
 
 
         total_amount.setText("টাকার পরিমানঃ " + amount);
-        deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: " + formatted + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
+        deposit_info.setText("কাস্টমার নাম : " + fname + "\nতারিখ: " + formatted + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
 
         btn_thermal_printer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,17 +101,17 @@ public class DepositDetailsActivity extends AppCompatActivity {
                     //The interface to print text to thermal printers.
                     Intent intent = getIntent();
                     int id = intent.getIntExtra("id", 0);
-                    int time = intent.getIntExtra("time", 0);
                     String account = intent.getStringExtra("account");
                     int date = intent.getIntExtra("date", 0);
                     int amount = intent.getIntExtra("amount", 0);
                     int user_id = intent.getIntExtra("user_id", 0);
                     int payer = intent.getIntExtra("payer", 0);
-                    String in_cat = intent.getStringExtra("in_cat");
+                    String in_cat = intent.getStringExtra("name");
                     String des = intent.getStringExtra("des");
                     String domain = intent.getStringExtra("domain");
+                    String fname = intent.getStringExtra("fname");
 
-                    IPrintToPrinter testPrinter = new DepositModel(id, time, account, date, amount, user_id, payer, in_cat, des, domain, getApplicationContext());
+                    IPrintToPrinter testPrinter = new DepositModel(id, account, date, amount, user_id, payer, in_cat, des, domain, fname, getApplicationContext());
                     //Connect to the printer and after successful connection issue the print command.
                     mPrnMng = printerFactory.createPrnMng(getApplicationContext(), address, testPrinter);
                 }

@@ -44,7 +44,6 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
 
 //        কাস্টমার নাম : এস.এম. মনির \nতারিখ : ১২/১১/২০২২\nভা.নং : ৫১৮\nটাকার পরিমানঃ ১৫০০\nবিবরণ : বিক্রয়
         int id = depositModel.getId();
-        int time = depositModel.getTime();
         String account = depositModel.getAccount();
         int date = depositModel.getDate();
         int amount = depositModel.getAmount();
@@ -53,6 +52,7 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
         String in_cat = depositModel.getIn_cat();
         String des = depositModel.getDes();
         String domain = depositModel.getDomain();
+        String fname = depositModel.getFname();
 
         // 1670349600 = 2022-07-31 00:00:00 strtotime
         // Timestamp To Date Converter
@@ -61,21 +61,21 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
         String formatted = simpleDateFormat.format(date1);
 
 
-        holder.deposit_info.setText("কাস্টমার নাম : " + payer + "\nতারিখ: "+ formatted + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
+        holder.deposit_info.setText("কাস্টমার নাম : " + fname + "\nতারিখ: "+ formatted + "\nভা.নং : " + id + "\nটাকার পরিমানঃ " + amount + "\nবিবরণ : " + des+ "\nখাত : " + in_cat);
         holder.print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DepositDetailsActivity.class);
                 intent.putExtra("id", id);
-                intent.putExtra("time", time);
                 intent.putExtra("account", account);
                 intent.putExtra("date", date);
                 intent.putExtra("amount", amount);
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("payer", payer);
-                intent.putExtra("in_cat", in_cat);
+                intent.putExtra("name", in_cat);
                 intent.putExtra("des", des);
                 intent.putExtra("domain", domain);
+                intent.putExtra("fname", fname);
                 context.startActivity(intent);
             }
         });
