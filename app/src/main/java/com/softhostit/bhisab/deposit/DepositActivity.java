@@ -58,15 +58,9 @@ public class DepositActivity extends AppCompatActivity {
     List<DepositModel> depositModels;
     private DepositAdapter depositAdapter;
 
-
-    List<CustomerModel> customerModelList;
-    private CustomerAdapter customerAdapter;
-
     private ArrayList<String> customerNameArrayList, customerIdArrayList;
 
     private ArrayList<String> bankIdArrayList, bankNameArrayList;
-
-
     ProgressBar progressBar;
     ImageView noData;
     Boolean isAllFabsVisible;
@@ -74,7 +68,6 @@ public class DepositActivity extends AppCompatActivity {
     FloatingActionButton addCategory, add_fab, addDeposit;
 
     TextView add_deposit_action_text, add_category_action_text;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -540,60 +533,6 @@ public class DepositActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(DepositActivity.this).addToRequestQueue(stringRequest);
-    }
-
-    private void coustomerList() {
-        // show list of customer here form database
-        Intent intent = getIntent();
-        String domain = intent.getStringExtra("domain");
-        String username = intent.getStringExtra("username");
-        // add data to array list
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_LIST,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting response to json array
-                            JSONArray array = new JSONArray(response);
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
-                                try {
-                                    //getting product object from json array
-                                    JSONObject productObject = array.getJSONObject(i);
-
-                                    int id_client = productObject.getInt("id");
-                                    String fname = productObject.getString("fname");
-                                    Toasty.info(DepositActivity.this, id_client + "" + fname, Toasty.LENGTH_SHORT).show();
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toasty.error(getApplicationContext(), "Something went wrong", Toasty.LENGTH_SHORT).show();
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("domain", domain);
-                params.put("username", username);
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-
     }
 
     private void depositList() {
