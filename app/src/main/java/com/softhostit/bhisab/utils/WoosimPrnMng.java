@@ -29,7 +29,7 @@ public class WoosimPrnMng {
 	// Key names received from the BluetoothPrintService Handler
 	public static final String DEVICE_NAME = "device_name";
 	public static final String TOAST = "toast";
-	//public static final int CActiveCodeTable = WoosimCmd.CT_ARABIC_FARSI;
+//	public static final int CActiveCodeTable = WoosimCmd.CT_ARABIC_FARSI;
 	//public static final int CActiveCodeTable = WoosimCmd.CT_ARABIC_FORMS_B;
 
 	private static BluetoothPrintService mPrintService = null;

@@ -155,8 +155,10 @@ public class DepositModel implements IPrintToPrinter {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
         String formatted = simpleDateFormat.format(date1);
 
+        Bitmap image = Bitmap.createScaledBitmap(bm, 300, 50, false);
 
-
+        prnMng.printPhoto(image);
+        // Print text as bitmap image
 //        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr(domain, 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr("Customer Receipt ", 1, WoosimCmd.ALIGN_CENTER);

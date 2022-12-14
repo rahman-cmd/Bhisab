@@ -8,6 +8,10 @@ public class printerFactory {
         /*Pay attention that based on the Farsi/Arabic font that is installed on the device you may need to
           pick another mapper to print Farsi/Arabic correctly. For printing English, most of the fonts
           are consistent with mappers.*/
+        // arabic font
+        if (context.getResources().getConfiguration().locale.getLanguage().equals("ar")) {
+            return new WCharMapperCT42();
+        }
 
         if (PrefMng.getActivePrinter(context)== PrefMng.PRN_WOOSIM_SELECTED)
             return new WCharMapperCT42();
