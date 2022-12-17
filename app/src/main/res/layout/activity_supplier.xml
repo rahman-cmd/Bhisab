@@ -7,10 +7,10 @@
     tools:context=".supplier.SupplierActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -58,16 +58,16 @@
         app:srcCompat="@drawable/ic_person" />
 
     <TextView
-        android:padding="8dp"
-        android:background="#03D9C5"
-        android:visibility="visible"
         android:id="@+id/add_supplier_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:background="#03D9C5"
+        android:padding="8dp"
         android:text="Add supplier"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/add_supplier_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_supplier_fab"
         app:layout_constraintTop_toTopOf="@+id/add_supplier_fab" />
@@ -85,16 +85,16 @@
         app:srcCompat="@drawable/ic_category" />
 
     <TextView
-        android:padding="8dp"
-        android:background="#03D9C5"
-        android:visibility="visible"
         android:id="@+id/add_supplier_group_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:background="#03D9C5"
+        android:padding="8dp"
         android:text="Add supplier group"
         android:textColor="#000000"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/add_supplier_group_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_supplier_group_fab"
         app:layout_constraintTop_toTopOf="@+id/add_supplier_group_fab" />

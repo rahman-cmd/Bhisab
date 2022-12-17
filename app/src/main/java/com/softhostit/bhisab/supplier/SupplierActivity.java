@@ -1,25 +1,34 @@
 package com.softhostit.bhisab.supplier;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.coustomer.CustomerAdapter;
 import com.softhostit.bhisab.coustomer.CustomerModel;
 
@@ -41,6 +50,14 @@ public class SupplierActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
 
+    FloatingActionButton add_fab, add_supplier_fab, add_supplier_group_fab;
+
+    // These are taken to make visible and invisible along with FABs
+    TextView add_supplier_action_text, add_supplier_group_action_text;
+
+    // to check whether sub FAB buttons are visible or not.
+    Boolean isAllFabsVisible;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +66,46 @@ public class SupplierActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
+
+        add_fab = findViewById(R.id.add_fab);
+        add_supplier_fab = findViewById(R.id.add_supplier_fab);
+        add_supplier_group_fab = findViewById(R.id.add_supplier_group_fab);
+        add_supplier_action_text = findViewById(R.id.add_supplier_action_text);
+        add_supplier_group_action_text = findViewById(R.id.add_supplier_group_action_text);
+
+
+        // Now set all the FABs and all the action name texts as GONE
+        add_supplier_fab.setVisibility(View.GONE);
+        add_supplier_group_fab.setVisibility(View.GONE);
+        add_supplier_action_text.setVisibility(View.GONE);
+        add_supplier_group_action_text.setVisibility(View.GONE);
+
+        isAllFabsVisible = false;
+
+        add_fab.setOnClickListener(view -> {
+            if (!isAllFabsVisible) {
+                add_supplier_fab.show();
+                add_supplier_group_fab.show();
+                add_supplier_action_text.setVisibility(View.VISIBLE);
+                add_supplier_group_action_text.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            } else {
+                add_supplier_fab.hide();
+                add_supplier_group_fab.hide();
+                add_supplier_action_text.setVisibility(View.GONE);
+                add_supplier_group_action_text.setVisibility(View.GONE);
+                isAllFabsVisible = false;
+            }
+        });
+
+        add_supplier_fab.setOnClickListener(view -> {
+
+
+        });
+
+        add_supplier_group_fab.setOnClickListener(view -> {
+
+        });
 
         supplierList();
     }
