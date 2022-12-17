@@ -17,6 +17,8 @@ public class DashboardModel {
         this.today_balance = today_balance;
     }
 
+    // helper method to get the domain
+
     public String getDomain() {
         return domain;
     }
