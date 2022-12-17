@@ -247,7 +247,6 @@ public class CoustomerActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.customer_group, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("response", response);
                 try {
                     JSONArray array = new JSONArray(response);
                     for (int i = 0; i < array.length(); i++) {

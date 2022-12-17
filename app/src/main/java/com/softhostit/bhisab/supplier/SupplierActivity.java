@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,6 +59,8 @@ public class SupplierActivity extends AppCompatActivity {
     // to check whether sub FAB buttons are visible or not.
     Boolean isAllFabsVisible;
 
+    private ArrayList<String> supplierNameArrayList, supplierIdArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,7 @@ public class SupplierActivity extends AppCompatActivity {
         add_supplier_group_action_text.setVisibility(View.GONE);
 
         isAllFabsVisible = false;
+        supplierList();
 
         add_fab.setOnClickListener(view -> {
             if (!isAllFabsVisible) {
@@ -99,6 +103,85 @@ public class SupplierActivity extends AppCompatActivity {
         });
 
         add_supplier_fab.setOnClickListener(view -> {
+            loadSupplierGroup();
+            // show the dialog to add customer group
+            final Dialog dialog = new Dialog(SupplierActivity.this);
+            dialog.setContentView(R.layout.add_supplier_dialog);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+
+            EditText addSupplierFirstName = dialog.findViewById(R.id.addSupplierFirstName);
+            EditText addSupplierLastName = dialog.findViewById(R.id.addSupplierLastName);
+            EditText addSupplierPhone = dialog.findViewById(R.id.addSupplierPhone);
+            EditText addSupplierCompanyName = dialog.findViewById(R.id.addSupplierCompanyName);
+            EditText addSupplierAddress = dialog.findViewById(R.id.addSupplierAddress);
+            TextView addSupplierGroup = dialog.findViewById(R.id.addSupplierGroup);
+            TextView addSupplierId = dialog.findViewById(R.id.addSupplierId);
+            Button addSupplierButton = dialog.findViewById(R.id.addSupplierButton);
+
+            addSupplierGroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // add customer category dialog start
+                    // get string array of categories from arraylist
+                    String[] supplier = new String[supplierNameArrayList.size()];
+                    for (int i = 0; i < supplierNameArrayList.size(); i++) {
+                        supplier[i] = supplierNameArrayList.get(i);
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SupplierActivity.this);
+                    builder.setTitle("Choose Category")
+                            .setItems(supplier, new DialogInterface.OnClickListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // get selected category id
+                                    String selectedSupplierId = supplierIdArrayList.get(which);
+                                    // get selected category name
+                                    String selectedSupplierName = supplierNameArrayList.get(which);
+                                    // set category name on textview
+                                    addSupplierGroup.setText(selectedSupplierName);
+                                    addSupplierId.setText(selectedSupplierId);
+                                }
+                            })
+                            .show();
+
+                    // add customer category dialog end
+                }
+            });
+
+
+            addSupplierButton.setOnClickListener(view1 -> {
+                String supplierName = addSupplierFirstName.getText().toString();
+                String supplierLastName = addSupplierLastName.getText().toString();
+                String supplierPhone = addSupplierPhone.getText().toString();
+                String supplierCompanyName = addSupplierCompanyName.getText().toString();
+                String supplierAddress = addSupplierAddress.getText().toString();
+                String supplierGroup = addSupplierGroup.getText().toString();
+                String supplierId = (addSupplierId.getText().toString());
+
+                if (supplierName.isEmpty()) {
+                    addSupplierFirstName.setError("Enter Supplier Name");
+                    addSupplierFirstName.requestFocus();
+                } else if (supplierLastName.isEmpty()) {
+                    addSupplierLastName.setError("Enter Supplier Last Name");
+                    addSupplierLastName.requestFocus();
+                } else if (supplierPhone.isEmpty()) {
+                    addSupplierPhone.setError("Enter Supplier Phone");
+                    addSupplierPhone.requestFocus();
+                } else if (supplierCompanyName.isEmpty()) {
+                    addSupplierCompanyName.setError("Enter Supplier Company Name");
+                    addSupplierCompanyName.requestFocus();
+                } else if (supplierAddress.isEmpty()) {
+                    addSupplierAddress.setError("Enter Supplier Address");
+                    addSupplierAddress.requestFocus();
+                } else if (supplierGroup.isEmpty()) {
+                    Toasty.error(SupplierActivity.this, "Select Supplier Group", Toasty.LENGTH_SHORT).show();
+                } else {
+                    addSupplier(supplierName, supplierLastName, supplierPhone, supplierCompanyName, supplierAddress, supplierId);
+                    dialog.dismiss();
+                }
+            });
 
         });
 
@@ -130,7 +213,113 @@ public class SupplierActivity extends AppCompatActivity {
             });
         });
 
-        supplierList();
+
+    }
+
+    private void addSupplier(String supplierName, String supplierLastName, String supplierPhone, String supplierCompanyName, String supplierAddress, String supplierId) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+
+        // add group button progress  dialog
+        ProgressDialog progressDialog = new ProgressDialog(SupplierActivity.this);
+        progressDialog.setMessage("Adding Supplier Group...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.ADD_SUPPLIER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (!jsonObject.getBoolean("error")) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        supplierList();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                    Toasty.error(SupplierActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toasty.error(SupplierActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                params.put("user_id", user_id + "");
+                params.put("fname", supplierName);
+                params.put("lname", supplierLastName);
+                params.put("phone1", supplierPhone);
+                params.put("cname", supplierCompanyName);
+                params.put("address", supplierAddress);
+                params.put("group", supplierId);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void loadSupplierGroup() {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+
+        supplierNameArrayList = new ArrayList<>();
+        supplierIdArrayList = new ArrayList<>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.SUPPLIER_GROUP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        int id = jsonObject.getInt("id");
+                        String name = jsonObject.getString("name");
+                        supplierIdArrayList.add(id + "");
+                        supplierNameArrayList.add(name);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toasty.error(SupplierActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toasty.error(SupplierActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                params.put("user_id", user_id + "");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
 
@@ -144,7 +333,7 @@ public class SupplierActivity extends AppCompatActivity {
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
         int user_id = intent.getIntExtra("user_id", 0);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.SUPPLIER_GROUP, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.SUPPLIER_GROUP_ADD, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -189,7 +378,7 @@ public class SupplierActivity extends AppCompatActivity {
         String username = intent.getStringExtra("username");
 
         // show data in recyclerview
-        supplierModelList  = new ArrayList<>();
+        supplierModelList = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.SUPPLIER_LIST,
                 new Response.Listener<String>() {
                     @Override
@@ -212,6 +401,7 @@ public class SupplierActivity extends AppCompatActivity {
                                     model.setName(productObject.getString("fname"));
                                     model.setPhone(productObject.getString("phone1"));
                                     model.setCname(productObject.getString("cname"));
+                                    model.setGroup(productObject.getString("group"));
                                     model.setAddress(productObject.getString("address"));
                                     supplierModelList.add(model);
 

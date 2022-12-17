@@ -163,42 +163,42 @@ public class DepositModel implements IPrintToPrinter {
         prnMng.printPhoto(image);
         prnMng.getDeviceAddr();
         // Print text as bitmap image
-//        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr(domain, 1, WoosimCmd.ALIGN_CENTER);
-//        prnMng.printStr("Customer Receipt ", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("Customer Receipt ", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr("Contact: " + "01770991502", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr("MD ABDUR RAHMAN", 1, WoosimCmd.ALIGN_CENTER);
-//        prnMng.printNewLine();
+        prnMng.printNewLine();
         printerWordMng wordMng = printerFactory.createPaperMng(context);
         prnMng.printStr("Print at: " + new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault()).format(new Date()), 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Date: " + formatted, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Name: " + fname, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
-//        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr(wordMng.getHorizontalUnderline());
 
 
 
-//        prnMng.printStr("Category: " + in_cat, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr("Category: " + in_cat, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Description: " + des, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("User ID: " + user_id, 1, WoosimCmd.ALIGN_LEFT);
 //
-//        prnMng.printStr("--------------------------------");
-//        prnMng.printStr("  Deposit        RECEIPT", 1, WoosimCmd.ALIGN_CENTER);
-//        prnMng.printStr("--------------------------------");
+        prnMng.printStr("--------------------------------");
+        prnMng.printStr("  Deposit        RECEIPT", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("--------------------------------");
 //
-//        prnMng.printStr("Thank you for your business", 1, WoosimCmd.ALIGN_CENTER);
-//        prnMng.printNewLine();
-//        prnMng.printStr("--------------------------------");
-//        prnMng.printStr("Powered by Soft Host It", 1, WoosimCmd.ALIGN_CENTER);
-//        prnMng.printStr("www.softhostit.com", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("Thank you for your business", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printNewLine();
+        prnMng.printStr("--------------------------------");
+        prnMng.printStr("Powered by Soft Host It", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("www.softhostit.com", 1, WoosimCmd.ALIGN_CENTER);
 //
 //
         prnMng.printNewLine();
-//        prnMng.printStr("Bhisab", 1, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("Bhisab", 1, WoosimCmd.ALIGN_CENTER);
 //        //print barcode
-//        prnMng.printPhoto(bm);
+        prnMng.printPhoto(bm);
         prnMng.printNewLine();
         printEnded(prnMng);
     }

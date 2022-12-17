@@ -5,16 +5,18 @@ public class SupplierModel {
     private String phone;
     private String address;
     private String cname;
+    private String group;
     private int id;
 
     public SupplierModel() {
     }
 
-    public SupplierModel(String name, String phone, String address, String cname, int id) {
+    public SupplierModel(String name, String phone, String address, String cname, String group, int id) {
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.cname = cname;
+        this.group = group;
         this.id = id;
     }
 
@@ -48,6 +50,14 @@ public class SupplierModel {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public int getId() {

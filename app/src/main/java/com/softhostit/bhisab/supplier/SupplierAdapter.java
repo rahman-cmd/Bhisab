@@ -39,8 +39,9 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
         String phone = supplierModel.getPhone();
         String address = supplierModel.getAddress();
         String cname = supplierModel.getCname();
+        String group = supplierModel.getGroup();
 
-        holder.contact_info.setText("" +"সাপ্লাইয়ারঃ "+ name + "\nকম্পানিঃ" + cname + "\nফোনঃ " + phone + "\nঠিকানাঃ " + address);
+        holder.contact_info.setText("" + "সাপ্লাইয়ারঃ " + name + "\nকম্পানিঃ " + cname + "\nফোনঃ " + phone + "\nগ্রুপঃ" + group + "\nঠিকানাঃ " + address);
         holder.contact_info.setPadding(5, 0, 0, 0);
 
         holder.profile_image.setVisibility(View.GONE);
