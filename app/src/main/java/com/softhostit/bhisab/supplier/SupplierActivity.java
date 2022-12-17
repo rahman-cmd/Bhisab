@@ -100,14 +100,87 @@ public class SupplierActivity extends AppCompatActivity {
 
         add_supplier_fab.setOnClickListener(view -> {
 
-
         });
 
         add_supplier_group_fab.setOnClickListener(view -> {
+            // show the dialog to add customer
+            final Dialog dialog = new Dialog(SupplierActivity.this);
+            dialog.setContentView(R.layout.add_customer_group_dialog);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
 
+            EditText addSupplierGroup = dialog.findViewById(R.id.addGroup);
+            addSupplierGroup.setHint("Add Supplier Group");
+            Button addGroupBtn = dialog.findViewById(R.id.addGroupBtn);
+            TextView headerTitle = dialog.findViewById(R.id.headerTitle);
+            headerTitle.setText("Add Supplier Group");
+
+            addGroupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String group = addSupplierGroup.getText().toString().trim();
+                    if (group.isEmpty()) {
+                        addSupplierGroup.setError("Enter Supplier Group Name");
+                        addSupplierGroup.requestFocus();
+                        return;
+                    }
+                    addSupplierGroups(group);
+                    dialog.dismiss();
+                }
+            });
         });
 
         supplierList();
+    }
+
+
+    private void addSupplierGroups(String group) {
+        // add group button progress  dialog
+        ProgressDialog progressDialog = new ProgressDialog(SupplierActivity.this);
+        progressDialog.setMessage("Adding Supplier Group...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.SUPPLIER_GROUP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (!jsonObject.getBoolean("error")) {
+                        progressDialog.dismiss();
+                        Toasty.success(SupplierActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                    } else {
+                        progressDialog.dismiss();
+                        Toasty.error(SupplierActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                    Toasty.error(SupplierActivity.this, "Error: " + e.toString(), Toasty.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toasty.error(SupplierActivity.this, "Error: " + error.toString(), Toasty.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", group);
+                params.put("user_id", user_id + "");
+                params.put("username", username);
+                params.put("domain", domain);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(SupplierActivity.this).addToRequestQueue(stringRequest);
     }
 
     private void supplierList() {

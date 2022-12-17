@@ -218,6 +218,7 @@ public class CoustomerActivity extends AppCompatActivity {
 
             EditText addGroup = dialog.findViewById(R.id.addGroup);
             Button addGroupBtn = dialog.findViewById(R.id.addGroupBtn);
+            addGroup.setHint("Enter Customer Group Name");
 
             addGroupBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
