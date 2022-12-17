@@ -9,8 +9,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.softhostit.bhisab.R;
 import com.softhostit.bhisab.pdf_report.BarCodeEncoder;
+import com.softhostit.bhisab.utils.IBixolonCanvasConst;
 import com.softhostit.bhisab.utils.IPrintToPrinter;
 import com.softhostit.bhisab.utils.WoosimPrnMng;
+import com.softhostit.bhisab.utils.printerFactory;
+import com.softhostit.bhisab.utils.printerWordMng;
 import com.woosim.printer.WoosimCmd;
 
 import java.text.SimpleDateFormat;
@@ -155,9 +158,10 @@ public class DepositModel implements IPrintToPrinter {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
         String formatted = simpleDateFormat.format(date1);
 
-        Bitmap image = Bitmap.createScaledBitmap(bm, 300, 50, false);
+        Bitmap image = Bitmap.createScaledBitmap(bm, 400, 48, false);
 
         prnMng.printPhoto(image);
+        prnMng.getDeviceAddr();
         // Print text as bitmap image
 //        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr(domain, 1, WoosimCmd.ALIGN_CENTER);
@@ -165,12 +169,16 @@ public class DepositModel implements IPrintToPrinter {
 //        prnMng.printStr("Contact: " + "01770991502", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr("MD ABDUR RAHMAN", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printNewLine();
+        printerWordMng wordMng = printerFactory.createPaperMng(context);
         prnMng.printStr("Print at: " + new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault()).format(new Date()), 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Date: " + formatted, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Name: " + fname, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Invoice ID: " + id, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Account: " + account, 1, WoosimCmd.ALIGN_LEFT);
         prnMng.printStr("Amount: " + amount, 1, WoosimCmd.ALIGN_LEFT);
+        prnMng.printStr(wordMng.getHorizontalUnderline());
+
+
 
 //        prnMng.printStr("Category: " + in_cat, 1, WoosimCmd.ALIGN_LEFT);
 //        prnMng.printStr("Description: " + des, 1, WoosimCmd.ALIGN_LEFT);

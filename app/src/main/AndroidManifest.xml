@@ -26,6 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".pdf_report.ViewPDFActivity"/>
+        <activity
             android:name=".DeviceListActivity"
             android:exported="false">
             <meta-data

@@ -63,4 +63,8 @@ public class Constant {
     public static final String PRODUCT_DOMAIN = "domain";
 
 
+    // deposit list
+    public static final String ORDER_RECEIPT = "order_receipt";
+
+
 }

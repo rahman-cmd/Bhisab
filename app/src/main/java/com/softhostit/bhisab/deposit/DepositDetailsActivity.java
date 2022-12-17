@@ -1,5 +1,6 @@
 package com.softhostit.bhisab.deposit;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static com.softhostit.bhisab.DeviceListActivity.EXTRA_DEVICE_ADDRESS;
 
 import androidx.annotation.Nullable;
@@ -8,14 +9,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.DeviceListActivity;
 import com.softhostit.bhisab.R;
+import com.softhostit.bhisab.pdf_report.BarCodeEncoder;
+import com.softhostit.bhisab.pdf_report.PDFTemplate;
 import com.softhostit.bhisab.utils.IPrintToPrinter;
 import com.softhostit.bhisab.utils.PrefMng;
 import com.softhostit.bhisab.utils.Tools;
@@ -23,14 +35,20 @@ import com.softhostit.bhisab.utils.WoosimPrnMng;
 import com.softhostit.bhisab.utils.printerFactory;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 
 public class DepositDetailsActivity extends AppCompatActivity {
-    TextView total_amount, deposit_info;
+    TextView total_amount, deposit_info, btn_pdf_receipt;
     Button btn_thermal_printer, disconnect_printer;
     private static final int REQUEST_CONNECT = 100;
+
+    private PDFTemplate templatePDF;
+    Bitmap bm = null;
+    String longText, shortText, userName;
+    private String[] header = {"Description", "Price"};
 
     private WoosimPrnMng mPrnMng = null;
 
@@ -44,6 +62,8 @@ public class DepositDetailsActivity extends AppCompatActivity {
         deposit_info = findViewById(R.id.deposit_info);
         btn_thermal_printer = findViewById(R.id.btn_thermal_printer);
         disconnect_printer = findViewById(R.id.disconnect_printer);
+        btn_pdf_receipt = findViewById(R.id.btn_pdf_receipt);
+
         getSupportActionBar().setTitle("Deposit Details");
 
         Intent intent = getIntent();
@@ -64,8 +84,50 @@ public class DepositDetailsActivity extends AppCompatActivity {
         String formatted = simpleDateFormat.format(date1);
 
 
+
+        //for Android 11
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Intent intent1 = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent1.setData(uri);
+                startActivity(intent1);
+            }
+        }
+
+        BarCodeEncoder qrCodeEncoder = new BarCodeEncoder();
+        try {
+            bm = qrCodeEncoder.encodeAsBitmap(domain, BarcodeFormat.CODE_128, 600, 300);
+        } catch (WriterException e) {
+            Log.d("Data", e.toString());
+        }
+
+
+        //for pdf report
+        shortText = "Customer Name: " + fname;
+        longText = "< Have a nice day. Visit again >";
+        templatePDF = new PDFTemplate(getApplicationContext());
+
+
         total_amount.setText("টাকার পরিমানঃ " + amount);
         deposit_info.setText("কাস্টমার নাম : " + fname + "\nতারিখ: " + formatted + "\nভা.নং : " + id + "\nবিবরণ : " + des + "\nখাত : " + in_cat);
+
+        btn_pdf_receipt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                templatePDF.openDocument();
+                templatePDF.addMetaData(Constant.ORDER_RECEIPT, Constant.ORDER_RECEIPT, "Bhisab");
+                templatePDF.addTitle(fname, formatted+ "\n Email: " + id + "\nContact: " + des + "\nInvoice ID:" + in_cat, "Total Amount: " + amount);
+                templatePDF.addParagraph(shortText);
+                templatePDF.createTable(header, getPDFReceipt());
+                templatePDF.addImage(bm);
+                templatePDF.addRightParagraph(longText);
+                templatePDF.closeDocument();
+                templatePDF.viewPDF();
+            }
+        });
+
+
 
         btn_thermal_printer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +196,11 @@ public class DepositDetailsActivity extends AppCompatActivity {
 
     }
 
+    private ArrayList<String[]> getPDFReceipt() {
+        ArrayList<String[]> rows = new ArrayList<>();
+        rows.add(new String[]{"Customer Name"});
+        return rows;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
