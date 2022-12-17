@@ -164,25 +164,25 @@ public class DepositActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // add customer category dialog start
                 // get string array of categories from arraylist
-                String[] depositAccount = new String[depositCategoryArrayList.size()];
+                String[] depositCatAccount = new String[depositCategoryArrayList.size()];
                 for (int i = 0; i < depositCategoryArrayList.size(); i++) {
-                    depositAccount[i] = depositCategoryArrayList.get(i);
+                    depositCatAccount[i] = depositCategoryArrayList.get(i);
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(DepositActivity.this);
                 builder.setTitle("Choose Account")
-                        .setItems(depositAccount, new DialogInterface.OnClickListener() {
+                        .setItems(depositCatAccount, new DialogInterface.OnClickListener() {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // get selected category id
-                                String selectedAccountId = depositCategoryIdArrayList.get(which);
+                                String selectedDAccountId = depositCategoryIdArrayList.get(which);
                                 String selectedUserId = depositCategoryUserIdArrayList.get(which);
                                 // get selected category name
-                                String selectedAccountName = depositCategoryArrayList.get(which);
+                                String selectedDAccountName = depositCategoryArrayList.get(which);
                                 // set category name on textview
-                                addDepositIncomeAccountNumber.setText(selectedAccountName);
-                                addDepositAccountId.setText(selectedAccountId);
+                                addDepositIncomeAccountNumber.setText(selectedDAccountName);
+                                addDepositAccountId.setText(selectedDAccountId);
                             }
                         })
                         .show();
@@ -314,29 +314,28 @@ public class DepositActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
     private void loadDepositCategory() {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+
         // show list of deposit category
         depositCategoryArrayList = new ArrayList<>();
         depositCategoryIdArrayList = new ArrayList<>();
         depositCategoryUserIdArrayList = new ArrayList<>();
 
-        Intent intent = getIntent();
-        String domain = intent.getStringExtra("domain");
-        String username = intent.getStringExtra("username");
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CATEGORY_ITEM, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("categories");
+//                    JSONArray jsonArray = new JSONArray(response);
+
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-
 
                         int id = object.getInt("id");
                         int user_id = object.getInt("user_id");
