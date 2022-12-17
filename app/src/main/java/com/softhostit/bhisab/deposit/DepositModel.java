@@ -195,9 +195,8 @@ public class DepositModel implements IPrintToPrinter {
 //
         prnMng.printNewLine();
 //        //print barcode
-        Bitmap image = Bitmap.createScaledBitmap(bm, 400, 48, false);
-        prnMng.printPhoto(image);
-        prnMng.printNewLine();
+//        Bitmap image = Bitmap.createScaledBitmap(bm, 400, 48, false);
+//        prnMng.printPhoto(image);
         printEnded(prnMng);
     }
 
