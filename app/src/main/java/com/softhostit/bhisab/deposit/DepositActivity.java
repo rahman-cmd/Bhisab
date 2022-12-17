@@ -156,6 +156,8 @@ public class DepositActivity extends AppCompatActivity {
         TextView addDepositBankId = dialog.findViewById(R.id.addDepositBankId);
 
         TextView addDepositIncomeAccountNumber = dialog.findViewById(R.id.addDepositIncomeAccountNumber);
+        TextView addDepositAccountId = dialog.findViewById(R.id.addDepositAccountId);
+
 
         addDepositIncomeAccountNumber.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +182,7 @@ public class DepositActivity extends AppCompatActivity {
                                 String selectedAccountName = depositCategoryArrayList.get(which);
                                 // set category name on textview
                                 addDepositIncomeAccountNumber.setText(selectedAccountName);
-//                                addDepositBankId.setText(selectedAccountId);
+                                addDepositAccountId.setText(selectedAccountId);
                             }
                         })
                         .show();
@@ -269,9 +271,11 @@ public class DepositActivity extends AppCompatActivity {
                 String date = addDepositDate.getText().toString().trim();
                 String customerName = addDepositCustomerName.getText().toString().trim();
                 String addDepositBank = addDepositBankName.getText().toString().trim();
+                String addDepositIncomeAccount = addDepositIncomeAccountNumber.getText().toString().trim();
 
                 int bankId = Integer.parseInt(addDepositBankId.getText().toString().trim());
                 int id = Integer.parseInt(addDepositCustomerId.getText().toString().trim());
+                int addDepositId = Integer.parseInt(addDepositAccountId.getText().toString().trim());
 
                 if (customerName.isEmpty()) {
                     addDepositCustomerName.setError("Select customer");
@@ -282,6 +286,12 @@ public class DepositActivity extends AppCompatActivity {
                 if (addDepositBank.isEmpty()) {
                     addDepositBankName.setError("Select account");
                     addDepositBankName.requestFocus();
+                    return;
+                }
+
+                if (addDepositIncomeAccount.isEmpty()) {
+                    addDepositIncomeAccountNumber.setError("Select account");
+                    addDepositIncomeAccountNumber.requestFocus();
                     return;
                 }
 
@@ -298,7 +308,7 @@ public class DepositActivity extends AppCompatActivity {
                 }
 
 
-                addDeposit(deposit, note, date, id, bankId);
+                addDeposit(deposit, note, date, id, bankId, addDepositId);
                 dialog.dismiss();
             }
         });
@@ -473,7 +483,7 @@ public class DepositActivity extends AppCompatActivity {
 
     }
 
-    private void addDeposit(String deposit, String note, String date, int id, int bankId) {
+    private void addDeposit(String deposit, String note, String date, int id, int bankId, int addDepositId) {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
@@ -523,7 +533,7 @@ public class DepositActivity extends AppCompatActivity {
                 params.put("account", bankId + "");
                 params.put("des", note);
                 params.put("amount", deposit);
-                params.put("in_cat", "1654");
+                params.put("in_cat", addDepositId + "");
 
 
                 return params;
