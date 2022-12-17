@@ -158,12 +158,12 @@ public class DepositModel implements IPrintToPrinter {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
         String formatted = simpleDateFormat.format(date1);
 
-        Bitmap image = Bitmap.createScaledBitmap(bm, 400, 48, false);
+
 
 
         prnMng.getDeviceAddr();
         // Print text as bitmap image
-        prnMng.printStr("Soft Host It", 2, WoosimCmd.ALIGN_CENTER);
+        prnMng.printStr("Bhisab", 2, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr(domain, 1, WoosimCmd.ALIGN_CENTER);
         prnMng.printStr("Customer Receipt ", 1, WoosimCmd.ALIGN_CENTER);
 //        prnMng.printStr("Contact: " + "01770991502", 1, WoosimCmd.ALIGN_CENTER);
@@ -186,17 +186,16 @@ public class DepositModel implements IPrintToPrinter {
         prnMng.printStr("--------------------------------");
         prnMng.printStr("  Deposit        RECEIPT", 1, WoosimCmd.ALIGN_CENTER);
         prnMng.printStr("--------------------------------");
-//
-        prnMng.printStr("Thank you for your business", 1, WoosimCmd.ALIGN_CENTER);
-        prnMng.printNewLine();
-        prnMng.printStr("--------------------------------");
+
         prnMng.printStr("Powered by Soft Host It", 1, WoosimCmd.ALIGN_CENTER);
         prnMng.printStr("www.softhostit.com", 1, WoosimCmd.ALIGN_CENTER);
 //
+        prnMng.printStr("--------------------------------");
+        prnMng.printStr("Thank you for your business", 1, WoosimCmd.ALIGN_CENTER);
 //
         prnMng.printNewLine();
-        prnMng.printStr("Bhisab", 1, WoosimCmd.ALIGN_CENTER);
 //        //print barcode
+        Bitmap image = Bitmap.createScaledBitmap(bm, 400, 48, false);
         prnMng.printPhoto(image);
         prnMng.printNewLine();
         printEnded(prnMng);
