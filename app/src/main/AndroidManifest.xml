@@ -25,8 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".pdf_report.ViewPDFActivity"/>
+        <activity android:name=".supplier.SupplierActivity"/>
+        <activity android:name=".pdf_report.ViewPDFActivity" />
         <activity
             android:name=".DeviceListActivity"
             android:exported="false">

@@ -59,6 +59,7 @@ public class DepositActivity extends AppCompatActivity {
     private DepositAdapter depositAdapter;
 
     private ArrayList<String> customerNameArrayList, customerIdArrayList;
+    private ArrayList<String> depositCategoryArrayList, depositCategoryIdArrayList, depositCategoryUserIdArrayList;
 
     private ArrayList<String> bankIdArrayList, bankNameArrayList;
     ProgressBar progressBar;
@@ -136,6 +137,7 @@ public class DepositActivity extends AppCompatActivity {
     private void showAddDepositDialog() {
         loadCustomer();
         loadBankList();
+        loadDepositCategory();
         // show dialog
         final Dialog dialog = new Dialog(DepositActivity.this);
         dialog.setContentView(R.layout.add_deposit_dialog);
@@ -152,6 +154,40 @@ public class DepositActivity extends AppCompatActivity {
 
         TextView addDepositBankName = dialog.findViewById(R.id.addDepositBankName);
         TextView addDepositBankId = dialog.findViewById(R.id.addDepositBankId);
+
+        TextView addDepositIncomeAccountNumber = dialog.findViewById(R.id.addDepositIncomeAccountNumber);
+
+        addDepositIncomeAccountNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // add customer category dialog start
+                // get string array of categories from arraylist
+                String[] depositAccount = new String[depositCategoryArrayList.size()];
+                for (int i = 0; i < depositCategoryArrayList.size(); i++) {
+                    depositAccount[i] = depositCategoryArrayList.get(i);
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DepositActivity.this);
+                builder.setTitle("Choose Account")
+                        .setItems(depositAccount, new DialogInterface.OnClickListener() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // get selected category id
+                                String selectedAccountId = depositCategoryIdArrayList.get(which);
+                                String selectedUserId = depositCategoryUserIdArrayList.get(which);
+                                // get selected category name
+                                String selectedAccountName = depositCategoryArrayList.get(which);
+                                // set category name on textview
+                                addDepositIncomeAccountNumber.setText(selectedAccountName);
+//                                addDepositBankId.setText(selectedAccountId);
+                            }
+                        })
+                        .show();
+
+                // add customer category dialog end
+            }
+        });
 
         addDepositCustomerName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +307,56 @@ public class DepositActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void loadDepositCategory() {
+        // show list of deposit category
+        depositCategoryArrayList = new ArrayList<>();
+        depositCategoryIdArrayList = new ArrayList<>();
+        depositCategoryUserIdArrayList = new ArrayList<>();
+
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CATEGORY_ITEM, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+
+                        int id = object.getInt("id");
+                        int user_id = object.getInt("user_id");
+                        String cattitle = object.getString("name");
+
+                        depositCategoryIdArrayList.add(String.valueOf(id));
+                        depositCategoryUserIdArrayList.add(String.valueOf(user_id));
+                        depositCategoryArrayList.add(cattitle);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DepositActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private void loadBankList() {
