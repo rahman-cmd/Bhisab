@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -119,7 +120,6 @@ public class ProductActivity extends AppCompatActivity {
 
                         // add product to database
                         addProduct(name, quantity, description, sell_price, buy_price, barcode);
-                        showAllProduct();
                         dialog.dismiss();
                     }
                 });
@@ -141,7 +141,12 @@ public class ProductActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    Log.d("responsedata", response);
+                    if (!jsonObject.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        showAllProduct();
+                    } else {
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
 
 
                 } catch (JSONException e) {

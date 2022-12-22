@@ -36,9 +36,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
         Model model = modelList.get(position);
 
-        holder.productName.setText("" + model.getName());
-        holder.productSellPrice.setText("" + model.getSell_price());
-        holder.productBuyPrice.setText("" + model.getBuy_price());
+        holder.productName.setText("Name: " + model.getName());
+        holder.productSellPrice.setText("Price: " + model.getSell_price());
+        holder.productBuyPrice.setText("Buy Price: " + model.getBuy_price());
+        holder.productStock.setText("Stock: " + model.getOpenstock());
 
 
         String image = model.getImages();
