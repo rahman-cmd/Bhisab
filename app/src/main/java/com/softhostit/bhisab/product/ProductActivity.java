@@ -134,7 +134,7 @@ public class ProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
-        String user_id = intent.getStringExtra("user_id");
+        int user_id = intent.getIntExtra("user_id", 0);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.ADD_PRODUCT, new Response.Listener<String>() {
             @Override
@@ -160,12 +160,12 @@ public class ProductActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("domain", domain);
                 params.put("username", username);
-                params.put("user_id", user_id);
+                params.put("user_id", user_id + "");
                 params.put("name", name);
-                params.put("openstock", String.valueOf(quantity));
-                params.put("description", description);
-                params.put("sell_price", String.valueOf(sell_price));
-                params.put("buy_price", String.valueOf(buy_price));
+                params.put("openstock", quantity + "");
+                params.put("des", description);
+                params.put("sell_price", sell_price + "");
+                params.put("buy_price", buy_price + "");
                 params.put("barcode", barcode);
                 return params;
             }
