@@ -29,6 +29,11 @@ public class Constant {
     public static final String ADD_SUPPLIER = BASE_URL + "supplier/add_sup.php";
     public static final String SUPPLIER_GROUP = BASE_URL + "supplier/group.php";
 
+
+    public static final String ADD_PRODUCT = BASE_URL + "product/add_product.php";
+
+
+
     //For retrofit base url must end with /
 //    public static final String PRODUCT_IMAGE_URL = "http://bhishab.palashhossain.com/product_images/";
 

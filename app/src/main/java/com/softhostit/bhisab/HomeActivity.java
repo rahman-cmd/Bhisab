@@ -32,6 +32,7 @@ import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.POS.PosActivity;
 import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.deposit.DepositActivity;
+import com.softhostit.bhisab.product.ProductActivity;
 import com.softhostit.bhisab.supplier.SupplierActivity;
 
 import org.json.JSONException;
@@ -48,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 public class HomeActivity extends AppCompatActivity  {
 
     BottomNavigationView nav_view;
-    CardView posPrint, coustomer, deposit, expense, report, setting, supplierBtn;
+    CardView posPrint, coustomer, deposit, expense, report, setting, supplierBtn, addProduct;
     TextView dailySales, today_expense, today_receive, today_balance, c_name;
 
     User user = SharedPrefManager.getInstance(this).getUser();
@@ -105,6 +106,17 @@ public class HomeActivity extends AppCompatActivity  {
             startActivity(intent);
             finish();
         }
+
+        addProduct = findViewById(R.id.addProduct);
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
+                intent.putExtra("domain", domain);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
 
 
         posPrint = findViewById(R.id.posPrint);
