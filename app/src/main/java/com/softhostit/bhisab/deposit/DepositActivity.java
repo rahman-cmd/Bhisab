@@ -266,6 +266,7 @@ public class DepositActivity extends AppCompatActivity {
         addDepositBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                depositList();
                 String deposit = addDepositEt.getText().toString().trim();
                 String note = addDepositNote.getText().toString().trim();
                 String date = addDepositDate.getText().toString().trim();
@@ -487,7 +488,8 @@ public class DepositActivity extends AppCompatActivity {
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
         int user_id = intent.getIntExtra("user_id", 0);
-        String account = depositModels.get(0).getAccount();
+        String account = intent.getStringExtra("account");
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.DEPOSIT_CREATE, new Response.Listener<String>() {
             @Override
