@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,9 +67,9 @@ public class DepositActivity extends AppCompatActivity {
     ImageView noData;
     Boolean isAllFabsVisible;
     RecyclerView deposit_recycler_view;
-    FloatingActionButton addCategory, add_fab, addDeposit;
+    FloatingActionButton addCategory, add_fab, addDeposit, addDepositBankAccount;
 
-    TextView add_deposit_action_text, add_category_action_text;
+    TextView add_deposit_action_text, add_category_action_text, add_deposit_bank_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +87,20 @@ public class DepositActivity extends AppCompatActivity {
         addCategory = findViewById(R.id.addCategory);
         add_fab = findViewById(R.id.add_fab);
         addDeposit = findViewById(R.id.addDeposit);
+        addDepositBankAccount = findViewById(R.id.addDepositBankAccount);
 
         // Also register the action name text, of all the FABs.
         add_deposit_action_text = findViewById(R.id.add_deposit_action_text);
         add_category_action_text = findViewById(R.id.add_category_action_text);
+        add_deposit_bank_text = findViewById(R.id.add_deposit_bank_text);
 
         // Now set all the FABs and all the action name texts as GONE
         addCategory.setVisibility(View.GONE);
         addDeposit.setVisibility(View.GONE);
+        addDepositBankAccount.setVisibility(View.GONE);
         add_deposit_action_text.setVisibility(View.GONE);
         add_category_action_text.setVisibility(View.GONE);
+        add_deposit_bank_text.setVisibility(View.GONE);
 
         isAllFabsVisible = false;
 
@@ -103,14 +108,18 @@ public class DepositActivity extends AppCompatActivity {
             if (!isAllFabsVisible) {
                 addCategory.show();
                 addDeposit.show();
+                addDepositBankAccount.show();
                 add_deposit_action_text.setVisibility(View.VISIBLE);
                 add_category_action_text.setVisibility(View.VISIBLE);
+                add_deposit_bank_text.setVisibility(View.VISIBLE);
                 isAllFabsVisible = true;
             } else {
                 addCategory.hide();
                 addDeposit.hide();
+                addDepositBankAccount.hide();
                 add_deposit_action_text.setVisibility(View.GONE);
                 add_category_action_text.setVisibility(View.GONE);
+                add_deposit_bank_text.setVisibility(View.GONE);
                 isAllFabsVisible = false;
             }
         });
@@ -129,8 +138,101 @@ public class DepositActivity extends AppCompatActivity {
             }
         });
 
+        addDepositBankAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddDepositBankAccountDialog();
+            }
+        });
+
         depositList();
 
+
+    }
+
+    private void showAddDepositBankAccountDialog() {
+        Dialog dialog = new Dialog(DepositActivity.this);
+        dialog.setContentView(R.layout.add_deposit_bank_account_dialog);
+        dialog.setTitle("Add Bank Account");
+
+        EditText bank_name = dialog.findViewById(R.id.addBankName);
+        Button addBankBtn = dialog.findViewById(R.id.addBankBtn);
+
+        addBankBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String bankName = bank_name.getText().toString();
+
+                if (bankName.isEmpty()) {
+                    bank_name.setError("Bank Name is required");
+                    bank_name.requestFocus();
+                    return;
+                }
+
+
+                addDepositBankAccount(bankName);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void addDepositBankAccount(String bankName) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int userId = intent.getIntExtra("user_id", 0);
+
+        // show the loading progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(DepositActivity.this);
+        progressDialog.setMessage("Adding Bank Account...");
+        progressDialog.show();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.BANK_CREATE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (!jsonObject.getBoolean("error")) {
+//                        Toasty.success(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        depositList();
+                    } else {
+                        progressDialog.dismiss();
+                        Toasty.error(DepositActivity.this, jsonObject.getString("message"), Toasty.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                    Toasty.error(DepositActivity.this, "Error: " + e.toString(), Toasty.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toasty.error(DepositActivity.this, "Error: " + error.toString(), Toasty.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("acctitle", bankName);
+                params.put("user_id", userId + "");
+                params.put("des", "");
+                params.put("ini_balan", "");
+                params.put("acc_number", "");
+                params.put("con_per", "");
+                params.put("phone", "");
+                params.put("username", username);
+                params.put("domain", domain);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(DepositActivity.this).addToRequestQueue(stringRequest);
 
     }
 

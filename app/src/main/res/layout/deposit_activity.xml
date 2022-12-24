@@ -103,25 +103,53 @@
         android:layout_marginBottom="24dp"
         android:visibility="visible"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/addCategory"
-        app:layout_constraintEnd_toEndOf="@+id/addCategory"
-        app:layout_constraintStart_toStartOf="@+id/addCategory"
+        app:layout_constraintBottom_toTopOf="@+id/addDepositBankAccount"
+        app:layout_constraintEnd_toEndOf="@+id/addDepositBankAccount"
+        app:layout_constraintStart_toStartOf="@+id/addDepositBankAccount"
         app:srcCompat="@drawable/ic_person" />
 
     <TextView
-        android:padding="8dp"
-        android:background="#03D9C5"
-        android:visibility="visible"
         android:id="@+id/add_deposit_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:background="#03D9C5"
+        android:padding="8dp"
         android:text="Add Deposit"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/addDeposit"
         app:layout_constraintEnd_toStartOf="@+id/addDeposit"
         app:layout_constraintTop_toTopOf="@+id/addDeposit" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addDepositBankAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/addCategory"
+        app:layout_constraintEnd_toEndOf="@+id/addCategory"
+        app:layout_constraintStart_toStartOf="@+id/addCategory"
+        app:srcCompat="@drawable/ic_account_balanc" />
+
+    <TextView
+        android:id="@+id/add_deposit_bank_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="#03D9C5"
+        android:padding="8dp"
+        android:text="Add Deposit Account"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/addDepositBankAccount"
+        app:layout_constraintEnd_toStartOf="@+id/addDepositBankAccount"
+        app:layout_constraintTop_toTopOf="@+id/addDepositBankAccount" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCategory"
@@ -136,16 +164,16 @@
         app:srcCompat="@drawable/ic_category" />
 
     <TextView
-        android:padding="8dp"
-        android:background="#03D9C5"
-        android:visibility="visible"
         android:id="@+id/add_category_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Add Category"
+        android:background="#03D9C5"
+        android:padding="8dp"
+        android:text="Add Income Account"
         android:textColor="#000000"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/addCategory"
         app:layout_constraintEnd_toStartOf="@+id/addCategory"
         app:layout_constraintTop_toTopOf="@+id/addCategory" />

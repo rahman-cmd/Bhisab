@@ -41,6 +41,7 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+        getSupportActionBar().setTitle("Expense");
 
 
         expenseRecyclerView = findViewById(R.id.expenseRecyclerView);
