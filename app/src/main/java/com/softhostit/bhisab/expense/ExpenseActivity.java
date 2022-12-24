@@ -234,14 +234,12 @@ public class ExpenseActivity extends AppCompatActivity {
                 String addExpenseAmountInt = addExpenseAmount.getText().toString().trim();
 
                 if (expenseName.isEmpty()) {
-                    addExpenseName.setError("Expense Name is required");
-                    addExpenseName.requestFocus();
+                    Toasty.error(ExpenseActivity.this, "Sector Name is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (expenseBankName.isEmpty()) {
-                    addExpenseBankName.setError("Expense Bank Name is required");
-                    addExpenseBankName.requestFocus();
+                    Toasty.error(ExpenseActivity.this, "Expense Bank Name is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -252,8 +250,7 @@ public class ExpenseActivity extends AppCompatActivity {
                 }
 
                 if (expenseDate.isEmpty()) {
-                    addExpenseDate.setError("Expense Date is required");
-                    addExpenseDate.requestFocus();
+                    Toasty.error(ExpenseActivity.this, "Expense Date is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
