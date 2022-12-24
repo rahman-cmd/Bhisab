@@ -45,9 +45,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
         holder.expenseName.setText("খাতঃ " + expenseModel.getIn_cat());
         holder.expenseDate.setText("তারিখঃ " + formatted);
-        holder.expenseAmount.setText("অ্যাকাউন্টঃ " + expenseModel.getAmount());
-        holder.expenseAccount.setText("বিবরণঃ " + expenseModel.getAccount());
-        holder.expenseDescription.setText("টাকার পরিমানঃ " + expenseModel.getDes());
+        holder.expenseAmount.setText("টাকার পরিমানঃ " + expenseModel.getAmount());
+        holder.expenseAccount.setText("অ্যাকাউন্টঃ " + expenseModel.getAccount());
+        holder.expenseDescription.setText("বিবরণঃ " + expenseModel.getDes());
 
     }
 

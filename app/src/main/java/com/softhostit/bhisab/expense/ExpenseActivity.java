@@ -12,7 +12,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,9 +28,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
-import com.softhostit.bhisab.coustomer.CustomerAdapter;
-import com.softhostit.bhisab.coustomer.CustomerModel;
-import com.softhostit.bhisab.deposit.DepositActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,8 +177,14 @@ public class ExpenseActivity extends AppCompatActivity {
                 builder.setItems(category, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        addExpenseName.setText(category[which]);
-                        addExpenseNameId.setText(categoryIdArrayList.get(which));
+                        // get selected category id
+                        String selectedExpenseId = categoryIdArrayList.get(which);
+                        // get selected category name
+                        String selectedExpenseName = categoryNameArrayList.get(which);
+                        // set category name on textview
+                        addExpenseName.setText(selectedExpenseName);
+                        addExpenseNameId.setText(selectedExpenseId);
+
                     }
                 });
                 builder.show();
@@ -227,8 +229,8 @@ public class ExpenseActivity extends AppCompatActivity {
                 String expenseDate = addExpenseDate.getText().toString();
                 String expenseDescription = addExpenseDescription.getText().toString();
 
-                int addExpenseId = Integer.parseInt(addExpenseNameId.getText().toString().trim());
-                int addExpenseBankAccountId = Integer.parseInt(addExpenseBankId.getText().toString().trim());
+                String addExpenseId = addExpenseNameId.getText().toString().trim();
+                String addExpenseBankAccountId = addExpenseBankId.getText().toString().trim();
                 String addExpenseAmountInt = addExpenseAmount.getText().toString().trim();
 
                 if (expenseName.isEmpty()) {
@@ -286,7 +288,7 @@ public class ExpenseActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void addExpense(int addExpenseId, int addExpenseBankAccountId, String addExpenseAmountInt, String expenseDate, String expenseDescription) {
+    private void addExpense(String addExpenseId, String addExpenseBankAccountId, String addExpenseAmountInt, String expenseDate, String expenseDescription) {
         Intent intent = getIntent();
         String domain = intent.getStringExtra("domain");
         String username = intent.getStringExtra("username");
@@ -351,13 +353,38 @@ public class ExpenseActivity extends AppCompatActivity {
     }
 
     private void showAddCategoryAlertDialog() {
+        Dialog dialog = new Dialog(ExpenseActivity.this);
+        dialog.setContentView(R.layout.add_expense_cat_dialog);
 
+        EditText sector_name = dialog.findViewById(R.id.sector_name);
+        Button addSectorBtn = dialog.findViewById(R.id.addSectorBtn);
+
+        addSectorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sector = sector_name.getText().toString();
+
+                if (sector.isEmpty()) {
+                    sector_name.setError("Sector Name is required");
+                    sector_name.requestFocus();
+                    return;
+                }
+
+
+                addSector(sector);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void addSector(String sector) {
     }
 
     private void showAddDepositBankAccountDialog() {
         Dialog dialog = new Dialog(ExpenseActivity.this);
         dialog.setContentView(R.layout.add_deposit_bank_account_dialog);
-        dialog.setTitle("Add Bank Account");
 
         EditText bank_name = dialog.findViewById(R.id.addBankName);
         Button addBankBtn = dialog.findViewById(R.id.addBankBtn);
