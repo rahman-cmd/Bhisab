@@ -25,6 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <activity android:name=".expense.ExpenseActivity"/>
         <activity android:name=".product.ProductActivity" />
         <activity android:name=".supplier.SupplierActivity" />
         <activity android:name=".pdf_report.ViewPDFActivity" />

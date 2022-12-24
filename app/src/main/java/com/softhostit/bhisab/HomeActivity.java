@@ -32,6 +32,7 @@ import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.POS.PosActivity;
 import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.deposit.DepositActivity;
+import com.softhostit.bhisab.expense.ExpenseActivity;
 import com.softhostit.bhisab.product.ProductActivity;
 import com.softhostit.bhisab.supplier.SupplierActivity;
 
@@ -112,6 +113,18 @@ public class HomeActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
+                intent.putExtra("domain", domain);
+                intent.putExtra("username", username);
+                intent.putExtra("user_id", id);
+                startActivity(intent);
+            }
+        });
+
+        expense = findViewById(R.id.expense);
+        expense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ExpenseActivity.class);
                 intent.putExtra("domain", domain);
                 intent.putExtra("username", username);
                 intent.putExtra("user_id", id);
