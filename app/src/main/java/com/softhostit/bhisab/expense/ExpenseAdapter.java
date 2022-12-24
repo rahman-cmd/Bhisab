@@ -43,13 +43,11 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
         String formatted = simpleDateFormat.format(date1);
 
-        holder.expenseName.setText(expenseModel.getIn_cat());
-        holder.expenseAmount.setText(expenseModel.getAmount());
-        holder.expenseDate.setText(formatted);
-        holder.expenseAccount.setText(expenseModel.getAccount());
-        holder.expenseDescription.setText(expenseModel.getDes());
-
-
+        holder.expenseName.setText("খাতঃ " + expenseModel.getIn_cat());
+        holder.expenseDate.setText("তারিখঃ " + formatted);
+        holder.expenseAmount.setText("অ্যাকাউন্টঃ " + expenseModel.getAmount());
+        holder.expenseAccount.setText("বিবরণঃ " + expenseModel.getAccount());
+        holder.expenseDescription.setText("টাকার পরিমানঃ " + expenseModel.getDes());
 
     }
 

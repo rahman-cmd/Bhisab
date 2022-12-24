@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.AuthFailureError;
@@ -55,13 +56,14 @@ public class ExpenseActivity extends AppCompatActivity {
         String username = intent.getStringExtra("username");
 
         expenseModelList = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.CLIENT_LIST,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.EXPENSE_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             //converting response to json array
                             JSONArray array = new JSONArray(response);
+                            Log.d("response_array", array.toString());
                             //traversing through all the object
                             for (int i = 0; i < array.length(); i++) {
                                 try {
@@ -87,7 +89,7 @@ public class ExpenseActivity extends AppCompatActivity {
                             expenseAdapter = new ExpenseAdapter(getApplicationContext(), expenseModelList);
                             // set adapter to recyclerview
                             expenseRecyclerView.setHasFixedSize(true);
-                            expenseRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            expenseRecyclerView.setLayoutManager(new LinearLayoutManager(ExpenseActivity.this));
                             expenseRecyclerView.setAdapter(expenseAdapter);
 
                         } catch (JSONException e) {

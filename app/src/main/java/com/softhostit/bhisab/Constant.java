@@ -29,6 +29,8 @@ public class Constant {
     public static final String ADD_SUPPLIER = BASE_URL + "supplier/add_sup.php";
     public static final String SUPPLIER_GROUP = BASE_URL + "supplier/group.php";
 
+    public static final String EXPENSE_LIST = BASE_URL + "expense/list.php";
+
 
     public static final String ADD_PRODUCT = BASE_URL + "product/add_product.php";
 
