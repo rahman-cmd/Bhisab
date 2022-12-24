@@ -34,6 +34,7 @@ public class Constant {
 
     public static final String EXPENSE_CATEGORY = BASE_URL + "expense/category.php";
     public static final String EXPENSE_CREATE = BASE_URL + "expense/create.php";
+    public static final String EXPENSE_CAT_CREATE = BASE_URL + "expense/cre_cat.php";
 
 
     public static final String ADD_PRODUCT = BASE_URL + "product/add_product.php";

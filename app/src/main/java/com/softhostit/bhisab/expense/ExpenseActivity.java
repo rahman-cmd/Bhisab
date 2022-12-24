@@ -377,6 +377,52 @@ public class ExpenseActivity extends AppCompatActivity {
     }
 
     private void addSector(String sector) {
+        Intent intent = getIntent();
+        String domain = intent.getStringExtra("domain");
+        String username = intent.getStringExtra("username");
+        int user_id = intent.getIntExtra("user_id", 0);
+
+        // show progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(ExpenseActivity.this);
+        progressDialog.setMessage("Adding Sector...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.EXPENSE_CAT_CREATE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (!jsonObject.getBoolean("error")) {
+                        Toasty.success(ExpenseActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else {
+                        progressDialog.dismiss();
+                        Toasty.error(ExpenseActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toasty.error(ExpenseActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("username", username);
+                params.put("user_id", user_id + "");
+                params.put("name", sector);
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private void showAddDepositBankAccountDialog() {
