@@ -63,7 +63,7 @@
             android:textSize="9dp" />
 
         <View
-            android:background="@color/red"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 

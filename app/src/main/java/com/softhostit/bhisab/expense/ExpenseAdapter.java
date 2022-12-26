@@ -40,13 +40,13 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
         // Timestamp To Date Converter
         Date date1 = new Date(date * 1000L);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LL/yyyy");
         String formatted = simpleDateFormat.format(date1);
 
-        holder.expenseName.setText("খাতঃ " + expenseModel.getName());
-        holder.expenseDate.setText("তারিখঃ " + formatted);
-        holder.expenseAmount.setText("টাকার পরিমানঃ " + expenseModel.getAmount());
-        holder.expenseDescription.setText("বিবরণঃ " + expenseModel.getDes());
+        holder.expenseName.setText(" " + expenseModel.getName());
+        holder.expenseDate.setText(" " + formatted);
+        holder.expenseAmount.setText("-$" + expenseModel.getAmount());
+        holder.expenseDescription.setText(" " + expenseModel.getDes());
 
     }
 

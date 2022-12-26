@@ -479,8 +479,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/add_user" />
@@ -524,8 +524,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/suppliar" />
@@ -569,8 +569,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/product" />
@@ -622,8 +622,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="10dp"
                                         android:src="@drawable/invoice" />
@@ -667,8 +667,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/deposit" />
@@ -712,8 +712,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="10dp"
                                         android:src="@drawable/expence" />
@@ -765,8 +765,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/report" />
@@ -809,8 +809,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="10dp"
                                         android:src="@drawable/wallet" />
@@ -854,8 +854,8 @@
                                     android:padding="10dp">
 
                                     <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
                                         android:background="@drawable/oval_bg"
                                         android:padding="8dp"
                                         android:src="@drawable/sarvice" />
