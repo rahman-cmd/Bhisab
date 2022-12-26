@@ -8,11 +8,12 @@ public class ExpenseModel {
     private int in_cat;
     private int amount;
     private int user_id;
+    private String name;
 
     public ExpenseModel() {
     }
 
-    public ExpenseModel(int id, int account, int date, String des, int in_cat, int amount, int user_id) {
+    public ExpenseModel(int id, int account, int date, String des, int in_cat, int amount, int user_id, String name) {
         this.id = id;
         this.account = account;
         this.date = date;
@@ -20,6 +21,7 @@ public class ExpenseModel {
         this.in_cat = in_cat;
         this.amount = amount;
         this.user_id = user_id;
+        this.name = name;
     }
 
     public int getId() {
@@ -76,5 +78,13 @@ public class ExpenseModel {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

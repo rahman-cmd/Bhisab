@@ -49,16 +49,6 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/expenseAccount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:fontFamily="@font/solaimanlipi"
-                    android:text="অ্যাকাউন্টঃ ব্যাংক একাউন্ট"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <TextView
                     android:id="@+id/expenseDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

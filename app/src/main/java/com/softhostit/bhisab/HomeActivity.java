@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     BottomNavigationView nav_view;
     CardView posPrint, coustomer, deposit, expense, report, setting, supplierBtn, addProduct;
-    TextView dailySales, today_expense, today_receive, today_balance, c_name;
+    TextView dailySales, today_expense, today_receive, today_balance;
 
     User user = SharedPrefManager.getInstance(this).getUser();
 
@@ -72,7 +72,6 @@ public class HomeActivity extends AppCompatActivity  {
         today_expense = findViewById(R.id.today_expense);
         today_receive = findViewById(R.id.today_receive);
         today_balance = findViewById(R.id.today_balance);
-        c_name = findViewById(R.id.c_name);
 
 
         // show the dashboard data
@@ -98,8 +97,7 @@ public class HomeActivity extends AppCompatActivity  {
             User user = SharedPrefManager.getInstance(this).getUser();
 
             actionBar.setTitle("Welcome " + user.getUsername());
-            actionBar.setSubtitle(user.getDomain());
-            c_name.setText(store_name);
+            actionBar.setSubtitle(store_name);
 
 
         } else {

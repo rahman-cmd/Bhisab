@@ -38,43 +38,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="10dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="#0EABD3"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="5dp">
-
-                <TextView
-                    android:id="@+id/c_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/solaimanlipi"
-                    android:padding="8dp"
-                    android:text="সফট হোস্ট আইটি কম্পানি "
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-
-            </com.google.android.material.card.MaterialCardView>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -87,12 +62,12 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="5dp"
                         app:cardElevation="5dp"
                         app:cardPreventCornerOverlap="true">
 
@@ -106,7 +81,7 @@
                                 android:id="@+id/linearLayout5"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
-                                android:background="#8D1A8A"
+                                android:background="#00B07F"
                                 android:padding="10dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
@@ -171,12 +146,12 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="5dp"
                         app:cardElevation="5dp"
                         app:cardPreventCornerOverlap="true">
 
@@ -189,7 +164,7 @@
                                 android:id="@+id/linearLayout5"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
-                                android:background="#8D1A8A"
+                                android:background="#00B07F"
                                 android:padding="10dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
@@ -251,8 +226,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -265,12 +240,12 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="5dp"
                         app:cardElevation="5dp"
                         app:cardPreventCornerOverlap="true">
 
@@ -283,7 +258,7 @@
                                 android:id="@+id/linearLayout5"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
-                                android:background="#8D1A8A"
+                                android:background="#00B07F"
                                 android:padding="10dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
@@ -348,12 +323,12 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="5dp"
                         app:cardElevation="5dp"
                         app:cardPreventCornerOverlap="true">
 
@@ -367,7 +342,7 @@
                                 android:id="@+id/linearLayout5"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
-                                android:background="#8D1A8A"
+                                android:background="#00B07F"
                                 android:padding="10dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
@@ -492,7 +467,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -536,7 +511,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -581,7 +556,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -635,7 +610,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -679,7 +654,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -724,7 +699,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -778,7 +753,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -821,7 +796,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -865,7 +840,7 @@
                                 android:focusable="true"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="2dp"
+                                app:cardElevation="0dp"
                                 app:cardPreventCornerOverlap="true">
 
 
@@ -964,7 +939,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Home"
-                        android:textColor="@color/red"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -987,7 +962,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Product"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -1025,7 +1000,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Support"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -1048,7 +1023,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Setting"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         android:textSize="12sp" />
 
                 </LinearLayout>

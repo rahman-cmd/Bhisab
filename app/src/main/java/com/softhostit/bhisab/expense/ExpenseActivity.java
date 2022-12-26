@@ -632,6 +632,7 @@ public class ExpenseActivity extends AppCompatActivity {
                                     model.setDate(productObject.getInt("date"));
                                     model.setDes(productObject.getString("des"));
                                     model.setAmount(productObject.getInt("amount"));
+                                    model.setName(productObject.getString("name"));
 
                                     expenseModelList.add(model);
 
