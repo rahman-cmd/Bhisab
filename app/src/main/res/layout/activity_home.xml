@@ -1,1030 +1,1036 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
     android:background="#D7D9D9"
     tools:context=".HomeActivity">
 
 
-    <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
-         android:id="@+id/nav_view"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="0dp"
-         android:layout_marginEnd="0dp"
-         android:background="@drawable/nav_background_curved"
-         app:itemIconTint="@color/bottom_nav_color"
-         app:itemTextColor="@color/bottom_nav_color"
-         app:labelVisibilityMode="labeled"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintLeft_toLeftOf="parent"
-         app:layout_constraintRight_toRightOf="parent"
-         app:menu="@menu/bootom_nva_menu">
-
-
-     </com.google.android.material.bottomnavigation.BottomNavigationView>-->
-
-
-    <ScrollView
-        android:scrollbars="none"
-        android:id="@+id/scrollView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp">
+            android:layout_height="?android:attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
+            <include
+                android:id="@+id/my_toolbar"
+                layout="@layout/toolbar" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+        </com.google.android.material.appbar.AppBarLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp"
-                        app:cardPreventCornerOverlap="true">
-
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white">
-
-                            <LinearLayout
-                                android:id="@+id/linearLayout5"
-                                android:layout_width="50dp"
-                                android:layout_height="match_parent"
-                                android:background="#00B07F"
-                                android:padding="10dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:id="@+id/profile_image"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:padding="3dp"
-                                    android:src="@drawable/daily_sales" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/linearLayout4"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/linearLayout5"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <TextView
-                                    android:id="@+id/textView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক বিক্রয়"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/dailySales"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sutonnymj_regular"
-                                    android:text="৳ ৫০০.০০"
-                                    android:textColor="@color/grey"
-                                    android:textSize="17sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp"
-                        app:cardPreventCornerOverlap="true">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white">
-
-                            <LinearLayout
-                                android:id="@+id/linearLayout5"
-                                android:layout_width="50dp"
-                                android:layout_height="match_parent"
-                                android:background="#00B07F"
-                                android:padding="10dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:id="@+id/profile_image"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:padding="3dp"
-                                    android:src="@drawable/daily_sales" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/linearLayout4"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/linearLayout5"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <TextView
-                                    android:id="@+id/textView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক অবশিষ্ট"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/today_balance"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sutonnymj_regular"
-                                    android:text="৳ ৫০০.০০"
-                                    android:textColor="@color/grey"
-                                    android:textSize="17sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-
-            </LinearLayout>
+        <ScrollView
+            android:scrollbars="none"
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp"
-                        app:cardPreventCornerOverlap="true">
+                        android:orientation="horizontal">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="5dp"
+                            app:cardPreventCornerOverlap="true">
 
-                            <LinearLayout
-                                android:id="@+id/linearLayout5"
-                                android:layout_width="50dp"
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="#00B07F"
-                                android:padding="10dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:background="@color/white">
 
-                                <ImageView
-                                    android:id="@+id/profile_image"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:padding="3dp"
-                                    android:src="@drawable/daily_deposit" />
+                                <LinearLayout
+                                    android:id="@+id/linearLayout5"
+                                    android:layout_width="50dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#00B07F"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/profile_image"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:padding="3dp"
+                                        android:src="@drawable/daily_sales" />
 
-                            <LinearLayout
-                                android:id="@+id/linearLayout4"
-                                android:layout_width="0dp"
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/hind_siliguri_light_regular"
+                                        android:text="দৈনিক বিক্রয়"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/dailySales"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/sutonnymj_regular"
+                                        android:text="৳ ৫০০.০০"
+                                        android:textColor="@color/grey"
+                                        android:textSize="17sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="5dp"
+                            app:cardPreventCornerOverlap="true">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/linearLayout5"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:background="@color/white">
 
-                                <TextView
-                                    android:id="@+id/textView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক জমা"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:id="@+id/linearLayout5"
+                                    android:layout_width="50dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#00B07F"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                                <TextView
-                                    android:id="@+id/today_receive"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sutonnymj_regular"
-                                    android:text="৳ ৫০০.০০"
-                                    android:textColor="@color/grey"
-                                    android:textSize="17sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/profile_image"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:padding="3dp"
+                                        android:src="@drawable/daily_sales" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/hind_siliguri_light_regular"
+                                        android:text="দৈনিক অবশিষ্ট"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/today_balance"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/sutonnymj_regular"
+                                        android:text="৳ ৫০০.০০"
+                                        android:textColor="@color/grey"
+                                        android:textSize="17sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp"
-                        app:cardPreventCornerOverlap="true">
+                        android:orientation="horizontal">
 
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="5dp"
+                            app:cardPreventCornerOverlap="true">
 
-                            <LinearLayout
-                                android:id="@+id/linearLayout5"
-                                android:layout_width="50dp"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="#00B07F"
-                                android:padding="10dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:background="@color/white">
 
-                                <ImageView
-                                    android:id="@+id/profile_image"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:padding="3dp"
-                                    android:src="@drawable/daily_expences" />
+                                <LinearLayout
+                                    android:id="@+id/linearLayout5"
+                                    android:layout_width="50dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#00B07F"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/profile_image"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:padding="3dp"
+                                        android:src="@drawable/daily_deposit" />
 
-                            <LinearLayout
-                                android:id="@+id/linearLayout4"
-                                android:layout_width="0dp"
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/hind_siliguri_light_regular"
+                                        android:text="দৈনিক জমা"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/today_receive"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/sutonnymj_regular"
+                                        android:text="৳ ৫০০.০০"
+                                        android:textColor="@color/grey"
+                                        android:textSize="17sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="5dp"
+                            app:cardPreventCornerOverlap="true">
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/linearLayout5"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:background="@color/white">
 
-                                <TextView
-                                    android:id="@+id/textView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/hind_siliguri_light_regular"
-                                    android:text="দৈনিক খরচ"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:id="@+id/linearLayout5"
+                                    android:layout_width="50dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#00B07F"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                                <TextView
-                                    android:id="@+id/today_expense"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sutonnymj_regular"
-                                    android:text="৳ ৫০০.০০"
-                                    android:textColor="@color/grey"
-                                    android:textSize="17sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/profile_image"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:padding="3dp"
+                                        android:src="@drawable/daily_expences" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/hind_siliguri_light_regular"
+                                        android:text="দৈনিক খরচ"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/today_expense"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/sutonnymj_regular"
+                                        android:text="৳ ৫০০.০০"
+                                        android:textColor="@color/grey"
+                                        android:textSize="17sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="20dp">
-
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="20dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/big_card_color"
                         android:orientation="vertical">
 
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
+                            android:background="@color/big_card_color"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/solaimanlipi"
-                                android:text="অপশন"
-                                android:textColor="@color/white"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="15dp"
-                                android:layout_weight="1"
-                                android:scaleType="fitStart"
-                                android:src="@drawable/ic_arrow_right" />
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/solaimanlipi"
+                                    android:text="অপশন"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitStart"
+                                    android:src="@drawable/ic_arrow_right" />
+
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/coustomer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/add_user" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="কাস্টোমার"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/supplierBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/suppliar" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="সাপ্লাইয়ার"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/addProduct"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/product" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="প্রোডাক্ট"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/posPrint"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="10dp"
+                                            android:src="@drawable/invoice" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="ইনভয়েস"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/deposit"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/deposit" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="জমা"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/expense"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="10dp"
+                                            android:src="@drawable/expence" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="খরচ"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/report" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="রিপোর্ট"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="10dp"
+                                            android:src="@drawable/wallet" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="জমার খাত"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:id="@+id/btnLogout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/sarvice" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="সার্ভিস"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/coustomer"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/add_user" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="কাস্টোমার"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/supplierBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/suppliar" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="সাপ্লাইয়ার"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/addProduct"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/product" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="প্রোডাক্ট"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/posPrint"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="10dp"
-                                        android:src="@drawable/invoice" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="ইনভয়েস"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/deposit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/deposit" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="জমা"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/expense"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="10dp"
-                                        android:src="@drawable/expence" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="খরচ"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginBottom="15dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/report" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="রিপোর্ট"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="10dp"
-                                        android:src="@drawable/wallet" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="জমার খাত"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:cardPreventCornerOverlap="true">
-
-
-                                <LinearLayout
-                                    android:id="@+id/btnLogout"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:padding="10dp">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/oval_bg"
-                                        android:padding="8dp"
-                                        android:src="@drawable/sarvice" />
-
-                                    <TextView
-                                        android:id="@+id/textView"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:fontFamily="@font/hind_siliguri_light_regular"
-                                        android:text="সার্ভিস"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
                     </LinearLayout>
-                </LinearLayout>
 
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/bg_gradient_soft"
-            android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/nav_background_curved"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="30dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/home" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Home"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="30dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/product_search" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Product"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <View
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="0dp" />
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_gradient_soft"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="5dp"
-                android:weightSum="2">
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/nav_background_curved"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:padding="5dp"
+                    android:weightSum="2">
 
-                    <ImageButton
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="30dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/support" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Support"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="?android:attr/actionBarSize"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/home" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="?android:attr/actionBarSize"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/product_search" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Product"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="0dp" />
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:padding="5dp"
+                    android:weightSum="2">
 
-                    <ImageButton
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="30dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/settings" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Setting"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="?android:attr/actionBarSize"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/support" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Support"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="?android:attr/actionBarSize"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/settings" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Setting"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -1032,28 +1038,38 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="128dp"
+            android:clickable="true"
+            android:tint="@color/white"
+            app:backgroundTint="@color/white"
+            app:borderWidth="1dp"
+            app:elevation="2dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:rippleColor="@color/grey"
+            app:srcCompat="@drawable/barcode" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_View_drowaer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="128dp"
-        android:clickable="true"
-        android:tint="@color/white"
-        app:backgroundTint="@color/white"
-        app:borderWidth="1dp"
-        app:elevation="2dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
-        app:rippleColor="@color/grey"
-        app:srcCompat="@drawable/barcode" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:theme="@style/Style_TextView"
+        app:headerLayout="@layout/drawar_head_layout"
+        app:menu="@menu/navigation_menu" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

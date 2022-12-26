@@ -33,5 +33,9 @@
         <item name="android:textStyle">bold|italic</item>
     </style>
 
+    <style name="Style_TextView">
+        <item name="android:fontFamily">@font/hind_siliguri_light_regular</item>
+    </style>
+
 
 </resources>

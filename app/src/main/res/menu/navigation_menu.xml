@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item android:title="অপশন">
+            <menu>
+                <item
+                    android:id="@+id/Job"
+                    android:icon="@drawable/ic_lock"
+                    android:title="জরুরী তথ্য"/>
+
+            </menu>
+
+        </item>
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item android:title="তথ্য">
+            <menu>
+                <item
+                    android:id="@+id/contact"
+                    android:icon="@drawable/ic_lock"
+                    android:title="আমাদের সাথে যোগাযোগ করুন" />
+
+                <item
+                    android:id="@+id/fiveStar"
+                    android:icon="@drawable/ic_lock"
+                    android:title="অ্যাপে ৫ স্টার দিন" />
+
+                <item
+                    android:id="@+id/About"
+                    android:icon="@drawable/ic_lock"
+                    android:title="আমাদের সম্পর্কে জানুন" />
+
+                <item
+                    android:id="@+id/share"
+                    android:icon="@drawable/ic_lock"
+                    android:title="শেয়ার করুন" />
+
+                <item
+                    android:id="@+id/privacy"
+                    android:icon="@drawable/ic_lock"
+                    android:title="প্রাইভেসি পলিসি" />
+
+                <item
+                    android:id="@+id/logoutBtn"
+                    android:icon="@drawable/logout"
+                    android:title="লগ আউট" />
+            </menu>
+        </item>
+
+    </group>
+
+</menu>
