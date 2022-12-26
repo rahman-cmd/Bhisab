@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_login);
 
+        getSupportActionBar().hide();
+
 
 
 

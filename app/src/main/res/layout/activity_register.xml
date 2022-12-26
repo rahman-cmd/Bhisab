@@ -4,19 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
     tools:context=".register.RegisterActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/bhisab_logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorAccent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/solaimanlipi"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:text="☰ বিহিসাব"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/txt_shop_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bhisab"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:text="⇚ বিহিসাব ⇛"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -31,24 +80,25 @@
         app:layout_constraintVertical_bias="0.45">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mobile Number"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorAccent"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:hintTextColor="@color/white">
+            app:hintTextColor="@color/colorAccent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerMobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_numbers"
                 android:fontFamily="@font/hind_siliguri_light_regular"
                 android:inputType="number"
-                android:textColor="@color/white"
+                android:textColor="@color/colorAccent"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textStyle="bold" />
 
@@ -56,25 +106,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Username"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorAccent"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:hintTextColor="@color/white">
+            app:hintTextColor="@color/colorAccent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_users"
                 android:fontFamily="@font/hind_siliguri_light_regular"
                 android:inputType="text"
-                android:textColor="@color/white"
+                android:textColor="@color/colorAccent"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textStyle="bold" />
 
@@ -82,25 +133,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Company Name"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorAccent"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:hintTextColor="@color/white">
+            app:hintTextColor="@color/colorAccent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerCompany_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_company"
                 android:fontFamily="@font/hind_siliguri_light_regular"
                 android:inputType="text"
-                android:textColor="@color/white"
+                android:textColor="@color/colorAccent"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textStyle="bold" />
 
@@ -108,25 +160,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorAccent"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:hintTextColor="@color/white">
+            app:hintTextColor="@color/colorAccent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_lock"
                 android:fontFamily="@font/hind_siliguri_light_regular"
                 android:hint="Password"
                 android:inputType="textVisiblePassword"
-                android:textColor="@color/white"
+                android:textColor="@color/colorAccent"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textStyle="bold" />
 
@@ -142,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/colorAccent"
         android:text="Register"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
@@ -157,13 +210,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/colorAccent"
         android:text="Login"
-        app:cornerRadius="50dp"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/registerBtn"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -176,7 +229,7 @@
         android:padding="12dp"
         android:text="কপিরাইট © ২০২৩ সফট হোস্ট আইটি"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -191,7 +244,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/solaimanlipi"
         android:text="হিসাব হোক সহজ স্বচ্ছ ও ঝামেলা বিহীন"
-        android:textColor="@color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +259,7 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/solaimanlipi"
         android:text="আপনার একাউন্ট থাকলে লগিন বাটনে ক্লিক করুন।"
-        android:textColor="@color/white"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
