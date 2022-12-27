@@ -26,6 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <activity android:name=".POS.CartActivity"
+            android:parentActivityName=".POS.PosActivity" />
         <activity
             android:name=".expense.ExpenseActivity"
             android:parentActivityName=".HomeActivity" />
@@ -35,7 +37,6 @@
         <activity
             android:name=".supplier.SupplierActivity"
             android:parentActivityName=".HomeActivity" />
-
         <activity android:name=".pdf_report.ViewPDFActivity" />
         <activity
             android:name=".DeviceListActivity"

@@ -23,6 +23,10 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.DeviceListActivity;
 import com.softhostit.bhisab.R;
@@ -37,6 +41,7 @@ import com.softhostit.bhisab.utils.printerFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -84,7 +89,6 @@ public class DepositDetailsActivity extends AppCompatActivity {
         String formatted = simpleDateFormat.format(date1);
 
 
-
         //for Android 11
         if (SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
@@ -94,6 +98,32 @@ public class DepositDetailsActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         }
+
+
+        // storage permission for Android 10 and below devices (API level 29 and below)
+        Dexter.withActivity(this)
+                .withPermissions(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new com.karumi.dexter.listener.multi.MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            Toasty.success(DepositDetailsActivity.this, "Permissions are granted!", Toast.LENGTH_SHORT, true).show();
+                        }
+                        if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
+                            Toasty.error(DepositDetailsActivity.this, "Permissions are denied!", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+                    }
+        }).check();
+
+
+
 
         BarCodeEncoder qrCodeEncoder = new BarCodeEncoder();
         try {
@@ -117,7 +147,7 @@ public class DepositDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 templatePDF.openDocument();
                 templatePDF.addMetaData(Constant.ORDER_RECEIPT, Constant.ORDER_RECEIPT, "Bhisab");
-                templatePDF.addTitle(fname, formatted+ "\n Email: " + id + "\nContact: " + des + "\nInvoice ID:" + in_cat, "Total Amount: " + amount);
+                templatePDF.addTitle(fname, formatted + "\n Email: " + id + "\nContact: " + des + "\nInvoice ID:" + in_cat, "Total Amount: " + amount);
                 templatePDF.addParagraph(shortText);
                 templatePDF.createTable(header, getPDFReceipt());
                 templatePDF.addImage(bm);
@@ -126,7 +156,6 @@ public class DepositDetailsActivity extends AppCompatActivity {
                 templatePDF.viewPDF();
             }
         });
-
 
 
         btn_thermal_printer.setOnClickListener(new View.OnClickListener() {

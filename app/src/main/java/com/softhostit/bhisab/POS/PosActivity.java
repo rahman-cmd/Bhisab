@@ -231,15 +231,8 @@ public class PosActivity extends AppCompatActivity {
                     return;
                 }
 
-                StringBuffer buffer = new StringBuffer();
-                while (res.moveToNext()) {
-                    buffer.append("ID :" + res.getInt(1) + "\n");
-                    buffer.append("Name :" + res.getString(2) + "\n");
-                    buffer.append("Price :" + res.getInt(3) + "\n\n");
-                }
-
-
-                showMsg("Data",buffer.toString());
+                Intent intent = new Intent(PosActivity.this, CartActivity.class);
+                startActivity(intent);
 
             }
         });
