@@ -74,6 +74,8 @@ public class PosActivity extends AppCompatActivity {
         img_cart = findViewById(R.id.img_cart);
         txtCount = findViewById(R.id.txt_count);
 
+//        txtCount.setText(cartDB.getCountCard() + "");
+
         imgScanner.setOnClickListener(v -> {
             Intent intent = new Intent(PosActivity.this, ScannerActivity.class);
             startActivity(intent);

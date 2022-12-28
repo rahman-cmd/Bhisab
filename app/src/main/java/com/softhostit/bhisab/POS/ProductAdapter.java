@@ -94,12 +94,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         DatabaseHelper product = new DatabaseHelper(context.getApplicationContext());
         Cursor res = product.getAllData();
-        PosActivity.txtCount.setText("" + res.getCount());
+//        PosActivity.txtCount.setText("" + res.getCount());
 
 
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
             DatabaseHelper productDB = new DatabaseHelper(context.getApplicationContext());
+            PosActivity.txtCount.setText("" + productDB.getAllData().getCount());
 
             if (productModel.getOpenstock() <=0){
                 Toasty.warning(context, R.string.stock_not_available_please_update_stock, Toast.LENGTH_SHORT).show();

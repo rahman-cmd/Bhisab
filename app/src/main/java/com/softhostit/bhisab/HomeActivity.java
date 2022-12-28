@@ -37,6 +37,7 @@ import com.softhostit.bhisab.Login.User;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.POS.PosActivity;
 import com.softhostit.bhisab.coustomer.CoustomerActivity;
+import com.softhostit.bhisab.database.DatabaseHelper;
 import com.softhostit.bhisab.deposit.DepositActivity;
 import com.softhostit.bhisab.expense.ExpenseActivity;
 import com.softhostit.bhisab.product.ProductActivity;
@@ -149,6 +150,8 @@ public class HomeActivity extends AppCompatActivity {
                         // click event for logout
                         if (SharedPrefManager.getInstance(HomeActivity.this).isLoggedIn()) {
                             SharedPrefManager.getInstance(HomeActivity.this).logout();
+                            DatabaseHelper databaseHelper = new DatabaseHelper(HomeActivity.this);
+                            databaseHelper.deleteAllData();
                             finish();
                             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                         }

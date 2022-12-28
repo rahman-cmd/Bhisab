@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.components.XAxis;
 import com.softhostit.bhisab.R;
@@ -23,6 +25,7 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<CartModel> cartModelArrayList;
     private CartAdapter cartAdapter;
     DatabaseHelper cartDB;
+    static TextView txt_total_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,12 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Product Cart");
 
         cart_recyclerview = findViewById(R.id.cart_recyclerview);
+        txt_total_price = findViewById(R.id.txt_total_price);
+
         cartDB = new DatabaseHelper(this);
         cartModelArrayList = new ArrayList<>();
         viewData();
+
 
 
     }

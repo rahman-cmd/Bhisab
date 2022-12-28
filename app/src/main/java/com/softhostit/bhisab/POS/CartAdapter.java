@@ -1,5 +1,6 @@
 package com.softhostit.bhisab.POS;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +33,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CartModel cartModel = cartModelArrayList.get(position);
+
+        PosActivity.txtCount.setText("" + cartModelArrayList.size());
 
         // delete data from database
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +52,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txt_item_name.setText(cartModel.getName());
         holder.txt_price.setText(cartModel.getSell_price());
 
+        // GET TOTAL PRICE OF ALL ITEMS
+        int total = 0;
+        for (int i = 0; i < cartModelArrayList.size(); i++) {
+            total += Integer.parseInt(cartModelArrayList.get(i).getSell_price());
+        }
+
+        CartActivity.txt_total_price.setText("Total Price: " + total + " TK");
+
+
+
     }
 
     @Override
@@ -58,7 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_item_name, txt_price, txt_minus;
+        TextView txt_item_name, txt_price, txt_minus, txt_total_price;
         ImageView img_delete;
 
         public ViewHolder(View itemView) {
@@ -68,6 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             txt_price = itemView.findViewById(R.id.txt_price);
             txt_minus = itemView.findViewById(R.id.txt_minus);
             img_delete = itemView.findViewById(R.id.img_delete);
+            txt_total_price = itemView.findViewById(R.id.txt_total_price);
 
 
         }
