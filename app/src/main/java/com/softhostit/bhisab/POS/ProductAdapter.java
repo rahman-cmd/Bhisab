@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     List<ProductModel> productModelList;
     public static int count;
+    MediaPlayer player;
 
     public ProductAdapter(Context context, List<ProductModel> productModelList) {
         this.context = context;
         this.productModelList = productModelList;
+        player = MediaPlayer.create(context, R.raw.delete_sound);
     }
 
     @NonNull
@@ -96,23 +99,34 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Cursor res = product.getAllData();
 //        PosActivity.txtCount.setText("" + res.getCount());
 
+        // Button Click Sound Effect
+
 
         holder.addCart.setOnClickListener(v -> {
             // click and increase count 1++
             DatabaseHelper productDB = new DatabaseHelper(context.getApplicationContext());
             PosActivity.txtCount.setText("" + productDB.getAllData().getCount());
 
-            if (productModel.getOpenstock() <=0){
+            if (productModel.getOpenstock() <= 0) {
                 Toasty.warning(context, R.string.stock_not_available_please_update_stock, Toast.LENGTH_SHORT).show();
             } else {
-                int isInserted =  productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
-
+                int isInserted = productDB.insertData(id, name, sell_price, buy_price, openstock, images, barcode, domain);
+                player.start();
                 if (isInserted > 0) {
                     PosActivity.txtCount.setVisibility(View.VISIBLE);
                 }
             }
 
         });
+
+        // product 0 stock will not be added to cart
+        if (productModel.getOpenstock() <= 0) {
+            holder.addCart.setClickable(false);
+            holder.addCart.setBackgroundColor(Color.GRAY);
+        } else {
+            holder.addCart.setClickable(true);
+        }
+
 
 
     }

@@ -2,6 +2,7 @@ package com.softhostit.bhisab.POS;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private Context context;
     private ArrayList<CartModel> cartModelArrayList;
     DatabaseHelper cartDB;
+    MediaPlayer player;
 
     public CartAdapter(Context context, ArrayList<CartModel> cartModelArrayList) {
         this.context = context;
         this.cartModelArrayList = cartModelArrayList;
+        player = MediaPlayer.create(context, R.raw.delete_sound);
     }
 
     @Override
@@ -42,6 +45,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                player.start();
                 cartDB = new DatabaseHelper(context);
                 cartDB.deleteData(cartModel.getId());
                 cartModelArrayList.remove(position);

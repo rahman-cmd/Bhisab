@@ -91,6 +91,9 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:id="@+id/img_delete"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
