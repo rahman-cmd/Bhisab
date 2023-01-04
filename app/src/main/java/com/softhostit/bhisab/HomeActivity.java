@@ -40,6 +40,7 @@ import com.softhostit.bhisab.coustomer.CoustomerActivity;
 import com.softhostit.bhisab.database.DatabaseHelper;
 import com.softhostit.bhisab.deposit.DepositActivity;
 import com.softhostit.bhisab.expense.ExpenseActivity;
+import com.softhostit.bhisab.invoice.InvoiceActivity;
 import com.softhostit.bhisab.product.ProductActivity;
 import com.softhostit.bhisab.supplier.SupplierActivity;
 
@@ -53,11 +54,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
+import kotlin.collections.IndexedValue;
 
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView nav_view;
-    CardView posPrint, coustomer, deposit, expense, report, setting, supplierBtn, addProduct;
+    CardView posPrint, coustomer, deposit, expense, report, setting, supplierBtn, addProduct, allInvoice;
     TextView dailySales, today_expense, today_receive, today_balance;
 
     // DrawerLayout
@@ -242,6 +244,17 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("username", username);
             startActivity(intent);
 
+        });
+
+        allInvoice = findViewById(R.id.allInvoice);
+        allInvoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, InvoiceActivity.class);
+                intent.putExtra("domain", domain);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
         });
 
         coustomer = findViewById(R.id.coustomer);

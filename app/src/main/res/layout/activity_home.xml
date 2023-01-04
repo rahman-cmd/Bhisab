@@ -31,18 +31,17 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
-            android:scrollbars="none"
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
             app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -454,10 +453,10 @@
 
 
                             <LinearLayout
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
                                 android:orientation="horizontal">
 
 
@@ -598,10 +597,10 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
                                 android:orientation="horizontal">
 
                                 <androidx.cardview.widget.CardView
@@ -741,14 +740,15 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginBottom="15dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="15dp"
                                 android:orientation="horizontal">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/allInvoice"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
@@ -773,7 +773,7 @@
                                             android:layout_height="60dp"
                                             android:background="@drawable/oval_bg"
                                             android:padding="8dp"
-                                            android:src="@drawable/report" />
+                                            android:src="@drawable/invoice" />
 
                                         <TextView
                                             android:id="@+id/textView"
@@ -781,10 +781,10 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="5dp"
                                             android:fontFamily="@font/hind_siliguri_light_regular"
-                                            android:text="রিপোর্ট"
+                                            android:text="সকল ইনভয়েস"
                                             android:textAlignment="center"
                                             android:textColor="@color/black"
-                                            android:textSize="15dp"
+                                            android:textSize="15sp"
                                             android:textStyle="bold" />
 
                                     </LinearLayout>
@@ -843,6 +843,150 @@
                                     android:clickable="true"
                                     android:focusable="true"
                                     android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:id="@+id/btnLogout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/sarvice" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="সার্ভিস"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="15dp"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="8dp"
+                                            android:src="@drawable/report" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="রিপোর্ট"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    android:visibility="invisible"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp"
+                                    app:cardPreventCornerOverlap="true">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp"
+                                            android:background="@drawable/oval_bg"
+                                            android:padding="10dp"
+                                            android:src="@drawable/wallet" />
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/hind_siliguri_light_regular"
+                                            android:text="জমার খাত"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    android:visibility="invisible"
                                     app:cardCornerRadius="8dp"
                                     app:cardElevation="0dp"
                                     app:cardPreventCornerOverlap="true">

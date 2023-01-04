@@ -25,8 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".POS.CartActivity"
+        <activity
+            android:name=".invoice.InvoiceActivity"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".POS.CartActivity"
             android:parentActivityName=".POS.PosActivity" />
         <activity
             android:name=".expense.ExpenseActivity"
