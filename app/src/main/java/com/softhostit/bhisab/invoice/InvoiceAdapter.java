@@ -61,7 +61,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
 
 
 
-        holder.allTV.setText("Name: " + name + "\nCname: " + cname + "\nPhone1: " + phone1 + "\nPre_due: " + pre_due + "\nAddress: " + address +"\n\n");
+        holder.allTV.setText("Name: " + name + "\nCname: " + cname + "\nPhone1: " + phone1 + "\nPre_due: " + pre_due + "\nAddress: " + address +"\n");
 
 
     }
