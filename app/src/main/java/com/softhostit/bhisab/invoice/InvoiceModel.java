@@ -1,6 +1,8 @@
 package com.softhostit.bhisab.invoice;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class InvoiceModel {
     private String currency;
     private String type;
@@ -8,7 +10,7 @@ public class InvoiceModel {
     private int invoice_id;
     private String date_issue;
     private int client_id;
-    private ClientDetailsModel clientDetails;
+    private ClientDetailsModel client_details;
     private int discount;
     private String discount_type;
     private int vat;
@@ -21,14 +23,14 @@ public class InvoiceModel {
     public InvoiceModel() {
     }
 
-    public InvoiceModel(String currency, String type, int invoice_id_custom, int invoice_id, String date_issue, int client_id, ClientDetailsModel clientDetails, int discount, String discount_type, int vat, String vat_type, int total, int total_payment, int due, int due_collect_date) {
+    public InvoiceModel(String currency, String type, int invoice_id_custom, int invoice_id, String date_issue, int client_id, ClientDetailsModel client_details, int discount, String discount_type, int vat, String vat_type, int total, int total_payment, int due, int due_collect_date) {
         this.currency = currency;
         this.type = type;
         this.invoice_id_custom = invoice_id_custom;
         this.invoice_id = invoice_id;
         this.date_issue = date_issue;
         this.client_id = client_id;
-        this.clientDetails = clientDetails;
+        this.client_details = client_details;
         this.discount = discount;
         this.discount_type = discount_type;
         this.vat = vat;
@@ -87,12 +89,12 @@ public class InvoiceModel {
         this.client_id = client_id;
     }
 
-    public ClientDetailsModel getClientDetailsModelArrayList() {
-        return clientDetails;
+    public ClientDetailsModel getClient_details() {
+        return client_details;
     }
 
-    public void setClientDetailsModelArrayList(ClientDetailsModel clientDetailsModelArrayList) {
-        this.clientDetails = clientDetailsModelArrayList;
+    public void setClient_details(ClientDetailsModel client_details) {
+        this.client_details = client_details;
     }
 
     public int getDiscount() {

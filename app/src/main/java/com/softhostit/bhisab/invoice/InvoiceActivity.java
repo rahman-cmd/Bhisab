@@ -1,11 +1,9 @@
 package com.softhostit.bhisab.invoice;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,16 +17,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.softhostit.bhisab.Constant;
 import com.softhostit.bhisab.Login.VolleySingleton;
 import com.softhostit.bhisab.R;
-import com.softhostit.bhisab.expense.ExpenseActivity;
-import com.softhostit.bhisab.product.Adapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +61,6 @@ public class InvoiceActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     InvoiceModel invoiceModel = new InvoiceModel();
-                    ClientDetailsModel clientDetailsModel = new ClientDetailsModel();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         invoiceModel.setCurrency(object.getString("currency"));
@@ -86,29 +78,19 @@ public class InvoiceActivity extends AppCompatActivity {
                         invoiceModel.setDue(object.getInt("due"));
                         invoiceModel.setDue_collect_date(object.getInt("due_collect_date"));
                         // get client_details
-                        JSONObject client_details = object.getJSONObject("client_details");
 
+                        JSONObject client_details = object.getJSONObject("client_details");
                         String name = client_details.getString("name");
                         String cname = client_details.getString("cname");
                         String phone1 = client_details.getString("phone1");
                         int pre_due = client_details.getInt("pre_due");
                         String address = client_details.getString("address");
 
-
-                        clientDetailsModel.setName(name);
-                        clientDetailsModel.setCname(cname);
-                        clientDetailsModel.setPhone1(phone1);
-                        clientDetailsModel.setPre_due(pre_due);
-                        clientDetailsModel.setAddress(address);
-
-                        clientDetailsModelArrayList.add(clientDetailsModel);
-
-                        Log.d("client_details", clientDetailsModel.getName());
-
+                        clientDetailsModelArrayList.add(new ClientDetailsModel(name, cname, phone1, pre_due, address));
                         invoiceModelArrayList.add(invoiceModel);
                     }
 
-                    invoiceAdapter = new InvoiceAdapter(InvoiceActivity.this, invoiceModelArrayList);
+                    invoiceAdapter = new InvoiceAdapter(InvoiceActivity.this, invoiceModelArrayList, clientDetailsModelArrayList);
                     invoiceRV.setAdapter(invoiceAdapter);
 
                     // set adapter to recyclerview

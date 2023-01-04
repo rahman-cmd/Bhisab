@@ -18,10 +18,12 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
 
     private Context context;
     private ArrayList<InvoiceModel> invoiceModelArrayList;
+    private ArrayList<ClientDetailsModel> clientDetailsModelArrayList;
 
-    public InvoiceAdapter(Context context, ArrayList<InvoiceModel> invoiceModelArrayList) {
+    public InvoiceAdapter(Context context, ArrayList<InvoiceModel> invoiceModelArrayList, ArrayList<ClientDetailsModel> clientDetailsModelArrayList) {
         this.context = context;
         this.invoiceModelArrayList = invoiceModelArrayList;
+        this.clientDetailsModelArrayList = clientDetailsModelArrayList;
     }
 
     @NonNull
@@ -34,8 +36,6 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         InvoiceModel invoiceModel = invoiceModelArrayList.get(position);
-
-
 
         String currency = invoiceModel.getCurrency();
         String type = invoiceModel.getType();
@@ -53,22 +53,15 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
         int due_collect_date = invoiceModel.getDue_collect_date();
 
 
+        String name = clientDetailsModelArrayList.get(position).getName();
+        String cname = clientDetailsModelArrayList.get(position).getCname();
+        String phone1 = clientDetailsModelArrayList.get(position).getPhone1();
+        int pre_due = clientDetailsModelArrayList.get(position).getPre_due();
+        String address = clientDetailsModelArrayList.get(position).getAddress();
 
 
 
-
-
-
-//        // get client details
-
-//        String name = clientDetailsModel.getName();
-//        String cname = clientDetailsModel.getCname();
-//        String phone1 = clientDetailsModel.getPhone1();
-//        int pre_due = clientDetailsModel.getPre_due();
-//        String address = clientDetailsModel.getAddress();
-
-
-        holder.allTV.setText("Name: " + currency);
+        holder.allTV.setText("Name: " + name + "\nCname: " + cname + "\nPhone1: " + phone1 + "\nPre_due: " + pre_due + "\nAddress: " + address +"\n\n");
 
 
     }
