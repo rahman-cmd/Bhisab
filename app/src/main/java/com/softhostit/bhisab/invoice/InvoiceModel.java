@@ -1,8 +1,6 @@
 package com.softhostit.bhisab.invoice;
 
 
-import com.google.gson.annotations.SerializedName;
-
 public class InvoiceModel {
     private String currency;
     private String type;
@@ -23,14 +21,13 @@ public class InvoiceModel {
     public InvoiceModel() {
     }
 
-    public InvoiceModel(String currency, String type, int invoice_id_custom, int invoice_id, String date_issue, int client_id, ClientDetailsModel client_details, int discount, String discount_type, int vat, String vat_type, int total, int total_payment, int due, int due_collect_date) {
+    public InvoiceModel(String currency, String type, int invoice_id_custom, int invoice_id, String date_issue, int client_id, int discount, String discount_type, int vat, String vat_type, int total, int total_payment, int due, int due_collect_date) {
         this.currency = currency;
         this.type = type;
         this.invoice_id_custom = invoice_id_custom;
         this.invoice_id = invoice_id;
         this.date_issue = date_issue;
         this.client_id = client_id;
-        this.client_details = client_details;
         this.discount = discount;
         this.discount_type = discount_type;
         this.vat = vat;
@@ -87,14 +84,6 @@ public class InvoiceModel {
 
     public void setClient_id(int client_id) {
         this.client_id = client_id;
-    }
-
-    public ClientDetailsModel getClient_details() {
-        return client_details;
-    }
-
-    public void setClient_details(ClientDetailsModel client_details) {
-        this.client_details = client_details;
     }
 
     public int getDiscount() {

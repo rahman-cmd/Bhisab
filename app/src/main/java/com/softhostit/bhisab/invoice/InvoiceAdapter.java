@@ -1,6 +1,8 @@
 package com.softhostit.bhisab.invoice;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.softhostit.bhisab.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
-public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHolder>{
+public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<InvoiceModel> invoiceModelArrayList;
@@ -60,8 +64,18 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
         String address = clientDetailsModelArrayList.get(position).getAddress();
 
 
+        // Timestamp To Date Converter
+        Date date1 = new Date(Long.parseLong(date_issue) * 1000L);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/LLL/yyyy");
+        String formatted = simpleDateFormat.format(date1);
 
-        holder.allTV.setText("Name: " + name + "\nCname: " + cname + "\nPhone1: " + phone1 + "\nPre_due: " + pre_due + "\nAddress: " + address +"\n");
+
+        holder.invoiceID.setText((invoiceModelArrayList.get(position).getInvoice_id()) + "");
+        holder.date_issue.setText(formatted);
+        holder.name.setText(name);
+        holder.pre_due.setText("$" + pre_due);
+//        holder.total_payment.setText("$" + total_payment);
+        holder.mobileNumber.setText(" "+phone1);
 
 
     }
@@ -72,13 +86,18 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView allTV;
+        TextView invoiceID, date_issue, name, pre_due, total_payment, mobileNumber;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            allTV = itemView.findViewById(R.id.allTV);
+            invoiceID = itemView.findViewById(R.id.invoiceID);
+            date_issue = itemView.findViewById(R.id.date_issue);
+            name = itemView.findViewById(R.id.name);
+            pre_due = itemView.findViewById(R.id.pre_due);
+            total_payment = itemView.findViewById(R.id.total_payment);
+            mobileNumber = itemView.findViewById(R.id.mobileNumber);
 
         }
     }

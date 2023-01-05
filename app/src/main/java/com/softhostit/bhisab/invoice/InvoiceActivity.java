@@ -60,34 +60,50 @@ public class InvoiceActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    InvoiceModel invoiceModel = new InvoiceModel();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        invoiceModel.setCurrency(object.getString("currency"));
-                        invoiceModel.setType(object.getString("type"));
-                        invoiceModel.setInvoice_id_custom(object.getInt("invoice_id_custom"));
-                        invoiceModel.setInvoice_id(object.getInt("invoice_id"));
-                        invoiceModel.setDate_issue(object.getString("date_issue"));
-                        invoiceModel.setClient_id(object.getInt("client_id"));
-                        invoiceModel.setDiscount(object.getInt("discount"));
-                        invoiceModel.setDiscount_type(object.getString("discount_type"));
-                        invoiceModel.setVat(object.getInt("vat"));
-                        invoiceModel.setVat_type(object.getString("vat_type"));
-                        invoiceModel.setTotal(object.getInt("total"));
-                        invoiceModel.setTotal_payment(object.getInt("total_payment"));
-                        invoiceModel.setDue(object.getInt("due"));
-                        invoiceModel.setDue_collect_date(object.getInt("due_collect_date"));
+
+                        String currency = object.getString("currency");
+                        String type = object.getString("type");
+                        int invoice_id_custom = object.getInt("invoice_id_custom");
+                        int invoice_id = object.getInt("invoice_id");
+                        String date_issue = object.getString("date_issue");
+                        int client_id = object.getInt("client_id");
+                        int discount = object.getInt("discount");
+                        String discount_type = object.getString("discount_type");
+                        int vat = object.getInt("vat");
+
+                        // VAT TYPE is null in some cases so we need to check it first before adding NULL = 0
+                        String vat_type = object.getString("vat_type");
+                        if (vat_type.equals("null")) {
+                            vat_type = "0";
+                        } else {
+                            vat_type = object.getString("vat_type");
+                        }
+
+                        int total = object.getInt("total");
+                        int total_payment = object.getInt("total_payment");
+                        int due = object.getInt("due");
+                        int due_collect_date = object.getInt("due_collect_date");
+
                         // get client_details
 
                         JSONObject client_details = object.getJSONObject("client_details");
                         String name = client_details.getString("name");
                         String cname = client_details.getString("cname");
                         String phone1 = client_details.getString("phone1");
-                        int pre_due = client_details.getInt("pre_due");
+                        // pre_due is null in some cases so we need to check it first before adding NULL = 0
+                        int pre_due = 0;
+                        if (client_details.isNull("pre_due")) {
+                            pre_due = 0;
+                        } else {
+                            pre_due = client_details.getInt("pre_due");
+                        }
                         String address = client_details.getString("address");
 
                         clientDetailsModelArrayList.add(new ClientDetailsModel(name, cname, phone1, pre_due, address));
-                        invoiceModelArrayList.add(invoiceModel);
+                        invoiceModelArrayList.add(new InvoiceModel(currency, type, invoice_id_custom, invoice_id, date_issue, client_id, discount, discount_type, vat, vat_type, total, total_payment, due, due_collect_date));
+
                     }
 
                     invoiceAdapter = new InvoiceAdapter(InvoiceActivity.this, invoiceModelArrayList, clientDetailsModelArrayList);
@@ -119,6 +135,7 @@ public class InvoiceActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("domain", domain);
                 params.put("user_id", user_id + "");
+                params.put("per_page", "20");
                 return params;
             }
         };
