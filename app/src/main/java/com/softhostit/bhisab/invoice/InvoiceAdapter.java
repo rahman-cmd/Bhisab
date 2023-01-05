@@ -70,11 +70,11 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
         String formatted = simpleDateFormat.format(date1);
 
 
-        holder.invoiceID.setText((invoiceModelArrayList.get(position).getInvoice_id()) + "");
+        holder.invoiceID.setText((invoice_id + ""));
         holder.date_issue.setText(formatted);
         holder.name.setText(name);
         holder.pre_due.setText("$" + pre_due);
-//        holder.total_payment.setText("$" + total_payment);
+        holder.total_payment.setText("$" + total_payment);
         holder.mobileNumber.setText(" "+phone1);
 
 
