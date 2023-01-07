@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,14 +38,13 @@ public class InvoiceActivity extends AppCompatActivity {
     private InvoiceAdapter invoiceAdapter;
 
     private RecyclerView invoiceRV;
-
+    private ProgressBar progressBarBottomScroll;
 
     private int start = 0;
     private int perPage = 10;
     private boolean isLoading = false;
     private LinearLayoutManager layoutManager;
     private int VISIBLE_THRESHOLD = 10;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class InvoiceActivity extends AppCompatActivity {
         clientDetailsModelArrayList = new ArrayList<>();
 
         layoutManager = new LinearLayoutManager(this);
+        progressBarBottomScroll = findViewById(R.id.progressBarBottomScroll);
 
         loadAllInvoice();
 
@@ -67,6 +69,7 @@ public class InvoiceActivity extends AppCompatActivity {
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 if (!isLoading && totalItemCount <= (lastVisibleItem + VISIBLE_THRESHOLD)) {
                     start += perPage;
+                    progressBarBottomScroll.setVisibility(View.VISIBLE);
                     loadAllInvoice();
                     isLoading = true;
                 }
@@ -152,13 +155,14 @@ public class InvoiceActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 isLoading = false;
+                progressBarBottomScroll.setVisibility(View.GONE);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                Toasty.error(InvoiceActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBarBottomScroll.setVisibility(View.GONE);
+                Toasty.error(InvoiceActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
             }
         }) {
