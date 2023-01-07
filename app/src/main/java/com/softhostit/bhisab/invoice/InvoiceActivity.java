@@ -1,5 +1,6 @@
 package com.softhostit.bhisab.invoice;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,14 @@ public class InvoiceActivity extends AppCompatActivity {
 
     private RecyclerView invoiceRV;
 
+
+    private int start = 0;
+    private int perPage = 10;
+    private boolean isLoading = false;
+    private LinearLayoutManager layoutManager;
+    private int VISIBLE_THRESHOLD = 10;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +54,26 @@ public class InvoiceActivity extends AppCompatActivity {
         invoiceModelArrayList = new ArrayList<>();
         clientDetailsModelArrayList = new ArrayList<>();
 
+        layoutManager = new LinearLayoutManager(this);
 
         loadAllInvoice();
+
+        // Implement the OnScrollListener for the RecyclerView
+        invoiceRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                if (!isLoading && totalItemCount <= (lastVisibleItem + VISIBLE_THRESHOLD)) {
+                    start += perPage;
+                    loadAllInvoice();
+                    isLoading = true;
+                }
+            }
+        });
+
+
     }
 
     private void loadAllInvoice() {
@@ -111,16 +138,21 @@ public class InvoiceActivity extends AppCompatActivity {
 
                     // set adapter to recyclerview
                     invoiceRV.setHasFixedSize(true);
-                    invoiceRV.setLayoutManager(new LinearLayoutManager(InvoiceActivity.this));
+                    invoiceRV.setLayoutManager(layoutManager);
 
                     if (!jsonObject.getBoolean("error")) {
                         Toasty.success(InvoiceActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     } else {
                         Toasty.error(InvoiceActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     }
+                    // Notify the adapter that the data has changed
+                    invoiceAdapter.notifyDataSetChanged();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                isLoading = false;
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -135,7 +167,8 @@ public class InvoiceActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("domain", domain);
                 params.put("user_id", user_id + "");
-                params.put("per_page", "20");
+                params.put("start", String.valueOf(start));
+                params.put("per_page", String.valueOf(perPage));
                 return params;
             }
         };
