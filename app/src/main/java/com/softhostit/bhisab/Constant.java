@@ -39,6 +39,7 @@ public class Constant {
 
     public static final String ADD_PRODUCT = BASE_URL + "product/add_product.php";
     public static final String ALL_INVOICE = BASE_URL + "invoice/list.php";
+    public static final String INVOICE_VIEW = BASE_URL + "invoice/view.php";
 
 
 

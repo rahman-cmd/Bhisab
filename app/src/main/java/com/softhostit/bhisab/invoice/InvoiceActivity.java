@@ -38,7 +38,7 @@ public class InvoiceActivity extends AppCompatActivity {
     private InvoiceAdapter invoiceAdapter;
 
     private RecyclerView invoiceRV;
-    private ProgressBar progressBarBottomScroll;
+    private ProgressBar progressBarBottomScroll, progressBar2;
 
     private int start = 0;
     private int perPage = 10;
@@ -57,6 +57,7 @@ public class InvoiceActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         progressBarBottomScroll = findViewById(R.id.progressBarBottomScroll);
+        progressBar2 = findViewById(R.id.progressBar2);
 
         loadAllInvoice();
 
@@ -131,6 +132,9 @@ public class InvoiceActivity extends AppCompatActivity {
                         }
                         String address = client_details.getString("address");
 
+                        progressBar2.setVisibility(View.GONE);
+                        invoiceRV.setVisibility(View.VISIBLE);
+
                         clientDetailsModelArrayList.add(new ClientDetailsModel(name, cname, phone1, pre_due, address));
                         invoiceModelArrayList.add(new InvoiceModel(currency, type, invoice_id_custom, invoice_id, date_issue, client_id, discount, discount_type, vat, vat_type, total, total_payment, due, due_collect_date));
 
@@ -144,8 +148,10 @@ public class InvoiceActivity extends AppCompatActivity {
                     invoiceRV.setLayoutManager(layoutManager);
 
                     if (!jsonObject.getBoolean("error")) {
+                        progressBar2.setVisibility(View.GONE);
                         Toasty.success(InvoiceActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     } else {
+                        progressBar2.setVisibility(View.GONE);
                         Toasty.error(InvoiceActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                     // Notify the adapter that the data has changed
@@ -162,6 +168,7 @@ public class InvoiceActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBarBottomScroll.setVisibility(View.GONE);
+                progressBar2.setVisibility(View.GONE);
                 Toasty.error(InvoiceActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
             }

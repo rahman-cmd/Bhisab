@@ -26,6 +26,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".invoice.InvoiceDetailsActivity"
+            android:parentActivityName=".invoice.InvoiceActivity" />
+        <activity
             android:name=".invoice.InvoiceActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
