@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.XAxis;
@@ -27,6 +28,8 @@ public class CartActivity extends AppCompatActivity {
     DatabaseHelper cartDB;
     static TextView txt_total_price;
 
+    Button btn_submit_order;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,10 @@ public class CartActivity extends AppCompatActivity {
         cartModelArrayList = new ArrayList<>();
         viewData();
 
-
+        btn_submit_order = findViewById(R.id.btn_submit_order);
+        btn_submit_order.setOnClickListener(v -> {
+            Toasty.success(this, "Order Submitted", Toasty.LENGTH_SHORT).show();
+        });
 
     }
 

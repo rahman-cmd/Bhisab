@@ -133,9 +133,9 @@ public class HomeActivity extends AppCompatActivity {
                         // click to share app
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Probash Jatra");
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Bhisab");
                         String shareMessage = "\nLet me recommend you this application\n\n";
-                        shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.probashjatraltd.probashjatra" + "\n\n";
+                        shareMessage = shareMessage + "https://play.google.com/store/apps/details?id="+ getPackageName();
                         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                         startActivity(Intent.createChooser(shareIntent, "choose one"));
                         drawerLayout.closeDrawers();
