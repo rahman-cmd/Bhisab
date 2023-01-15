@@ -14,6 +14,7 @@ import com.softhostit.bhisab.utils.WoosimPrnMng;
 import com.woosim.printer.WoosimCmd;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -26,7 +27,7 @@ public class TestPrinter implements IPrintToPrinter {
     String currency = "BDT: ";
 
     private Context context;
-    List<OrderItemModel> orderDetailsList;
+    List<OrderItemModel> orderDetailsList = new ArrayList<>();
     String servedBy, shopName, shopAddress, shopEmail, shopContact, invoiceId, orderDate, customerName, footer, tax, discounts;
     Bitmap bm;
 
@@ -34,7 +35,7 @@ public class TestPrinter implements IPrintToPrinter {
         this.context = context;
         this.orderDetailsList = orderDetailsList;
 
-        f = new DecimalFormat("#0.00");
+        f = new DecimalFormat("#0.0");
     }
 
 
@@ -58,6 +59,8 @@ public class TestPrinter implements IPrintToPrinter {
 //
 //        f = new DecimalFormat("#0.00");
 //    }
+
+
 
 
     @Override
@@ -88,26 +91,15 @@ public class TestPrinter implements IPrintToPrinter {
         prnMng.printStr("--------------------------------");
 
         double getItemPrice;
-
-        Log.d("OrderDetailsList", "printContent: " + orderDetailsList.size());
-
-
-
-
         for (int i = 0; i < orderDetailsList.size(); i++) {
             name = orderDetailsList.get(i).getName();
+            String first10 = name.substring(0, 10);
             int price = orderDetailsList.get(i).getPrice();
-
             getItemPrice = price;
-
             int qty = orderDetailsList.get(i).getQuantity();
             unite = orderDetailsList.get(i).getUnit();
-
             cost_total = qty * price;
-
-
-            prnMng.leftRightAlign(name + " " + f.format(getItemPrice) + "x" + qty, "=" + f.format(cost_total));
-
+            prnMng.leftRightAlign(first10 + " " + f.format(getItemPrice) + "x" + qty, "=" + f.format(cost_total));
 
         }
 
@@ -123,13 +115,13 @@ public class TestPrinter implements IPrintToPrinter {
 //        prnMng.printStr(footer, 1, WoosimCmd.ALIGN_CENTER);
 
         prnMng.printNewLine();
-
-        //print barcode
-        prnMng.printPhoto(bm);
-        prnMng.printNewLine();
-
-        printEnded(prnMng);
-        prnMng.printNewLine();
+//
+//        //print barcode
+//        prnMng.printPhoto(bm);
+//        prnMng.printNewLine();
+//
+//        printEnded(prnMng);
+//        prnMng.printNewLine();
 
     }
 
