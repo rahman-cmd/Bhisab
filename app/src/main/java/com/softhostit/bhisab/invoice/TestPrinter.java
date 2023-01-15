@@ -39,7 +39,6 @@ public class TestPrinter implements IPrintToPrinter {
     }
 
 
-
 //    public TestPrinter(Context context, String shopName, String shopAddress, String shopEmail, String shopContact, String invoiceId, String orderDate, String customerName, String footer, double subTotal, String line_total, String tax, String discounts, String served_by, List<OrderItemModel> orderDetailsList) {
 //        this.context = context;
 //        this.shopName = shopName;
@@ -59,8 +58,6 @@ public class TestPrinter implements IPrintToPrinter {
 //
 //        f = new DecimalFormat("#0.00");
 //    }
-
-
 
 
     @Override
@@ -91,15 +88,17 @@ public class TestPrinter implements IPrintToPrinter {
         prnMng.printStr("--------------------------------");
 
         double getItemPrice;
+        int slNumber = 1;
         for (int i = 0; i < orderDetailsList.size(); i++) {
             name = orderDetailsList.get(i).getName();
-            String first10 = name.substring(0, 10);
             int price = orderDetailsList.get(i).getPrice();
             getItemPrice = price;
             int qty = orderDetailsList.get(i).getQuantity();
             unite = orderDetailsList.get(i).getUnit();
             cost_total = qty * price;
-            prnMng.leftRightAlign(first10 + " " + f.format(getItemPrice) + "x" + qty, "=" + f.format(cost_total));
+            prnMng.printStr(slNumber + "." + name + " " + f.format(getItemPrice) + "x" + qty + "=" + f.format(cost_total), 1, WoosimCmd.ALIGN_CENTER);
+            slNumber += 1;
+//            prnMng.leftRightAlign(first10 + " " + f.format(getItemPrice) + "x" + qty, "=" + f.format(cost_total));
 
         }
 
