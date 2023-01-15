@@ -1,16 +1,8 @@
 package com.softhostit.bhisab.invoice;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.softhostit.bhisab.R;
-import com.softhostit.bhisab.utils.IPrintToPrinter;
-import com.softhostit.bhisab.utils.WoosimPrnMng;
-import com.woosim.printer.WoosimCmd;
-
-import es.dmoral.toasty.Toasty;
-
-public class OrderItemModel implements IPrintToPrinter {
+public class OrderItemModel{
     private Context context;
     private int item_id;
     private String name;
@@ -126,25 +118,5 @@ public class OrderItemModel implements IPrintToPrinter {
 
     public void setLine_total(int line_total) {
         this.line_total = line_total;
-    }
-
-    @Override
-    public void printContent(WoosimPrnMng prnMng) {
-
-        prnMng.printStr("  Items        Price  Qty  Total", 1, WoosimCmd.ALIGN_CENTER);
-        prnMng.printStr("--------------------------------");
-
-        double getItemPrice;
-
-    }
-
-    @Override
-    public void printEnded(WoosimPrnMng prnMng) {
-        //Do any finalization you like after print ended.
-        if (prnMng.printSucc()) {
-            Toasty.success(context, R.string.print_succ, Toast.LENGTH_LONG).show();
-        } else {
-            Toasty.error(context, R.string.print_error, Toast.LENGTH_LONG).show();
-        }
     }
 }
