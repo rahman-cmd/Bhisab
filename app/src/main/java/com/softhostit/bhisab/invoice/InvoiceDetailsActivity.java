@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,9 +63,12 @@ import es.dmoral.toasty.Toasty;
 public class InvoiceDetailsActivity extends AppCompatActivity {
 
     RecyclerView recycler;
-    TextView txt_total_price, txt_tax, txt_discount, txt_total_cost;
+    TextView txt_total_price, txt_tax, txt_discount, txt_total_cost, txt_total_due;
+
+    private ArrayList<TestPrinter> testPrinters;
 
 
+    ProgressBar progressBar3;
     Button btn_thermal_printer, disconnect_printer, btn_pdf_receipt;
     private static final int REQUEST_CONNECT = 100;
 
@@ -77,7 +83,23 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
     private OrderDetailsAdapter orderDetailsAdapter;
 
 
-    String invoiceId, shopName, orderDate, orderPrice, customerName, tax, discounts, shopAddress, shopEmail, shopContact;
+    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+
+
+    String shopName, date, discount_type, vat_type, name, cname, phone1, c_address;
+    int invoiceId, invoice_id_customer, client_id, discount, vat, total, total_payment, due, pre_due;
+
+    private int invoice_ids;
+    private String date_issue;
+    private String grand_quantity;
+    private int subtotal;
+    private int discounts;
+    private int vat_tax;
+    private int total_amount;
+    private int payment;
+    private int due_amount;
+
+
     double calculatedTotalPrice;
 
 
@@ -94,40 +116,44 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         txt_tax = findViewById(R.id.txt_tax);
         txt_discount = findViewById(R.id.txt_discount);
         txt_total_cost = findViewById(R.id.txt_total_cost);
+        txt_total_due = findViewById(R.id.txt_total_due);
         btn_pdf_receipt = findViewById(R.id.btn_pdf_receipt);
         btn_thermal_printer = findViewById(R.id.btn_thermal_printer);
         disconnect_printer = findViewById(R.id.disconnect_printer);
+        progressBar3 = findViewById(R.id.progressBar3);
 
         f = new DecimalFormat("#0.00");
 
         Intent intent = getIntent();
-        int invoice_id = intent.getIntExtra("invoice_id", 0);
-        int invoice_id_customer = intent.getIntExtra("invoice_id_customer", 0);
-        String formatted = intent.getStringExtra("formatted");
-        int client_id = intent.getIntExtra("client_id", 0);
-        int discount = intent.getIntExtra("discount", 0);
-        String discount_type = intent.getStringExtra("discount_type");
-        int vat = intent.getIntExtra("vat", 0);
-        String vat_type = intent.getStringExtra("vat_type");
-        int total = intent.getIntExtra("total", 0);
-        int total_payment = intent.getIntExtra("total_payment", 0);
-        int due = intent.getIntExtra("due", 0);
-        String name = intent.getStringExtra("name");
-        String cname = intent.getStringExtra("cname");
-        String phone1 = intent.getStringExtra("phone1");
-        int pre_due = intent.getIntExtra("pre_due", 0);
-        String address = intent.getStringExtra("address");
+        invoiceId = intent.getIntExtra("invoice_id", 0);
+        invoice_id_customer = intent.getIntExtra("invoice_id_customer", 0);
+        date = intent.getStringExtra("formatted");
+        client_id = intent.getIntExtra("client_id", 0);
+        discount = intent.getIntExtra("discount", 0);
+        discount_type = intent.getStringExtra("discount_type");
+        vat = intent.getIntExtra("vat", 0);
+        vat_type = intent.getStringExtra("vat_type");
+        total = intent.getIntExtra("total", 0);
+        total_payment = intent.getIntExtra("total_payment", 0);
+        due = intent.getIntExtra("due", 0);
+
+        name = intent.getStringExtra("name");
+        cname = intent.getStringExtra("cname");
+        phone1 = intent.getStringExtra("phone1");
+        pre_due = intent.getIntExtra("pre_due", 0);
+        c_address = intent.getStringExtra("address");
 
         txt_discount.setText("Discount: " + discount);
         txt_tax.setText("VAT/TAX: " + vat);
         txt_total_price.setText("Total Price: " + total);
         txt_total_cost.setText("Total Payment: " + total_payment);
-
+        txt_total_due.setText("Total Due: " + due);
 
 
         loadInvoiceItems();
 
         orderItemModelArrayList = new ArrayList<>();
+        testPrinters = new ArrayList<>();
 
         //for Android 11
         if (SDK_INT >= Build.VERSION_CODES.R) {
@@ -149,7 +175,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                            Toasty.success(InvoiceDetailsActivity.this, "Permissions granted!", Toast.LENGTH_SHORT, true).show();
+//                            Toasty.success(InvoiceDetailsActivity.this, "Permissions granted!", Toast.LENGTH_SHORT, true).show();
                         }
                         if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
                             Toasty.error(InvoiceDetailsActivity.this, "Permissions are denied!", Toast.LENGTH_SHORT, true).show();
@@ -161,6 +187,25 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
                     }
                 }).check();
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            int writePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//            int readPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+//            List<String> listPermissionsNeeded = new ArrayList<>();
+//            if (writePermission != PackageManager.PERMISSION_GRANTED) {
+//                listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//            }
+//            if (readPermission != PackageManager.PERMISSION_GRANTED) {
+//                listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+//            }
+//            if (!listPermissionsNeeded.isEmpty()) {
+//                requestPermissions(listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
+//            } else {
+//                Toast.makeText(InvoiceDetailsActivity.this, "Permissions granted!", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            Toast.makeText(InvoiceDetailsActivity.this, "Permissions granted!", Toast.LENGTH_SHORT).show();
+//        }
 
 
         BarCodeEncoder qrCodeEncoder = new BarCodeEncoder();
@@ -207,8 +252,8 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                     // if address is not null, then print to the printer
                     PrefMng.saveActivePrinter(InvoiceDetailsActivity.this, PrefMng.PRN_WOOSIM_SELECTED);
 
+                    IPrintToPrinter testPrinter = new TestPrinter(InvoiceDetailsActivity.this, name, cname, phone1, pre_due, c_address, invoice_ids, date_issue, grand_quantity, subtotal, discounts, vat_tax, total_amount, payment, due_amount, orderItemModelArrayList);
 
-                    IPrintToPrinter testPrinter = new TestPrinter(InvoiceDetailsActivity.this, orderItemModelArrayList);
                     //Connect to the printer and after successful connection issue the print command.
                     mPrnMng = printerFactory.createPrnMng(getApplicationContext(), address, testPrinter);
                 }
@@ -237,15 +282,48 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         int user_id = sharedPrefManager.getUser().getId();
 
         Intent intent = getIntent();
-        int invoice_id = intent.getIntExtra("invoice_id", 0);
+        final int[] invoice_id = {intent.getIntExtra("invoice_id", 0)};
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.INVOICE_VIEW, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("client_details");
+
+
+                    TestPrinter testPrinter = new TestPrinter();
+                    invoice_ids = jsonObject.getInt("invoice_id");
+                    date_issue = jsonObject.getString("date_issue");
+                    grand_quantity = jsonObject.getString("grand_quantity");
+                    subtotal = jsonObject.getInt("subtotal");
+                    discounts = jsonObject.getInt("discount");
+                    vat_tax = jsonObject.getInt("vat");
+                    total_amount = jsonObject.getInt("total");
+                    payment = jsonObject.getInt("payment");
+                    due_amount = jsonObject.getInt("due");
+                    testPrinter.setInvoice_ids(invoice_ids);
+                    testPrinter.setDate_issue(date_issue);
+                    testPrinter.setGrand_quantity(grand_quantity);
+                    testPrinter.setSubtotal(subtotal);
+                    testPrinter.setDiscounts(discounts);
+                    testPrinter.setVat_tax(vat_tax);
+                    testPrinter.setTotal_amount(total_amount);
+                    testPrinter.setPayment(payment);
+                    testPrinter.setDue_amount(due_amount);
+                    testPrinter.setName(jsonObject1.getString("name"));
+                    testPrinter.setCname(jsonObject1.getString("cname"));
+                    testPrinter.setPhone1(jsonObject1.getString("phone1"));
+                    testPrinter.setPre_due(jsonObject1.getInt("pre_due"));
+                    testPrinter.setC_address(jsonObject1.getString("address"));
+                    testPrinters.add(testPrinter);
+
+
+
+
                     JSONArray jsonArray = jsonObject.getJSONArray("items");
 
+                    Log.d("Data", jsonArray.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         OrderItemModel orderItemModel = new OrderItemModel();
                         orderItemModel.setItem_id(jsonArray.getJSONObject(i).getInt("item_id"));
@@ -257,34 +335,33 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                         orderItemModel.setDiscount(jsonArray.getJSONObject(i).getInt("discount"));
                         orderItemModel.setUnit(jsonArray.getJSONObject(i).getString("unit"));
                         orderItemModel.setLine_total(jsonArray.getJSONObject(i).getInt("line_total"));
+
+
                         orderItemModelArrayList.add(orderItemModel);
+                        progressBar3.setVisibility(View.GONE);
+                        recycler.setVisibility(View.VISIBLE);
+
                     }
 
                     orderDetailsAdapter = new OrderDetailsAdapter(InvoiceDetailsActivity.this, orderItemModelArrayList);
                     recycler.setAdapter(orderDetailsAdapter);
                     recycler.setHasFixedSize(true);
                     recycler.setLayoutManager(new LinearLayoutManager(InvoiceDetailsActivity.this));
-
-                    Log.d("jsonArray", jsonArray.toString());
-
-
                     if (!jsonObject.getBoolean("error")) {
-
+                        progressBar3.setVisibility(View.GONE);
                         Toasty.success(InvoiceDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     } else {
-
+                        progressBar3.setVisibility(View.GONE);
                         Toasty.error(InvoiceDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar3.setVisibility(View.GONE);
                 Toasty.error(InvoiceDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
             }
@@ -294,7 +371,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("domain", domain);
                 params.put("user_id", user_id + "");
-                params.put("invoice_id", invoice_id + "");
+                params.put("invoice_id", invoice_id[0] + "");
                 return params;
             }
         };
@@ -328,4 +405,23 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
         if (mPrnMng != null) mPrnMng.releaseAllocatoins();
         super.onDestroy();
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
+//            Map<String, Integer> perms = new HashMap<>();
+//            perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+//            perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+//            for (int i = 0; i < permissions.length; i++)
+//                perms.put(permissions[i], grantResults[i]);
+//            if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+//                    && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(InvoiceDetailsActivity.this, "Permissions granted!", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(InvoiceDetailsActivity.this, "Permissions are denied!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
+
 }
