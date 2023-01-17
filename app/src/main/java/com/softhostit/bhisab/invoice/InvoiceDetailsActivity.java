@@ -151,6 +151,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
 
         loadInvoiceItems();
+        loadPrintData();
 
         orderItemModelArrayList = new ArrayList<>();
         testPrinters = new ArrayList<>();
@@ -275,7 +276,7 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void loadInvoiceItems() {
+    private void loadPrintData() {
         // get domain name and user_id from sher prefarence
         SharedPrefManager sharedPrefManager = new SharedPrefManager(this);
         String domain = sharedPrefManager.getUser().getDomain();
@@ -290,7 +291,6 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONObject jsonObject1 = jsonObject.getJSONObject("client_details");
-
 
                     TestPrinter testPrinter = new TestPrinter();
                     invoice_ids = jsonObject.getInt("invoice_id");
@@ -318,12 +318,54 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                     testPrinter.setC_address(jsonObject1.getString("address"));
                     testPrinters.add(testPrinter);
 
+                    if (!jsonObject.getBoolean("error")) {
+                        progressBar3.setVisibility(View.GONE);
+                        Toasty.success(InvoiceDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressBar3.setVisibility(View.GONE);
+                        Toasty.error(InvoiceDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar3.setVisibility(View.GONE);
+                Toasty.error(InvoiceDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("domain", domain);
+                params.put("user_id", user_id + "");
+                params.put("invoice_id", invoice_id[0] + "");
+                return params;
+            }
+        };
 
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
+    private void loadInvoiceItems() {
+        // get domain name and user_id from sher prefarence
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(this);
+        String domain = sharedPrefManager.getUser().getDomain();
+        int user_id = sharedPrefManager.getUser().getId();
+
+        Intent intent = getIntent();
+        final int[] invoice_id = {intent.getIntExtra("invoice_id", 0)};
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.INVOICE_VIEW, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-                    Log.d("Data", jsonArray.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         OrderItemModel orderItemModel = new OrderItemModel();
                         orderItemModel.setItem_id(jsonArray.getJSONObject(i).getInt("item_id"));
@@ -335,7 +377,6 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
                         orderItemModel.setDiscount(jsonArray.getJSONObject(i).getInt("discount"));
                         orderItemModel.setUnit(jsonArray.getJSONObject(i).getString("unit"));
                         orderItemModel.setLine_total(jsonArray.getJSONObject(i).getInt("line_total"));
-
 
                         orderItemModelArrayList.add(orderItemModel);
                         progressBar3.setVisibility(View.GONE);
